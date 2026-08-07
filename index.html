@@ -1022,53 +1022,60 @@
       const quickPdfBtn = document.getElementById('quick-pdf-btn');
       if (!pdfContainer) return;
       pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando PDFs...</div>`;
+      
+      let pdfs = [];
+      let pdfFolder = `${modDir}/pdf`;
+
       try {
-        const res = await fetch(`${modDir}/pdfs.json`);
-        if (!res.ok) throw new Error("pdfs.json não encontrado");
-        const pdfs = await res.json();
-        if (badge) badge.innerText = pdfs.length || 0;
-
-        if (!pdfs || pdfs.length === 0) {
-          if (quickPdfBtn) quickPdfBtn.classList.add('hidden');
-          pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-folder-open text-2xl mb-2 block"></i> Nenhum arquivo PDF disponível para este módulo.</div>`;
-          return;
+        let res = await fetch(`${pdfFolder}/index.json`);
+        if (!res.ok) {
+          res = await fetch(`${modDir}/pdfs.json`);
+          pdfFolder = modDir;
         }
+        if (res.ok) {
+          pdfs = await res.json();
+        }
+      } catch (e) { pdfs = []; }
 
-        if (quickPdfBtn) quickPdfBtn.classList.remove('hidden');
+      if (badge) badge.innerText = pdfs.length || 0;
 
-        pdfContainer.innerHTML = pdfs.map((pdf, idx) => {
-          const pdfPath = `${modDir}/${pdf.file}`;
-          const containerId = `pdf-embed-box-${idx}`;
-          return `
-            <div class="col-span-2 bg-slate-50 dark:bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
-              <div class="flex flex-wrap items-center justify-between gap-3">
-                <div class="flex items-center gap-3.5">
-                  <div class="w-11 h-12 bg-rose-100 dark:bg-rose-950 rounded-xl flex items-center justify-center shrink-0">
-                    <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-xl"></i>
-                  </div>
-                  <div>
-                    <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm">${escapeHtml(pdf.title || pdf.file)}</h4>
-                    ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(pdf.description)}</p>` : ''}
-                  </div>
+      if (!pdfs || pdfs.length === 0) {
+        if (quickPdfBtn) quickPdfBtn.classList.add('hidden');
+        pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-folder-open text-2xl mb-2 block"></i> Nenhum arquivo PDF encontrado na pasta 'pdf/' deste módulo.</div>`;
+        return;
+      }
+
+      if (quickPdfBtn) quickPdfBtn.classList.remove('hidden');
+
+      pdfContainer.innerHTML = pdfs.map((pdf, idx) => {
+        const pdfFile = (pdf.file.startsWith('/') || pdf.file.includes('://')) ? pdf.file : `${pdfFolder}/${pdf.file}`;
+        const containerId = `pdf-embed-box-${idx}`;
+        return `
+          <div class="col-span-2 bg-slate-50 dark:bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-3.5">
+                <div class="w-11 h-12 bg-rose-100 dark:bg-rose-950 rounded-xl flex items-center justify-center shrink-0">
+                  <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-xl"></i>
                 </div>
-                <div class="flex items-center gap-2">
-                  <button onclick="togglePdfEmbed('${pdfPath}', '${containerId}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition flex items-center gap-1.5 shadow-sm">
-                    <i class="fa-solid fa-eye"></i> Ler na Página
-                  </button>
-                  <a href="${pdfPath}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-600 transition flex items-center gap-1">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Nova Aba
-                  </a>
+                <div>
+                  <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm">${escapeHtml(pdf.title || pdf.file)}</h4>
+                  ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(pdf.description)}</p>` : ''}
+                  <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1">Localização: pdf/${escapeHtml(pdf.file)}</p>
                 </div>
               </div>
-              <div id="${containerId}" class="hidden"></div>
+              <div class="flex items-center gap-2">
+                <button onclick="togglePdfEmbed('${pdfFile}', '${containerId}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition flex items-center gap-1.5 shadow-sm">
+                  <i class="fa-solid fa-eye"></i> Ler na Página
+                </button>
+                <a href="${pdfFile}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-600 transition flex items-center gap-1">
+                  <i class="fa-solid fa-arrow-up-right-from-square"></i> Nova Aba
+                </a>
+              </div>
             </div>
-          `;
-        }).join('');
-      } catch (e) {
-        if (badge) badge.innerText = '0';
-        if (quickPdfBtn) quickPdfBtn.classList.add('hidden');
-        pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-folder-open text-2xl mb-2 block text-amber-500"></i> Nenhum arquivo PDF cadastrado em pdfs.json.</div>`;
-      }
+            <div id="${containerId}" class="hidden"></div>
+          </div>
+        `;
+      }).join('');
     }
 
     async function fetchModuleQuestions(moduleId, smoothScroll = true) {
