@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-09-kubernetes-cka",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Arquitetura, Instalação e Configuração",
+      "question": "Pergunta de teste para o módulo Kubernetes Administrator",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

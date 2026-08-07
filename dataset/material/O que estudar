@@ -1,0 +1,60 @@
+| Tecnologia / Conceito                  | Explicação resumida                                                                        |
+| -------------------------------------- | ------------------------------------------------------------------------------------------ |
+| **DevOps**                             | Cultura que integra desenvolvimento e infraestrutura para automatizar entrega de software. |
+| **CI/CD**                              | Automatiza compilação, testes e implantação das aplicações.                                |
+| **Git**                                | Sistema de controle de versão do código-fonte.                                             |
+| **GitHub**                             | Plataforma para hospedar código e colaborar em projetos Git.                               |
+| **GitHub Actions**                     | Ferramenta de CI/CD integrada ao GitHub.                                                   |
+| **Docker**                             | Cria e executa aplicações em containers.                                                   |
+| **Kubernetes (K8s)**                   | Orquestra containers em ambientes de produção.                                             |
+| **Infrastructure as Code (IaC)**       | Gerencia infraestrutura usando código em vez de configuração manual.                       |
+| **Terraform**                          | Principal ferramenta de IaC para criar infraestrutura em Cloud.                            |
+| **Linux**                              | Sistema operacional predominante em servidores e ambientes DevOps.                         |
+| **Python**                             | Linguagem muito utilizada para automação e scripts DevOps.                                 |
+| **Bash**                               | Shell para automação de tarefas no Linux.                                                  |
+| **Azure**                              | Plataforma de Cloud Computing da Microsoft.                                                |
+| **AWS**                                | Plataforma de Cloud Computing da Amazon.                                                   |
+| **Nginx**                              | Servidor Web e Reverse Proxy para aplicações.                                              |
+| **SQL / PostgreSQL**                   | Banco de dados relacional para armazenar informações.                                      |
+| **Redis**                              | Banco de dados em memória utilizado para cache e filas.                                    |
+| **Observabilidade**                    | Monitoramento da saúde e desempenho das aplicações.                                        |
+| **Prometheus**                         | Coleta métricas de servidores e aplicações.                                                |
+| **Grafana**                            | Cria dashboards e gráficos para monitoramento.                                             |
+| **OpenTelemetry**                      | Coleta logs, métricas e rastreamento (tracing) das aplicações.                             |
+| **DevSecOps**                          | Integra segurança ao processo DevOps desde o desenvolvimento.                              |
+| **FinOps**                             | Gerenciamento e otimização de custos em Cloud.                                             |
+| **Site Reliability Engineering (SRE)** | Garante alta disponibilidade, estabilidade e confiabilidade dos sistemas.                  |
+| **Platform Engineering**               | Cria plataformas internas para facilitar o trabalho dos desenvolvedores.                   |
+| **Serverless**                         | Execução de aplicações sem gerenciar servidores diretamente.                               |
+| **Cloud Native**                       | Desenvolvimento de aplicações projetadas para Cloud e containers.                          |
+| **Multicloud**                         | Utilização de mais de um provedor de Cloud (AWS, Azure, GCP etc.).                         |
+| **AIOps**                              | Uso de Inteligência Artificial para monitoramento e automação operacional.                 |
+
+
+
+
+Principais cargos
+DevOps Engineer — Automatiza infraestrutura, CI/CD e deploys.
+Cloud Engineer — Implanta e administra ambientes em Azure, AWS ou GCP.
+Platform Engineer — Desenvolve plataformas internas para equipes de desenvolvimento.
+Site Reliability Engineer (SRE) — Mantém sistemas altamente disponíveis e confiáveis.
+DevSecOps Engineer — Integra práticas de segurança aos pipelines DevOps.
+Infrastructure Engineer — Administra servidores, redes e infraestrutura.
+Cloud Solutions Architect — Projeta arquiteturas completas em Cloud.
+Stack mais procurada pelas empresas
+Linux
+Git / GitHub
+GitHub Actions
+Docker
+Kubernetes
+Terraform
+Azure
+AWS
+Python
+Bash
+Nginx
+PostgreSQL
+Redis
+Prometheus
+Grafana
+OpenTelemetry

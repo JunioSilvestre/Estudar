@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-07-aws-solutions-architect",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Design de Arquiteturas Seguras",
+      "question": "Pergunta de teste para o módulo Solutions Architect Associate",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-10b-ansible-ex294",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Ansible Specialist",
+      "question": "Pergunta de teste para o módulo de estudo Ansible Specialist (EX294).",
+      "correct_answer": "Resposta correta de teste para validação.",
+      "explanation": "Explicação detalhada de teste para o módulo Ansible Specialist."
+    }
+  ]
+}

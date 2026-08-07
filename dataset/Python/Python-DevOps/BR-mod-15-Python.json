@@ -1,0 +1,197 @@
+{
+  "module_id": "BR-mod-15-Python",
+  "questions": [
+    {
+      "id": "PY-001",
+      "question_number": "01",
+      "category": "Python Fundamentals",
+      "question": "Qual comando cria e ativa um ambiente virtual Python isolado para um projeto DevOps, evitando conflitos entre dependências de diferentes projetos?",
+      "correct_answer": "python3 -m venv .venv && source .venv/bin/activate",
+      "explanation": "O módulo `venv` cria ambientes virtuais isolados. A convenção DevOps é usar `.venv` na raiz do projeto. O `source` ativa o ambiente no shell atual (Linux/macOS). No Windows usa-se `.venv\\Scripts\\activate`.",
+      "code_snippet": "# Criar ambiente virtual\npython3 -m venv .venv\n\n# Ativar (Linux/macOS)\nsource .venv/bin/activate\n\n# Instalar dependências\npip install -r requirements.txt\n\n# Desativar\ndeactivate",
+      "references": [
+        { "title": "Python Docs — venv — Virtual Environments", "url": "https://docs.python.org/3/library/venv.html" }
+      ],
+      "detailed_explanation": "### Ambientes Virtuais Python (venv)\n\nAmbientes virtuais são isolamentos de pacotes Python por projeto. São fundamentais no workflow DevOps.\n\n#### Por que usar venv?\n\n- Evita conflitos entre versões de bibliotecas\n- Permite reproduzir o ambiente em CI/CD\n- Isola dependências por projeto\n\n#### Fluxo completo\n\n```bash\n# 1. Criar o ambiente\npython3 -m venv .venv\n\n# 2. Ativar\nsource .venv/bin/activate\n\n# 3. Verificar que está ativo\nwhich python  # deve apontar para .venv/bin/python\n\n# 4. Instalar deps\npip install boto3 requests python-dotenv\n\n# 5. Congelar dependências\npip freeze > requirements.txt\n```\n\n#### .gitignore recomendado\n\n```\n.venv/\n__pycache__/\n*.pyc\n.env\n```\n\n#### Referência Oficial\n\nPEP 405 define a especificação de virtual environments: https://peps.python.org/pep-0405/"
+    },
+    {
+      "id": "PY-002",
+      "question_number": "02",
+      "category": "Python Fundamentals",
+      "question": "Em Python DevOps, qual decorator e recurso de type hints permitem criar funções com parâmetros opcionais tipados, melhorando a legibilidade e a validação em ferramentas de automação?",
+      "correct_answer": "Type hints com Optional[str] (ou str | None no Python 3.10+) e valores default nos parâmetros",
+      "explanation": "Type hints (PEP 484) permitem anotar tipos em funções Python. `Optional[T]` indica que o valor pode ser `T` ou `None`. Em Python 3.10+ usa-se `T | None`. Ferramentas como `mypy` validam os tipos estaticamente.",
+      "code_snippet": "from typing import Optional\n\ndef deploy_service(\n    name: str,\n    region: str = 'us-east-1',\n    replicas: int = 1,\n    tag: Optional[str] = None\n) -> dict:\n    return {\n        'service': name,\n        'region': region,\n        'replicas': replicas,\n        'tag': tag or 'latest'\n    }\n\n# Python 3.10+ syntax\ndef deploy_v2(name: str, tag: str | None = None) -> dict:\n    return {'service': name, 'tag': tag or 'latest'}",
+      "references": [
+        { "title": "Python Docs — typing — Type Hints", "url": "https://docs.python.org/3/library/typing.html" },
+        { "title": "PEP 484 — Type Hints", "url": "https://peps.python.org/pep-0484/" }
+      ]
+    },
+    {
+      "id": "PY-003",
+      "question_number": "03",
+      "category": "Linux + Bash Automation",
+      "question": "Qual módulo Python permite executar comandos shell e capturar stdout/stderr de forma segura em scripts de automação DevOps, substituindo os inseguros `os.system()` e `os.popen()`?",
+      "correct_answer": "subprocess — especificamente subprocess.run() com capture_output=True",
+      "explanation": "O módulo `subprocess` é a forma recomendada (PEP 324) para executar processos externos em Python. `subprocess.run()` com `capture_output=True` captura stdout e stderr, e `check=True` lança exceção em caso de erro.",
+      "code_snippet": "import subprocess\n\n# Executar comando e capturar saída\nresult = subprocess.run(\n    ['kubectl', 'get', 'pods', '-n', 'production'],\n    capture_output=True,\n    text=True,\n    check=True\n)\n\nprint(result.stdout)\n\n# Com tratamento de erro\ntry:\n    subprocess.run(['systemctl', 'restart', 'nginx'], check=True)\nexcept subprocess.CalledProcessError as e:\n    print(f'Erro: {e.returncode}')",
+      "references": [
+        { "title": "Python Docs — subprocess", "url": "https://docs.python.org/3/library/subprocess.html" },
+        { "title": "PEP 324 — subprocess module", "url": "https://peps.python.org/pep-0324/" }
+      ]
+    },
+    {
+      "id": "PY-004",
+      "question_number": "04",
+      "category": "boto3 — AWS SDK",
+      "question": "Usando o boto3, qual é o método correto para fazer upload de um arquivo local para um bucket S3, e como configurar as credenciais AWS de forma segura para uso em pipelines CI/CD?",
+      "correct_answer": "s3_client.upload_file(filename, bucket, key) com credenciais via variáveis de ambiente AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY",
+      "explanation": "O `boto3` usa a cadeia de credenciais AWS: variáveis de ambiente → ~/.aws/credentials → IAM Role. Em CI/CD, o padrão é usar variáveis de ambiente (GitHub Secrets, GitLab CI variables) ou IAM Roles em EC2/ECS/Lambda.",
+      "code_snippet": "import boto3\nfrom botocore.exceptions import ClientError\n\n# Cliente S3 (credenciais via env vars ou IAM Role)\ns3 = boto3.client('s3', region_name='us-east-1')\n\n# Upload de arquivo\ntry:\n    s3.upload_file(\n        Filename='./dist/app.zip',\n        Bucket='my-deploy-bucket',\n        Key='releases/app-v1.0.zip'\n    )\n    print('Upload concluído com sucesso')\nexcept ClientError as e:\n    print(f'Erro S3: {e}')\n\n# Listar objetos\nresponse = s3.list_objects_v2(Bucket='my-deploy-bucket')\nfor obj in response.get('Contents', []):\n    print(obj['Key'])",
+      "references": [
+        { "title": "boto3 Docs — S3 Client", "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/s3.html" },
+        { "title": "AWS Docs — Credential Provider Chain", "url": "https://docs.aws.amazon.com/sdkref/latest/guide/standardized-credentials.html" }
+      ]
+    },
+    {
+      "id": "PY-005",
+      "question_number": "05",
+      "category": "boto3 — AWS SDK",
+      "question": "Como usar o boto3 para listar todas as instâncias EC2 em execução em uma região e filtrar apenas as que possuem uma tag específica de ambiente?",
+      "correct_answer": "ec2.describe_instances() com Filters=[{'Name': 'tag:Env', 'Values': ['production']}, {'Name': 'instance-state-name', 'Values': ['running']}]",
+      "explanation": "O `describe_instances()` aceita a chave `Filters` para filtrar por tags, estado, tipo de instância etc. O retorno é paginado via `Reservations` → `Instances`.",
+      "code_snippet": "import boto3\n\nec2 = boto3.client('ec2', region_name='us-east-1')\n\nresponse = ec2.describe_instances(\n    Filters=[\n        {'Name': 'tag:Environment', 'Values': ['production']},\n        {'Name': 'instance-state-name', 'Values': ['running']}\n    ]\n)\n\nfor reservation in response['Reservations']:\n    for instance in reservation['Instances']:\n        print(f\"ID: {instance['InstanceId']} | Type: {instance['InstanceType']}\")",
+      "references": [
+        { "title": "boto3 Docs — EC2 describe_instances", "url": "https://boto3.amazonaws.com/v1/documentation/api/latest/reference/services/ec2/client/describe_instances.html" }
+      ]
+    },
+    {
+      "id": "PY-006",
+      "question_number": "06",
+      "category": "Azure SDK for Python",
+      "question": "Qual classe do Azure SDK for Python é usada para listar e gerenciar Resource Groups, e como autenticar de forma segura usando Service Principal em pipelines CI/CD?",
+      "correct_answer": "ResourceManagementClient com autenticação via DefaultAzureCredential ou ClientSecretCredential (AZURE_CLIENT_ID, AZURE_TENANT_ID, AZURE_CLIENT_SECRET)",
+      "explanation": "O `azure-mgmt-resource` fornece o `ResourceManagementClient`. A autenticação recomendada é `DefaultAzureCredential` do pacote `azure-identity`, que suporta Service Principal via env vars, Managed Identity e Azure CLI automaticamente.",
+      "code_snippet": "from azure.identity import DefaultAzureCredential\nfrom azure.mgmt.resource import ResourceManagementClient\nimport os\n\n# Autenticação automática (env vars, Managed Identity, CLI)\ncredential = DefaultAzureCredential()\nsubscription_id = os.environ['AZURE_SUBSCRIPTION_ID']\n\nclient = ResourceManagementClient(credential, subscription_id)\n\n# Listar todos os Resource Groups\nfor rg in client.resource_groups.list():\n    print(f'{rg.name} — {rg.location}')\n\n# Criar Resource Group\nclient.resource_groups.create_or_update(\n    'rg-devops-prod',\n    {'location': 'eastus'}\n)",
+      "references": [
+        { "title": "Azure SDK Python — azure-mgmt-resource", "url": "https://learn.microsoft.com/python/api/azure-mgmt-resource/azure.mgmt.resource.resourcemanagementclient" },
+        { "title": "Azure Docs — DefaultAzureCredential", "url": "https://learn.microsoft.com/python/api/azure-identity/azure.identity.defaultazurecredential" }
+      ]
+    },
+    {
+      "id": "PY-007",
+      "question_number": "07",
+      "category": "requests — REST APIs",
+      "question": "Como usar a biblioteca `requests` para chamar uma API REST com autenticação Bearer Token, tratar erros HTTP corretamente e fazer parse do JSON de resposta?",
+      "correct_answer": "requests.get(url, headers={'Authorization': 'Bearer TOKEN'}) seguido de response.raise_for_status() e response.json()",
+      "explanation": "`raise_for_status()` lança `HTTPError` para qualquer resposta 4xx ou 5xx, evitando processamento silencioso de erros. `response.json()` faz parse automático do JSON retornado.",
+      "code_snippet": "import requests\nfrom requests.exceptions import HTTPError, Timeout\n\nAPI_URL = 'https://api.github.com/repos/org/repo/actions/runs'\nTOKEN = 'ghp_seu_token_aqui'\n\ntry:\n    response = requests.get(\n        API_URL,\n        headers={'Authorization': f'Bearer {TOKEN}'},\n        timeout=10\n    )\n    response.raise_for_status()  # lança erro para 4xx/5xx\n    data = response.json()\n    print(f\"Total runs: {data['total_count']}\")\n\nexcept HTTPError as e:\n    print(f'Erro HTTP: {e.response.status_code}')\nexcept Timeout:\n    print('Timeout na requisição')",
+      "references": [
+        { "title": "requests Docs — Quickstart", "url": "https://requests.readthedocs.io/en/latest/user/quickstart/" },
+        { "title": "requests Docs — Authentication", "url": "https://requests.readthedocs.io/en/latest/user/authentication/" }
+      ]
+    },
+    {
+      "id": "PY-008",
+      "question_number": "08",
+      "category": "python-dotenv — Secrets",
+      "question": "Como usar o `python-dotenv` para carregar variáveis de ambiente de um arquivo `.env` em um script Python, seguindo o padrão 12-Factor App para configurações de infraestrutura?",
+      "correct_answer": "from dotenv import load_dotenv; load_dotenv() — depois acessar com os.getenv('VAR_NAME')",
+      "explanation": "O `python-dotenv` carrega variáveis de um arquivo `.env` para o ambiente do processo. Seguindo o 12-Factor App, configurações sensíveis (tokens, strings de conexão) nunca devem ser hardcoded — ficam no `.env` (gitignored) localmente ou em variáveis CI/CD em produção.",
+      "code_snippet": "# .env (nunca commitar no git!)\n# AWS_ACCESS_KEY_ID=AKIA...\n# AWS_SECRET_ACCESS_KEY=abc123\n# DATABASE_URL=postgresql://user:pass@host/db\n\nimport os\nfrom dotenv import load_dotenv\n\n# Carrega o .env automaticamente\nload_dotenv()\n\naws_key = os.getenv('AWS_ACCESS_KEY_ID')\ndb_url = os.getenv('DATABASE_URL', 'sqlite:///default.db')  # com fallback\n\nprint(f'Conectando ao banco: {db_url}')",
+      "references": [
+        { "title": "python-dotenv Docs — GitHub", "url": "https://github.com/theskumar/python-dotenv" },
+        { "title": "12-Factor App — Config", "url": "https://12factor.net/config" }
+      ]
+    },
+    {
+      "id": "PY-009",
+      "question_number": "09",
+      "category": "PyYAML — YAML Automation",
+      "question": "Como usar PyYAML para gerar um manifesto Kubernetes (Deployment) de forma programática em Python, permitindo parametrizar nome, imagem e número de réplicas dinamicamente?",
+      "correct_answer": "yaml.dump(manifest_dict, default_flow_style=False) onde manifest_dict é um dicionário Python com a estrutura do manifesto K8s",
+      "explanation": "`yaml.dump()` serializa dicionários Python para YAML. `default_flow_style=False` gera YAML em formato de bloco (legível). `yaml.safe_load()` faz o caminho inverso, lendo YAML para dict Python.",
+      "code_snippet": "import yaml\n\ndef generate_deployment(name: str, image: str, replicas: int = 2) -> str:\n    manifest = {\n        'apiVersion': 'apps/v1',\n        'kind': 'Deployment',\n        'metadata': {'name': name, 'labels': {'app': name}},\n        'spec': {\n            'replicas': replicas,\n            'selector': {'matchLabels': {'app': name}},\n            'template': {\n                'metadata': {'labels': {'app': name}},\n                'spec': {\n                    'containers': [{\n                        'name': name,\n                        'image': image,\n                        'ports': [{'containerPort': 8080}]\n                    }]\n                }\n            }\n        }\n    }\n    return yaml.dump(manifest, default_flow_style=False)\n\nprint(generate_deployment('api-service', 'myrepo/api:v1.2', replicas=3))",
+      "references": [
+        { "title": "PyYAML Docs", "url": "https://pyyaml.org/wiki/PyYAMLDocumentation" }
+      ]
+    },
+    {
+      "id": "PY-010",
+      "question_number": "10",
+      "category": "kubernetes — Client Python",
+      "question": "Como usar o client oficial `kubernetes` Python para listar todos os Pods em execução em um namespace e verificar o status de cada um programaticamente?",
+      "correct_answer": "CoreV1Api().list_namespaced_pod(namespace='production') após carregar a config com config.load_kube_config() ou config.load_incluster_config()",
+      "explanation": "`load_kube_config()` usa o arquivo `~/.kube/config` (desenvolvimento local). `load_incluster_config()` usa o ServiceAccount automático quando o script roda dentro do cluster (Pod). `list_namespaced_pod()` retorna todos os pods do namespace.",
+      "code_snippet": "from kubernetes import client, config\n\n# Local: usa ~/.kube/config\nconfig.load_kube_config()\n\n# Dentro do cluster (Pod com ServiceAccount):\n# config.load_incluster_config()\n\nv1 = client.CoreV1Api()\n\npods = v1.list_namespaced_pod(namespace='production')\nfor pod in pods.items:\n    print(f\"{pod.metadata.name}: {pod.status.phase}\")",
+      "references": [
+        { "title": "kubernetes Python Client — GitHub", "url": "https://github.com/kubernetes-client/python" },
+        { "title": "K8s Docs — Python Client Examples", "url": "https://github.com/kubernetes-client/python/tree/master/examples" }
+      ]
+    },
+    {
+      "id": "PY-011",
+      "question_number": "11",
+      "category": "docker SDK for Python",
+      "question": "Como usar o Docker SDK for Python para fazer build de uma imagem a partir de um Dockerfile e em seguida executar um container com variáveis de ambiente injetadas?",
+      "correct_answer": "docker.from_env().images.build(path='.', tag='myapp:v1') e client.containers.run('myapp:v1', environment={'ENV': 'prod'}, detach=True)",
+      "explanation": "O Docker SDK Python (`docker` package) é o wrapper oficial da Docker Engine API. `from_env()` conecta ao daemon Docker local via socket. `images.build()` executa o `docker build`. `containers.run()` equivale ao `docker run`.",
+      "code_snippet": "import docker\n\nclient = docker.from_env()\n\n# Build da imagem\nimage, logs = client.images.build(\n    path='.',\n    tag='myapp:v1.0',\n    rm=True  # remove containers intermediários\n)\nprint(f'Imagem criada: {image.tags}')\n\n# Executar container\ncontainer = client.containers.run(\n    'myapp:v1.0',\n    environment={'APP_ENV': 'production', 'PORT': '8080'},\n    ports={'8080/tcp': 8080},\n    detach=True\n)\nprint(f'Container iniciado: {container.id[:12]}')",
+      "references": [
+        { "title": "Docker SDK for Python — Docs", "url": "https://docker-py.readthedocs.io/en/stable/" }
+      ]
+    },
+    {
+      "id": "PY-012",
+      "question_number": "12",
+      "category": "pytest — Testing & CI/CD",
+      "question": "Como usar `pytest` com `unittest.mock.patch` para testar uma função que chama o boto3 sem fazer chamadas reais à AWS?",
+      "correct_answer": "@pytest.fixture com mock.patch('boto3.client') ou @patch decorator no teste, substituindo o cliente real por um MagicMock",
+      "explanation": "Mockar o `boto3.client` isola os testes de infraestrutura real. `mock.patch` substitui o objeto alvo pelo `MagicMock` durante o teste. Isso permite testar a lógica de negócio sem credenciais AWS ou custos.",
+      "code_snippet": "import pytest\nfrom unittest.mock import patch, MagicMock\nfrom meu_modulo import listar_buckets_s3\n\n@patch('boto3.client')\ndef test_listar_buckets(mock_boto_client):\n    # Configura o mock\n    mock_s3 = MagicMock()\n    mock_boto_client.return_value = mock_s3\n    mock_s3.list_buckets.return_value = {\n        'Buckets': [\n            {'Name': 'bucket-prod'},\n            {'Name': 'bucket-staging'}\n        ]\n    }\n\n    resultado = listar_buckets_s3()\n\n    assert len(resultado) == 2\n    assert 'bucket-prod' in resultado\n    mock_s3.list_buckets.assert_called_once()",
+      "references": [
+        { "title": "pytest Docs", "url": "https://docs.pytest.org/en/stable/" },
+        { "title": "Python Docs — unittest.mock", "url": "https://docs.python.org/3/library/unittest.mock.html" }
+      ]
+    },
+    {
+      "id": "PY-013",
+      "question_number": "13",
+      "category": "bandit — Security (DevSecOps)",
+      "question": "Como integrar o `bandit` em um pipeline CI/CD para análise de segurança estática (SAST) do código Python, e qual flag define o nível mínimo de severidade para falhar o build?",
+      "correct_answer": "bandit -r . --severity-level medium --exit-zero (ou sem --exit-zero para falhar o CI em vulnerabilidades medium+)",
+      "explanation": "`bandit` escaneia código Python buscando padrões inseguros (B-IDs: B101-B701). `-r` é recursivo. `--severity-level` filtra por LOW, MEDIUM ou HIGH. Sem `--exit-zero`, retorna código de saída != 0 em vulnerabilidades, falhando o pipeline CI.",
+      "code_snippet": "# Instalar\npip install bandit\n\n# Scan completo com relatório JSON\nbandit -r ./src -f json -o bandit-report.json\n\n# No CI/CD: falha se encontrar severity >= MEDIUM\nbandit -r . --severity-level medium\n\n# Ignorar testes (falsos positivos comuns)\nbandit -r . --exclude ./tests\n\n# GitHub Actions exemplo:\n# - name: Security Scan\n#   run: bandit -r src/ --severity-level medium",
+      "references": [
+        { "title": "bandit Docs — PyCQA", "url": "https://bandit.readthedocs.io/en/latest/" },
+        { "title": "bandit GitHub", "url": "https://github.com/PyCQA/bandit" }
+      ]
+    },
+    {
+      "id": "PY-014",
+      "question_number": "14",
+      "category": "OpenTelemetry — Observability",
+      "question": "Como instrumentar uma aplicação Python com OpenTelemetry para criar spans de trace e exportar para um coletor OTLP (como Jaeger ou Grafana Tempo)?",
+      "correct_answer": "TracerProvider com OTLPSpanExporter, configurar o endpoint OTLP e usar tracer.start_as_current_span() como context manager",
+      "explanation": "O OpenTelemetry Python SDK fornece `TracerProvider` para traces, `MeterProvider` para métricas e `LoggerProvider` para logs. O `OTLPSpanExporter` envia traces para qualquer backend compatível (Jaeger, Zipkin, Grafana Tempo, Datadog).",
+      "code_snippet": "from opentelemetry import trace\nfrom opentelemetry.sdk.trace import TracerProvider\nfrom opentelemetry.sdk.trace.export import BatchSpanProcessor\nfrom opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter\n\n# Configurar provider\nprovider = TracerProvider()\nexporter = OTLPSpanExporter(endpoint='http://localhost:4317')\nprovider.add_span_processor(BatchSpanProcessor(exporter))\ntrace.set_tracer_provider(provider)\n\ntracer = trace.get_tracer('meu-servico')\n\ndef deploy_pipeline():\n    with tracer.start_as_current_span('deploy') as span:\n        span.set_attribute('environment', 'production')\n        span.set_attribute('service.version', '1.2.0')\n        # ... lógica de deploy\n        print('Deploy iniciado')",
+      "references": [
+        { "title": "OpenTelemetry Python Docs", "url": "https://opentelemetry-python.readthedocs.io/" },
+        { "title": "OpenTelemetry — Getting Started Python", "url": "https://opentelemetry.io/docs/languages/python/getting-started/" }
+      ]
+    },
+    {
+      "id": "PY-015",
+      "question_number": "15",
+      "category": "click — DevOps CLI Tools",
+      "question": "Como usar o `click` para criar uma ferramenta CLI DevOps com subcomandos (grupos), opções obrigatórias e variáveis de ambiente como fallback para os parâmetros?",
+      "correct_answer": "@click.group() para criar grupos de subcomandos, @click.option() com envvar='ENV_VAR' para fallback em variável de ambiente",
+      "explanation": "`click.group()` organiza CLIs complexas com subcomandos (como `git commit`, `git push`). A opção `envvar` permite que a variável de ambiente substitua o parâmetro, útil em pipelines CI/CD onde as opções vêm de secrets.",
+      "code_snippet": "import click\n\n@click.group()\ndef cli():\n    \"\"\"DevOps Automation CLI\"\"\"\n    pass\n\n@cli.command()\n@click.option('--env', '-e', required=True,\n              envvar='DEPLOY_ENV',\n              help='Ambiente de deploy (production/staging)')\n@click.option('--image', '-i', required=True,\n              help='Imagem Docker com tag')\n@click.option('--dry-run', is_flag=True, default=False,\n              help='Simular sem executar')\ndef deploy(env: str, image: str, dry_run: bool):\n    \"\"\"Realiza deploy de uma imagem para o ambiente especificado\"\"\"\n    click.echo(f'🚀 Deploy: {image} → {env}')\n    if dry_run:\n        click.secho('[DRY RUN] Nenhuma alteração aplicada', fg='yellow')\n\nif __name__ == '__main__':\n    cli()\n\n# Uso:\n# python devops.py deploy --env production --image myapp:v1.2\n# DEPLOY_ENV=staging python devops.py deploy --image myapp:v1.2",
+      "references": [
+        { "title": "Click Docs — Pallets Projects", "url": "https://click.palletsprojects.com/en/stable/" },
+        { "title": "Click Docs — Commands and Groups", "url": "https://click.palletsprojects.com/en/stable/commands/" }
+      ]
+    }
+  ]
+}

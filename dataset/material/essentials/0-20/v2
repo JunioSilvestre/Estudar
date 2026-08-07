@@ -1,0 +1,529 @@
+inux Essentials Objectives V2.0
+
+
+
+Contents
+1	Introduction
+2	Candidate Description
+3	Version Information
+4	Translations of Objectives
+5	Exams and Requirements
+6	Objectives
+6.1	011 The Linux Operating System and Open Source Software
+6.1.1	011.1 Linux Distributions (weight: 2)
+6.1.2	011.2 Major Open Source Applications (weight: 2)
+6.1.3	011.3 Open Source Software and Licensing (weight: 1)
+6.1.4	011.4 Linux Usage (weight: 2)
+6.2	012 Command Line Basics
+6.2.1	012.1 Command Line Usage (weight: 3)
+6.2.2	012.2 Documentation, Man Pages and Usage Information (weight: 2)
+6.2.3	012.3 Files, Directories and Paths (weight: 2)
+6.2.4	012.4 File and Directory Management (weight: 2)
+6.3	013 Data Processing
+6.3.1	013.1 File Archives and Compression (weight: 2)
+6.3.2	013.2 Redirections and String Processing (weight: 3)
+6.3.3	013.3 Shell Scripting Basics (weight: 4)
+6.4	014: Linux System Administration Basics
+6.4.1	014.1 Linux Installation and Provisioning (weight: 1)
+6.4.2	014.2 Computer Hardware and Device Access (weight: 2)
+6.4.3	014.3 Processes and Log Messages (weight: 3)
+6.4.4	014.4 Network Configuration (weight: 2)
+6.5	015: Security and File System Permissions
+6.5.1	015.1 Remote Logins, File Transfers and Elevated Permissions (weight: 2)
+6.5.2	015.2 User and Group Management (weight: 2)
+6.5.3	015.3 File System Permissions and Ownership (weight: 2)
+6.5.4	015.4 Special Directories and Files (weight: 1)
+Introduction
+The purpose of the Linux Essentials Certificate is to define the basic knowledge required to competently use a desktop or mobile device using a Linux Operating System. The associated Linux Essentials Program will guide and encourage youth (and those new to Linux and Open Source) to understand the place of Linux and Open Source in the context of the broader IT industry.
+
+
+
+Candidate Description
+This is a description of a candidate that is just barely qualified to pass the Linux Essentials exam. This hypothetical person is called the Minimally Qualified Candidate (MQC). Standards on the Linux Essentials exam should be set so that this person (and anyone more able) would pass but anyone less able would not pass.
+
+The MQC has an understanding of the Linux and Open Source industry and knowledge of the most popular Open Source applications. The candidate should understand the major components of the Linux operating system, and have the technical proficiency to work on the Linux command line. The MQC has a basic understanding of security and administration related topics such as user/group management, working on the command line and permissions. The Linux Essentials certificate holder is most likely the end user of a mostly managed system.
+
+The Linux Essentials MQC should have rudimentary skills or knowledge in the following topics:
+
+Free and Open Source Software, the various communities and licenses
+Processes, programs and the components of an operating system
+Computer hardware
+System security, users/groups and file permissions for public and private directories
+Make the system accessible and able to connect to other computers on a Local Area Network (LAN)
+Open Source Applications in the workplace as they relate to closed source equivalents
+File system browsers on a Linux Desktop
+Where to go for help
+Work on the command line and with files
+Make and restore simple backups and archives
+Use a basic command line editor
+File compression
+Create and run simple shell scripts
+
+
+Version Information
+These objectives are version 2.0.
+
+This is also a summary and detailed information on the changes from version 1.6 to 2.0 of the objectives.
+
+The version 1.6 objectives can be found here.
+
+
+
+Translations of Objectives
+The following translations of the objectives are available on this wiki:
+
+English
+Brazilian Portuguese
+Chinese (Simplified)
+Chinese (Traditional)
+Dutch
+French
+German
+Italian
+Japanese
+Spanish
+
+
+Exams and Requirements
+The Linux Essentials certificate is awarded after passing this exam:
+
+010 (40 questions in 60 minutes)
+There is no requirement to posses another certificate.
+
+
+
+Objectives
+011 The Linux Operating System and Open Source Software
+011.1 Linux Distributions (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand commonly used Linux distributions, including their relationship and their major components. This includes various types of releases and support schema.
+
+Key Knowledge Areas:
+
+Kernel and userspace
+Linux Distributions
+Distribution life cycle management
+Awareness of Android and its relation to Linux
+The following is a partial list of the used files, terms and utilities:
+
+Debian-based Distributions (Debian GNU/Linux, Ubuntu, Raspberry Pi OS)
+Enterprise Linux-based Distributions (Red Hat Enterprise Linux, AlmaLinux, Rocky Linux, Fedora Linux, CentOS Stream)
+SUSE-based Distributions (SUSE Linux Enterprise, openSUSE Leap, openSUSE Tumbleweed)
+Alpine Linux (main and edge)
+Long-Term Support (LTS), stable, testing and unstable releases, and rolling releases, alpha and beta versions
+
+
+011.2 Major Open Source Applications (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be aware of major open source applications. This includes awareness of the main purpose and key features of the various applications, but no specific details, usage or installation of the applications.
+
+Key Knowledge Areas:
+
+Desktop applications
+Web applications
+Server applications
+Programming languages
+Software packages and repositories
+Package management tools
+The following is a partial list of the used files, terms and utilities:
+
+LibreOffice, Thunderbird, Firefox, Chromium / Chrome, VSCodium / Visual Studio Code, GIMP, Inkscape, VLC, GPG, R
+Nextcloud, ownCloud, Kodi, Jitsi, Big Blue Button, Moodle, Git, GitLab, Forgejo / Gitea
+Apache HTTPD, NGINX, MariaDB, MySQL, PostgreSQL, NFS, Samba
+C, C++, Java, JavaScript, Python, PHP, Rust, Go
+dpkg, apt-get, apt, rpm, dnf, zypper, apk
+
+
+011.3 Open Source Software and Licensing (weight: 1)
+Weight
+
+1
+Description
+
+Candidates should understand the principle of free and open source software and open content. This includes awareness of the main open source software license types as well as Creative Commons. Furthermore, candidates should understand the aspects of proprietary and free software on digital autonomy and digital sovereignty.
+
+Key Knowledge Areas:
+
+Open source philosophy
+Open source and open content licensing
+Proprietary software
+Free software
+The following is a partial list of the used files, terms and utilities:
+
+Copyleft, Permissive
+GPL, BSD Licenses
+Creative Commons
+Free Software, Open Source Software
+Digital autonomy
+Digital sovereignty
+Free Software Foundation (FSF)
+Open Source Initiative (OSI)
+
+
+011.4 Linux Usage (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand major types of computers that are commonly used to run Linux. Candidates should be aware of system administration utilities, including text editors and configuration management tools. The actual usage of editors and configuration management tools is not covered in this objective. Furthermore, candidates should understand fundamental security measures when using computers and network services.
+
+Key Knowledge Areas:
+
+Understanding types of computers that can run Linux
+Awareness of virtualization, containers and cloud computing
+Awareness of common text editors
+Awareness of configuration management tools
+Secure handling of credentials
+Secure transfer and storage of data
+The following is a partial list of the used files, terms and utilities:
+
+Desktop computers, laptops and other mobile devices
+Server computers, virtual machines and cloud instances
+Embedded systems and HPC clusters
+Client and server roles
+vi, nano
+Strong password, password managers, multi-factor authentication, passkeys
+Encryption in network protocols (HTTPS), storage media
+Secure handling of USB devices
+
+
+012 Command Line Basics
+012.1 Command Line Usage (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should be able to use the Linux command line. This includes using commands, variables and quoting. Candidates should understand the principles of build-in commands and executable files, including common locations for executable files in the Linux file system.
+
+Key Knowledge Areas:
+
+Basic shell
+Command line syntax
+Variables
+Quoting
+The following is a partial list of the used files, terms and utilities:
+
+Bash
+echo
+history
+PATH environment variable
+export
+type
+/bin, /usr/bin, /usr/sbin, /sbin
+
+
+012.2 Documentation, Man Pages and Usage Information (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be able to leverage documentation provided on a Linux system. This includes using man pages as well as running commands with common parameters to display usage information. Furthermore, candidates should be aware of important file system locations containing documentation and example files.
+
+Key Knowledge Areas:
+
+Man pages
+Common help parameters of command line tools
+The following is a partial list of the used files, terms and utilities:
+
+man
+-h, --help
+/usr/share/doc/
+
+
+012.3 Files, Directories and Paths (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the Linux filesystem, including commands to navigate to specific directories and list the content of directories. Candidates should understand the concepts of absolute and relative paths, hidden files and directories as well as home directories.
+
+Key Knowledge Areas:
+
+Files, directories
+Hidden files and directories
+Home directories
+Absolute and relative paths
+Searching for files based on file names
+The following is a partial list of the used files, terms and utilities:
+
+Common options for ls
+Recursive listings
+cd
+. and ..
+/
+/home and ~
+find
+
+
+012.4 File and Directory Management (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be able to create, copy, move and rename files and directories. This includes simple use of wildcards and shell globbing.
+
+Key Knowledge Areas:
+
+Files and directories
+Case sensitivity
+Simple globbing
+The following is a partial list of the used files, terms and utilities:
+
+mv, cp, rm, touch
+mkdir, rmdir
+
+
+013 Data Processing
+013.1 File Archives and Compression (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be able to create, list and extract file archives in the TAR and ZIP formats. Furthermore, Candidates should be able to compress files, including using compressed file archives.
+
+Key Knowledge Areas:
+
+Files, directories
+Archives, compression
+The following is a partial list of the used files, terms and utilities:
+
+tar
+Common tar options
+gzip, bzip2, xz
+zip, unzip
+
+
+013.2 Redirections and String Processing (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should be able to use I/O redirection on the command line. This includes writing data to files, reading data from files as well as passing data between commands. Furthermore Candidates should be able to use common text processing tools, including using simple regular expressions to filter and process text files.
+
+Key Knowledge Areas:
+
+Command line pipes
+I/O redirection
+Regular Expressions using ., [ ], *, and ? in Extended Regular Expression syntax
+The following is a partial list of the used files, terms and utilities:
+
+grep, grep -E
+less
+cat, head, tail
+sort
+uniq
+cut
+wc
+
+
+013.3 Shell Scripting Basics (weight: 4)
+Weight
+
+4
+Description
+
+Candidates should be able to write simple shell scripts. This includes using setting and displaying variables, conditions to check file existence and variable quality as well as using for loops.
+
+Key Knowledge Areas:
+
+Basic shell scripting
+The following is a partial list of the used files, terms and utilities:
+
+#! (shebang)
+/bin/bash
+Variables
+Arguments
+if conditions (file existence and variable equality)
+for loops (iterate over space separated lists and file glob expressions)
+echo
+Exit status
+
+
+014: Linux System Administration Basics
+014.1 Linux Installation and Provisioning (weight: 1)
+Weight
+
+1
+Description
+
+Candidates should understand the installation of Linux on a physical computer, a virtual machine and the provisioing of Linux in cloud instances. This includes awareness of dual boot setups as well as key differentiators to other operating systems and Linux compatibility of other operating systems.
+
+Key Knowledge Areas:
+
+Differences between Windows, macOS and Linux
+Installing Linux on a computer or in a virtual machine
+Using Linux in cloud instances
+The following is a partial list of the used files, terms and utilities:
+
+Installation media, ISO files
+Operating system images
+Dual boot
+Windows Subsystem for Linux
+
+
+014.2 Computer Hardware and Device Access (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the major components of a computer. Furthermore, candidates should understand how the Linux kernel manages hardware support and how device files are used to access hardware. This includes relevant file system paths as well as important pseudo-devices.
+
+Key Knowledge Areas:
+
+Hardware
+Device files for physical and virtual devices
+The following is a partial list of the used files, terms and utilities:
+
+Motherboards, processors (x86, ARM), memory, power supplies, optical drives, peripherals
+Network interface cards (Ethernet, WiFi)
+Block storage (Hard drives, solid state disks and partitions, /dev/sd*, /dev/nvme*)
+Raspberry Pi
+Drivers and Kernel Modules
+/dev/, /boot/, /sys/
+/dev/null, /dev/zero, /dev/urandom
+
+
+014.3 Processes and Log Messages (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should understand the concepts of processes on Linux. That includes listing running processes and determining resource consumption of processes. Candidates should also be able to start, stop and query systemd service units. Furthermore, Candidates should be able to retrieve log messages from the systemd journal, log files and the kernel ring buffer.
+
+Key Knowledge Areas:
+
+Programs and configuration
+Processes
+Services
+Logging and systemd Journal
+The following is a partial list of the used files, terms and utilities:
+
+ps, top, free
+systemctl (start, stop, status)
+journalctl, dmesg
+/etc/
+/var/log/
+/proc/
+
+
+014.4 Network Configuration (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the principles of IP networks, including the Internet, IPv4 and IPv6 addresses, routing and name resolution. Candidates should be able to query the network configuration of a Linux system and have a fundamental understanding of automatic network configuration, as well as basic network troubleshooting competencies.
+
+Key Knowledge Areas:
+
+Internet, network, routers
+Querying DNS client configuration
+Querying network configuration
+Automatic network configuration
+The following is a partial list of the used files, terms and utilities:
+
+ip route show, ip -6 route show
+ip addr show
+ss
+/etc/resolv.conf, /etc/hosts, resolvectl
+IPv4, IPv6
+DHCP, SLAAC, DHCPv6
+ping
+host
+
+
+015: Security and File System Permissions
+015.1 Remote Logins, File Transfers and Elevated Permissions (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be able to securely log into remote systems for accessing a Linux shell and transferring files using SSH, including using public key authentication. Furthermore, candidates should be able to elevate their privileges in order to perform administrative tasks.
+
+Key Knowledge Areas:
+
+Root and standard users
+System users
+Executing commands with elevated permissions
+Remote logins using SSH
+SSH key generation and authentication
+The following is a partial list of the used files, terms and utilities:
+
+sudo, su
+ssh, scp
+ssh-keygen
+~/.ssh/authorized_keys
+
+
+015.2 User and Group Management (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the concepts of users and groups in Linux. This includes creating users, changing passwords and querying information about users accounts and user sessions. Furthermore, candidates should understand the files that contain the Linux user database.
+
+Key Knowledge Areas:
+
+User and group commands
+User IDs
+The following is a partial list of the used files, terms and utilities:
+
+/etc/passwd, /etc/shadow, /etc/group, /etc/skel/
+id, w, last, wtmpdb last
+useradd, groupadd
+passwd
+
+
+015.3 File System Permissions and Ownership (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand ownership and permissions in the Linux file system. This includes querying, interpreting and changing ownership and permissions for files and directories.
+
+Key Knowledge Areas:
+
+File and directory permissions and ownership
+The following is a partial list of the used files, terms and utilities:
+
+ls -l, ls -a
+chmod, chown
+
+
+015.4 Special Directories and Files (weight: 1)
+Weight
+
+1
+Description
+
+Candidates should understand the special properties of temporary directories and symbolic links. This includes the creation, listing and deletion of symbolic links.
+
+Key Knowledge Areas:
+
+Using temporary files and directories
+Symbolic links
+The following is a partial list of the used files, terms and utilities:
+
+/tmp/, /var/tmp/ and Sticky Bit
+ls -d
+ln -s

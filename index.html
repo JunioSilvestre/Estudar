@@ -1,0 +1,1757 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technical Certification & Study Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Devicon Brand Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  
+  <!-- Marked CDN for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <!-- Custom Technical Styling & Print Styles -->
+  <style>
+    :root {
+      --bg-main: #f5f5f5;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+    }
+    
+    .dark {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .tech-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    .tech-header {
+      background: var(--card-bg);
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #334155;
+    }
+
+    pre code {
+      font-family: 'Fira Code', monospace;
+    }
+
+    /* Print styling optimization */
+    @media print {
+      header, footer, #navigation-panel, #pagination-top, #pagination-bottom, .no-print {
+        display: none !important;
+      }
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .tech-card {
+        border: 1px solid #cbd5e1 !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+        margin-bottom: 2rem !important;
+      }
+      .bg-slate-900 {
+        background-color: #f1f5f9 !important;
+        color: #0f172a !important;
+        border: 1px solid #cbd5e1 !important;
+      }
+      pre code {
+        color: #0f172a !important;
+      }
+    }
+
+    /* ── Navigation Panel: wrap ao chegar no limite do box ── */
+    #navigation-panel {
+      /* Não clip — o card cresce em altura conforme itens quebram linha */
+      overflow: visible;
+    }
+    #nav-inner-row {
+      display: flex;
+      flex-wrap: wrap;          /* quebra linha ao atingir a borda */
+      align-items: flex-start;  /* linhas adicionais ficam alinhadas ao topo */
+      gap: 0.75rem 1rem;
+      width: 100%;
+    }
+    /* Sobrescreve o shrink-0 do Tailwind nos três wrappers de seção
+       para que eles possam se ajustar e quebrar linha normalmente */
+    #nav-inner-row > div {
+      flex-shrink: 1 !important;
+      min-width: 0;
+    }
+    /* O wrapper de categorias também precisa poder quebrar seus filhos */
+    #categories-nav-wrapper {
+      flex-wrap: wrap;
+    }
+
+    /* ── Mobile: Navigation Panel ─────────────────── */
+    @media (max-width: 767px) {
+      #certifications-nav-wrapper,
+      #categories-nav-wrapper {
+        border-left: none;
+        border-top: 1px solid var(--card-border);
+        padding-left: 0 !important;
+        padding-top: 0.75rem;
+        width: 100%;
+      }
+    }
+
+    /* ── Mobile: Modal bottom-sheet ──────────────── */
+    @media (max-width: 640px) {
+      #explanation-modal { padding: 0; align-items: flex-end; }
+      #modal-container {
+        max-height: 92dvh;
+        border-radius: 1.25rem 1.25rem 0 0;
+        width: 100%;
+        max-width: 100%;
+      }
+      #modal-body { padding: 1rem 1.25rem; }
+    }
+
+    /* ── Modal scroll progress bar ───────────────── */
+    #modal-scroll-progress {
+      height: 3px;
+      background: linear-gradient(90deg, #6366f1, #818cf8);
+      width: 0%;
+      transition: width 0.1s linear;
+      border-radius: 0 2px 2px 0;
+    }
+    #modal-scroll-track {
+      height: 3px;
+      background: #e2e8f0;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .dark #modal-scroll-track {
+      background: #334155;
+    }
+
+    /* ── Panels & Compact Cards System (Protótipo do Usuário) ─────────────────── */
+    .panel {
+      width: 100%;
+      max-width: 420px;
+      padding: 24px;
+      border-radius: 18px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+    html:not(.dark) .panel {
+      background: #ffffff;
+      border-color: #cbd5e1;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .panel-title {
+      margin: 0;
+      color: #f1f5f9;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    html:not(.dark) .panel-title {
+      color: #0f172a;
+    }
+
+    .panel-title i {
+      color: #38bdf8;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      width: 100%;
+    }
+
+    .cards.cols-1 { grid-template-columns: 1fr; }
+    .cards.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .card {
+      --accent: #38bdf8;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-align: center;
+      text-decoration: none;
+      padding: 18px 10px;
+      border-radius: 12px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #e2e8f0;
+      cursor: pointer;
+      transition: transform 250ms ease, border-color 250ms ease, background 250ms ease, box-shadow 250ms ease;
+    }
+    html:not(.dark) .card {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+      color: #0f172a;
+    }
+
+    .card i {
+      font-size: 1.4rem;
+      color: var(--accent);
+      transition: transform 250ms ease;
+    }
+
+    .card .tip {
+      margin: 0;
+      font-size: 0.78rem;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+
+    .card .second-text {
+      margin: 0;
+      font-size: 0.62rem;
+      color: #94a3b8;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    html:not(.dark) .card .second-text {
+      color: #64748b;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+      background: #16233b;
+    }
+    html:not(.dark) .card:hover {
+      background: #f1f5f9;
+    }
+
+    .card:hover i {
+      transform: scale(1.15);
+    }
+
+    .card.active-card {
+      border-color: var(--accent) !important;
+      background: #1e293b !important;
+      box-shadow: 0 0 14px var(--accent);
+    }
+    html:not(.dark) .card.active-card {
+      background: #e2e8f0 !important;
+    }
+
+    @media (max-width: 340px) {
+      .cards {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    /* Area weight bar */
+    .area-bar {
+      height: 4px;
+      border-radius: 9999px;
+      background: linear-gradient(90deg,#6366f1,#818cf8);
+    }
+
+    /* ── 2K (2560px) ──────────────────────────────── */
+    @media (min-width: 2560px) {
+      html { font-size: 20px; }
+      .max-w-7xl { max-width: 144rem !important; }
+      .max-w-4xl { max-width: 84rem  !important; }
+    }
+    /* ── 4K (3840px) ──────────────────────────────── */
+    @media (min-width: 3840px) {
+      html { font-size: 28px; }
+      .max-w-7xl { max-width: 180rem !important; }
+      .max-w-4xl { max-width: 120rem !important; }
+    }
+    /* ── 8K (7680px) ──────────────────────────────── */
+    @media (min-width: 7680px) {
+      html { font-size: 48px; }
+      .max-w-7xl { max-width: 240rem !important; }
+      .max-w-4xl { max-width: 180rem !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- Header Sticky Top -->
+  <header class="tech-header sticky top-0 z-50 py-3 px-4 sm:px-8 no-print">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 dark:bg-indigo-600 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-terminal text-lg text-indigo-400 dark:text-white"></i>
+        </div>
+        <div>
+          <h1 id="app-title" class="text-xl font-extrabold tracking-tight"></h1>
+          <p id="app-description" class="text-xs font-medium text-slate-500 dark:text-slate-400"></p>
+        </div>
+      </div>
+
+      <!-- Controls: Theme Toggle, Dataset Selector, Language Switcher, Print & JSON Loader -->
+      <div class="flex flex-wrap items-center gap-2.5">
+        
+        <!-- Dark / Light Theme Toggle -->
+        <button onclick="toggleTheme()" id="theme-toggle-btn" title="Alternar Tema Claro / Escuro" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs p-2 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center transition">
+          <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+        </button>
+
+
+        <!-- Language Switcher (PT-BR | EN-US) -->
+        <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+          <button id="lang-btn-pt" onclick="setLanguage('pt')" class="px-2.5 py-1 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm flex items-center gap-1">
+            <span>🇧🇷</span> PT
+          </button>
+          <button id="lang-btn-en" onclick="setLanguage('en')" class="px-2.5 py-1 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 flex items-center gap-1">
+            <span>🇺🇸</span> EN
+          </button>
+        </div>
+
+        <!-- Quick Print PDF Button -->
+        <button onclick="window.print()" title="Imprimir ou Salvar PDF" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-2.5 py-1.5 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 font-medium transition shadow-sm">
+          <i class="fa-solid fa-print text-indigo-600 dark:text-indigo-400"></i>
+          <span class="hidden sm:inline" id="ui-btn-print">Imprimir</span>
+        </button>
+
+        <!-- JSON Builder / Creator Link -->
+        <a href="builder.html" target="_blank" title="Criar ou Editar arquivo JSON / Build JSON" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-3 py-1.5 rounded-xl font-bold flex items-center gap-1.5 transition shadow-sm">
+          <i class="fa-solid fa-file-pen text-xs"></i>
+          <span id="ui-btn-builder" class="hidden sm:inline">Criar / Editar JSON</span>
+        </a>
+
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-6">
+
+    <!-- ── MÓDULOS: Grade de cards (sempre visível) ── -->
+    <div id="modules-panel" class="tech-card rounded-2xl p-5 sm:p-6 no-print">
+      <!-- Header do painel -->
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-layer-group text-indigo-600 dark:text-indigo-400"></i>
+          <span id="ui-label-modules" class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Módulos de Estudo</span>
+        </div>
+        <!-- Botão Salvas -->
+        <button id="btn-toggle-starred" onclick="toggleStarredFilter()" class="px-3 py-1 rounded-lg text-xs font-semibold transition-all duration-150 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 flex items-center gap-1.5">
+          <i class="fa-solid fa-star text-amber-500"></i>
+          <span id="ui-starred-label">Salvas</span>
+          <span id="starred-count-badge" class="bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-[10px] px-1.5 py-0.5 rounded-full font-mono">0</span>
+        </button>
+      </div>
+      <!-- Grade de Módulos (renderizada em Painéis pelo JS) -->
+      <div id="modules-grid" class="flex flex-wrap items-stretch justify-center gap-6">
+        <!-- Renderizado dinamicamente -->
+      </div>
+    </div>
+
+    <!-- ── PAINEL DE INFO DO MÓDULO (aparece ao clicar num módulo) ── -->
+    <div id="module-info-panel" class="hidden tech-card rounded-2xl overflow-hidden no-print">
+      <!-- Header colorido do módulo -->
+      <div id="module-info-header" class="px-6 py-4 flex flex-wrap items-start justify-between gap-4">
+        <div class="flex items-start gap-4">
+          <div id="module-info-number" class="text-3xl font-black text-white opacity-90 font-mono leading-none">01</div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span id="module-info-group" class="text-xs font-bold text-white/70 uppercase tracking-wider"></span>
+              <span id="module-info-code" class="bg-white/20 text-white text-[11px] px-2 py-0.5 rounded font-mono font-bold"></span>
+            </div>
+            <h2 id="module-info-name" class="text-xl font-extrabold text-white leading-tight"></h2>
+            <div class="flex items-center gap-3 mt-1">
+              <span id="module-info-level" class="text-xs text-white/80 font-medium"></span>
+              <span class="text-white/40">•</span>
+              <span id="module-info-weight" class="text-xs font-bold text-white/90"></span>
+            </div>
+          </div>
+        </div>
+        <button onclick="clearModuleSelection()" class="text-white/60 hover:text-white transition text-xs flex items-center gap-1 bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg">
+          <i class="fa-solid fa-xmark"></i> Fechar
+        </button>
+      </div>
+
+      <div class="p-5 sm:p-6 space-y-5">
+        <!-- Tabela de Áreas de Conhecimento -->
+        <div>
+          <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-chart-bar text-indigo-500"></i> Áreas de Conhecimento
+          </h4>
+          <div id="module-areas-table" class="space-y-2">
+            <!-- Renderizado pelo JS -->
+          </div>
+        </div>
+
+        <!-- Tabs de Conteúdo: Simulado, Guia de Estudo, PDFs -->
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-700 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+            <button id="tab-btn-questions" onclick="switchModuleTab('questions')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm">
+              <i class="fa-solid fa-list-check text-indigo-500"></i> Questões & Simulado
+            </button>
+            <button id="tab-btn-guide" onclick="switchModuleTab('guide')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+              <i class="fa-solid fa-book-open text-emerald-500"></i> Guia & Texto Longo
+            </button>
+            <button id="tab-btn-pdfs" onclick="switchModuleTab('pdfs')" class="px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+              <i class="fa-solid fa-file-pdf text-rose-500"></i> PDFs (<span id="tab-pdf-count">0</span>)
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ── TELA DE BOAS-VINDAS (visível só quando nenhum módulo está selecionado) ── -->
+    <div id="welcome-screen" class="tech-card rounded-2xl p-10 sm:p-16 text-center space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center mx-auto">
+        <i class="fa-solid fa-graduation-cap text-3xl text-indigo-600 dark:text-indigo-400"></i>
+      </div>
+      <h2 class="text-xl font-bold text-slate-800 dark:text-slate-100">Selecione um Módulo para Começar</h2>
+      <p class="text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">Escolha um dos módulos acima para ver as áreas de conhecimento, texto de estudo e questões da certificação.</p>
+    </div>
+
+    <!-- ── WRAPPER DA ABA 1: QUESTÕES & SIMULADO ── -->
+    <div id="questions-view-wrapper" class="space-y-6 hidden">
+      <!-- Filtro de Categorias -->
+      <div id="module-categories-wrapper" class="hidden tech-card rounded-xl p-4">
+        <div class="flex flex-wrap items-center gap-1.5">
+          <span id="ui-label-categories" class="text-xs font-bold text-slate-400 uppercase tracking-wider mr-1">Filtrar por Categoria:</span>
+          <div id="categories-nav-container" class="flex flex-wrap gap-1.5">
+            <!-- Renderizado pelo JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions Cards Container -->
+      <div id="questions-list" class="space-y-6">
+      </div>
+    </div>
+
+    <!-- ── WRAPPER DA ABA 2: GUIA & TEXTO LONGO (material.md) ── -->
+    <div id="guide-view-wrapper" class="hidden tech-card rounded-2xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center gap-2 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <i class="fa-solid fa-book-open text-emerald-500 text-lg"></i>
+        <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Material Técnico & Guia Completo de Estudo</h3>
+      </div>
+      <div id="guide-content-area" class="prose dark:prose-invert max-w-none text-sm leading-relaxed text-slate-800 dark:text-slate-200">
+        <!-- Renderizado dinamicamente pelo Marked JS -->
+      </div>
+    </div>
+
+    <!-- ── WRAPPER DA ABA 3: PDFs E DOCUMENTOS LONGOS ── -->
+    <div id="pdfs-view-wrapper" class="hidden tech-card rounded-2xl p-6 sm:p-8 space-y-4">
+      <div class="flex items-center gap-2 pb-4 border-b border-slate-200 dark:border-slate-800">
+        <i class="fa-solid fa-file-pdf text-rose-500 text-lg"></i>
+        <h3 class="font-extrabold text-base text-slate-900 dark:text-white">Biblioteca de PDFs & Documentos Oficiais</h3>
+      </div>
+      <div id="pdfs-content-area" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Renderizado dinamicamente pelo JS -->
+      </div>
+    </div>
+
+    <!-- Bottom Pagination Controls -->
+    <div id="pagination-bottom" class="hidden tech-card rounded-xl p-3.5 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+      
+      <div class="flex items-center gap-3 text-xs">
+        <!-- Items Per Page Selector -->
+        <div class="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-800 p-1 rounded-lg border border-slate-200 dark:border-slate-700">
+          <span id="ui-label-per-page" class="text-slate-500 dark:text-slate-400 text-[11px] font-semibold px-1">Exibir:</span>
+          <button onclick="setItemsPerPage(1)" id="per-page-1" class="px-2 py-0.5 rounded font-mono font-bold transition">1</button>
+          <button onclick="setItemsPerPage(10)" id="per-page-10" class="px-2 py-0.5 rounded font-mono font-bold transition">10</button>
+          <button onclick="setItemsPerPage(25)" id="per-page-25" class="px-2 py-0.5 rounded font-mono font-bold transition">25</button>
+          <button onclick="setItemsPerPage(50)" id="per-page-50" class="px-2 py-0.5 rounded font-mono font-bold transition">50</button>
+          <button onclick="setItemsPerPage(100)" id="per-page-100" class="px-2 py-0.5 rounded font-mono font-bold transition">100</button>
+          <button onclick="setItemsPerPage('ALL')" id="per-page-ALL" class="px-2 py-0.5 rounded font-bold transition">Todas</button>
+        </div>
+        <span id="filtered-range-text-bottom" class="font-mono text-xs font-semibold text-slate-600 dark:text-slate-400">
+          Mostrando questões 0 a 0
+        </span>
+      </div>
+
+      <div class="flex items-center gap-1.5">
+        <button onclick="changePage(-1)" id="btn-prev-page-bottom" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 font-semibold text-xs transition flex items-center gap-1">
+          <i class="fa-solid fa-arrow-left"></i> <span id="ui-btn-prev">Anterior</span>
+        </button>
+        <button onclick="changePage(1)" id="btn-next-page-bottom" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 border border-slate-300 dark:border-slate-700 font-semibold text-xs transition flex items-center gap-1">
+          <span id="ui-btn-next">Próxima</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal de Explicação Detalhada (Pop-up de 100+ Linhas / Folha A4 multi-página) -->
+  <div id="explanation-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-3 sm:p-6 no-print">
+    <!-- Backdrop Overlay -->
+    <div id="modal-backdrop" onclick="closeExplanationModal()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+
+    <!-- Modal Dialog Content Box -->
+    <div id="modal-container" class="relative w-full max-w-4xl max-h-[92vh] bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col z-10 overflow-hidden transition-all duration-300 transform scale-95 opacity-0">
+      
+      <!-- Modal Header -->
+      <div class="tech-header px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4 shrink-0 bg-slate-50/90 dark:bg-slate-900/90">
+        <div class="flex items-center gap-3 min-w-0">
+          <span id="modal-question-id" class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-lg font-mono font-bold shrink-0">
+            Q-00
+          </span>
+          <div class="min-w-0">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white flex items-center gap-2 truncate" id="modal-title">
+              Explicação Detalhada
+            </h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 truncate" id="modal-subtitle">
+              Análise técnica aprofundada com comandos, exemplos e tabelas
+            </p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 shrink-0">
+          <!-- Scroll-to-top button (visible when user scrolls down) -->
+          <button id="modal-scroll-top-btn" onclick="modalScrollToTop()" title="Voltar ao topo" class="hidden w-8 h-8 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-indigo-500 hover:text-white flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-arrow-up text-xs"></i>
+          </button>
+          <!-- Page position indicator -->
+          <span id="modal-page-indicator" class="hidden text-[11px] font-mono font-bold text-slate-400 dark:text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-lg"></span>
+          <button onclick="closeExplanationModal()" class="w-8 h-8 rounded-xl bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-rose-500 hover:text-white dark:hover:bg-rose-600 dark:hover:text-white flex items-center justify-center transition shadow-sm">
+            <i class="fa-solid fa-xmark text-base"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Scroll Progress Bar (A4 multi-page indicator) -->
+      <div id="modal-scroll-track" class="shrink-0">
+        <div id="modal-scroll-progress"></div>
+      </div>
+
+      <!-- Modal Scrollable Body (Suporta 100+ Linhas / 5 Páginas A4 com Scroll Suave) -->
+      <div id="modal-body" class="p-6 sm:p-8 overflow-y-auto space-y-6 text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-sans scroll-smooth" onscroll="onModalScroll(this)">
+        <!-- Conteúdo Renderizado Dinamicamente -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between shrink-0 text-xs text-slate-500 font-medium">
+        <span class="flex items-center gap-1.5">
+          <i class="fa-solid fa-keyboard text-indigo-500"></i> <span id="modal-esc-hint">Pressione ESC para fechar</span>
+        </span>
+        <div class="flex items-center gap-2">
+          <span id="modal-read-pct" class="font-mono text-[11px] text-indigo-500 font-bold"></span>
+          <button onclick="closeExplanationModal()" class="px-4 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 font-semibold transition" id="modal-close-btn">
+            Fechar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="mt-12 py-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 font-medium no-print">
+    <p>Template Técnico de Certificação • Paginado (10, 25, 50, 100) • Bilingual • JSON & Pop-up Otimizados</p>
+  </footer>
+
+  <!-- Application Logic -->
+  <script>
+    // App State
+    let dataset = {
+      title: {},
+      description: {},
+      providers: [],
+      questions: []
+    };
+
+    let currentLang = 'pt';
+    let selectedModuleId = null;
+    let selectedCategoryId = 'ALL';
+    let filterOnlyStarred = false;
+
+    // Pagination State
+    let itemsPerPage = 1; // default: 25 items per page
+    let currentPage = 1;
+    let starredQuestionIds = new Set();
+
+    // Multilingual Dictionary
+    const i18n = {
+      pt: {
+        providers_label: "Provedores:",
+        certifications_label: "Certificação:",
+        categories_label: "Categorias:",
+        all_providers: "Todas Tecnologias",
+        all_certs: "Todas Certificações",
+        all_categories: "Todas",
+        all_questions_filter: "Exibindo todas as questões da base",
+        correct_answer: "Resposta Correta",
+        short_explanation: "Explicação Objetiva:",
+        official_reference: "Referência Oficial:",
+        detailed_explanation_btn: "Explicação Detalhada (Pop-up)",
+        detailed_explanation_title: "Explicação Técnica Detalhada",
+        detailed_explanation_sub: "Análise aprofundada com comandos, tabelas e exemplos práticos",
+        close_modal: "Fechar",
+        esc_to_close: "Pressione ESC para fechar",
+        copy_code: "Copiar",
+        code_copied: "Copiado!",
+        load_json: "Carregar JSON",
+        print_btn: "Imprimir",
+        questions_badge: "{count} Questões",
+        per_page_label: "Exibir:",
+        page_range: "Exibindo {start} a {end} de {total} questões",
+        starred_label: "Salvas",
+        quick_map: "Mapa da Página Atual:",
+        btn_prev: "Anterior",
+        btn_next: "Próxima",
+        no_questions_title: "Nenhuma questão encontrada para este filtro.",
+        no_questions_sub: "Selecione outro provedor ou certificação no menu acima."
+      },
+      en: {
+        providers_label: "Providers:",
+        certifications_label: "Certification:",
+        categories_label: "Categories:",
+        all_providers: "All Technologies",
+        all_certs: "All Certifications",
+        all_categories: "All",
+        all_questions_filter: "Displaying all questions in database",
+        correct_answer: "Correct Answer",
+        short_explanation: "Objective Explanation:",
+        official_reference: "Official Reference:",
+        detailed_explanation_btn: "Detailed Explanation (Pop-up)",
+        detailed_explanation_title: "Detailed Technical Explanation",
+        detailed_explanation_sub: "Deep dive analysis with commands, tables, and practical examples",
+        close_modal: "Close",
+        esc_to_close: "Press ESC to close",
+        copy_code: "Copy",
+        code_copied: "Copied!",
+        load_json: "Load JSON",
+        print_btn: "Print",
+        questions_badge: "{count} Questions",
+        per_page_label: "Show:",
+        page_range: "Showing {start} to {end} of {total} questions",
+        starred_label: "Bookmarked",
+        quick_map: "Current Page Map:",
+        btn_prev: "Previous",
+        btn_next: "Next",
+        no_questions_title: "No questions found for this filter.",
+        no_questions_sub: "Select another provider or certification from the menu above."
+      }
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadSavedBookmarks();
+      setupKeyboardListeners();
+      loadModulesData();
+    });
+
+    async function loadModulesData() {
+      try {
+        const res = await fetch('dataset/modules.json');
+        if (!res.ok) throw new Error('modules.json não encontrado');
+        const modules = await res.json();
+        dataset.modules = modules;
+        
+        // Restore session
+        try {
+          const saved = JSON.parse(localStorage.getItem('simulado_session') || '{}');
+          itemsPerPage = saved.itemsPerPage || 1;
+          selectedModuleId = saved.selectedModuleId || null;
+          selectedCategoryId = saved.selectedCategoryId || 'ALL';
+        } catch(e) {}
+
+        // Set static title
+        document.getElementById('app-title').innerText = "Menu de Estudos DevOps";
+        document.getElementById('app-description').innerText = "Base Completa de Certificações Oficiais";
+
+        updateHeaderTexts();
+        renderModuleGrid();
+        
+        if (selectedModuleId) {
+          await fetchModuleQuestions(selectedModuleId, false);
+        } else {
+          clearModuleSelection();
+        }
+      } catch(err) {
+        showErrorMessage("Erro ao carregar modules.json: " + err.message);
+      }
+    }
+
+    function setupKeyboardListeners() {
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeExplanationModal();
+        } else if (e.key === 'ArrowRight') {
+          const btn = document.getElementById('btn-next-page-bottom');
+          if (btn && !btn.disabled) changePage(1);
+        } else if (e.key === 'ArrowLeft') {
+          const btn = document.getElementById('btn-prev-page-bottom');
+          if (btn && !btn.disabled) changePage(-1);
+        }
+      });
+    }
+
+    function loadSavedBookmarks() {
+      try {
+        const saved = localStorage.getItem('simulado_starred_ids');
+        if (saved) {
+          starredQuestionIds = new Set(JSON.parse(saved));
+        }
+      } catch (e) {}
+      updateStarredBadge();
+    }
+
+    function saveBookmarks() {
+      try {
+        localStorage.setItem('simulado_starred_ids', JSON.stringify([...starredQuestionIds]));
+      } catch (e) {}
+      updateStarredBadge();
+    }
+
+    function toggleStar(questionId) {
+      if (starredQuestionIds.has(questionId)) {
+        starredQuestionIds.delete(questionId);
+      } else {
+        starredQuestionIds.add(questionId);
+      }
+      saveBookmarks();
+      renderQuestions();
+    }
+
+    function updateStarredBadge() {
+      const badge = document.getElementById('starred-count-badge');
+      if (badge) badge.innerText = starredQuestionIds.size;
+    }
+
+    function toggleStarredFilter() {
+      filterOnlyStarred = !filterOnlyStarred;
+      const btn = document.getElementById('btn-toggle-starred');
+      if (filterOnlyStarred) {
+        btn.className = 'px-3 py-1 rounded-lg text-xs font-bold transition-all duration-150 bg-amber-500 text-white border border-amber-600 shadow-sm flex items-center gap-1.5';
+      } else {
+        btn.className = 'px-3 py-1 rounded-lg text-xs font-semibold transition-all duration-150 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-300 dark:border-slate-700 flex items-center gap-1.5';
+      }
+      currentPage = 1;
+      renderQuestions();
+    }
+
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const iconEl = document.getElementById('theme-icon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        iconEl.className = 'fa-solid fa-moon text-sm';
+      } else {
+        htmlEl.classList.add('dark');
+        iconEl.className = 'fa-solid fa-sun text-sm text-amber-400';
+      }
+    }
+
+    function saveSession() {
+      const session = {
+        itemsPerPage,
+        currentPage,
+        selectedModuleId,
+        selectedCategoryId
+      };
+      try {
+        localStorage.setItem('simulado_session', JSON.stringify(session));
+      } catch(e) {}
+    }
+
+    let currentModuleTab = 'questions';
+
+    function switchModuleTab(tab) {
+      currentModuleTab = tab;
+      const btnQ = document.getElementById('tab-btn-questions');
+      const btnG = document.getElementById('tab-btn-guide');
+      const btnP = document.getElementById('tab-btn-pdfs');
+
+      const wrapQ = document.getElementById('questions-view-wrapper');
+      const wrapG = document.getElementById('guide-view-wrapper');
+      const wrapP = document.getElementById('pdfs-view-wrapper');
+
+      [btnQ, btnG, btnP].forEach(b => {
+        if (!b) return;
+        b.className = 'px-3.5 py-1.5 rounded-lg text-xs font-medium transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+      });
+
+      if (wrapQ) wrapQ.classList.add('hidden');
+      if (wrapG) wrapG.classList.add('hidden');
+      if (wrapP) wrapP.classList.add('hidden');
+
+      if (tab === 'questions') {
+        if (btnQ) btnQ.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm';
+        if (wrapQ) wrapQ.classList.remove('hidden');
+      } else if (tab === 'guide') {
+        if (btnG) btnG.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm';
+        if (wrapG) wrapG.classList.remove('hidden');
+      } else if (tab === 'pdfs') {
+        if (btnP) btnP.className = 'px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm';
+        if (wrapP) wrapP.classList.remove('hidden');
+      }
+    }
+
+    async function fetchModuleMaterial(modDir) {
+      const guideContainer = document.getElementById('guide-content-area');
+      if (!guideContainer) return;
+      guideContainer.innerHTML = `<div class="text-slate-400 text-center py-8"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando texto de estudo...</div>`;
+      try {
+        const res = await fetch(`${modDir}/material.md`);
+        if (!res.ok) throw new Error("Guia não encontrado");
+        const text = await res.text();
+        if (window.marked) {
+          guideContainer.innerHTML = `<div class="prose dark:prose-invert max-w-none text-slate-800 dark:text-slate-200 text-sm leading-relaxed">${marked.parse(text)}</div>`;
+        } else {
+          guideContainer.innerHTML = `<pre class="whitespace-pre-wrap font-sans text-sm text-slate-800 dark:text-slate-200">${escapeHtml(text)}</pre>`;
+        }
+      } catch (e) {
+        guideContainer.innerHTML = `<div class="text-slate-400 text-center py-8"><i class="fa-solid fa-circle-info text-amber-500 mr-2"></i> Nenhum texto de apoio cadastrado para este módulo.</div>`;
+      }
+    }
+
+    async function fetchModulePdfs(modDir) {
+      const pdfContainer = document.getElementById('pdfs-content-area');
+      const badge = document.getElementById('tab-pdf-count');
+      if (!pdfContainer) return;
+      pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Carregando PDFs...</div>`;
+      try {
+        const res = await fetch(`${modDir}/pdfs.json`);
+        if (!res.ok) throw new Error("pdfs.json não encontrado");
+        const pdfs = await res.json();
+        if (badge) badge.innerText = pdfs.length || 0;
+
+        if (!pdfs || pdfs.length === 0) {
+          pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-folder-open text-2xl mb-2 block"></i> Nenhum arquivo PDF disponível para este módulo.</div>`;
+          return;
+        }
+
+        pdfContainer.innerHTML = pdfs.map(pdf => `
+          <a href="${modDir}/${pdf.file}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition group">
+            <div class="w-12 h-14 bg-rose-100 dark:bg-rose-950 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-200 dark:group-hover:bg-rose-900 transition">
+              <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-2xl"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-bold text-slate-800 dark:text-slate-100 text-sm truncate">${escapeHtml(pdf.title || pdf.file)}</p>
+              ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">${escapeHtml(pdf.description)}</p>` : ''}
+              <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1 truncate">${escapeHtml(pdf.file)}</p>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-rose-500 transition shrink-0"></i>
+          </a>
+        `).join('');
+      } catch (e) {
+        if (badge) badge.innerText = '0';
+        pdfContainer.innerHTML = `<div class="text-slate-400 text-center py-8 col-span-2"><i class="fa-solid fa-folder-open text-2xl mb-2 block text-amber-500"></i> Nenhum arquivo PDF cadastrado em pdfs.json.</div>`;
+      }
+    }
+
+    async function fetchModuleQuestions(moduleId, smoothScroll = true) {
+      try {
+        const wrapQ = document.getElementById('questions-view-wrapper');
+        if (wrapQ) wrapQ.classList.remove('hidden');
+        document.getElementById('welcome-screen').classList.add('hidden');
+        const container = document.getElementById('questions-list');
+        container.innerHTML = `
+          <div class="tech-card rounded-2xl p-12 text-center text-slate-500 space-y-4">
+            <i class="fa-solid fa-circle-notch fa-spin text-3xl text-indigo-600"></i>
+            <p class="text-sm font-medium">Carregando questões do módulo...</p>
+          </div>
+        `;
+
+        const mod = (dataset.modules || []).find(m => m.id === moduleId);
+        const fetchPath = (mod && mod.path) ? mod.path : `dataset/${moduleId}/${moduleId}.json`;
+        const modDir = fetchPath.substring(0, fetchPath.lastIndexOf('/'));
+
+        fetchModuleMaterial(modDir);
+        fetchModulePdfs(modDir);
+
+        const res = await fetch(fetchPath);
+        if (!res.ok) {
+           dataset.questions = [];
+        } else {
+           const json = await res.json();
+           dataset.questions = json.questions || [];
+        }
+      } catch (err) {
+        dataset.questions = [];
+      }
+
+      selectedModuleId = moduleId;
+      renderModuleGrid();
+      renderModuleInfoPanel();
+      
+      try {
+         const saved = JSON.parse(localStorage.getItem('simulado_session') || '{}');
+         if (saved.selectedModuleId === moduleId && !smoothScroll) {
+            currentPage = saved.currentPage || 1;
+            selectedCategoryId = saved.selectedCategoryId || 'ALL';
+         } else {
+            currentPage = 1;
+            selectedCategoryId = 'ALL';
+         }
+      } catch(e) { currentPage = 1; selectedCategoryId = 'ALL'; }
+      
+      renderCategoriesNav();
+      renderQuestions();
+      saveSession();
+
+      // Reset to active tab
+      switchModuleTab(currentModuleTab || 'questions');
+
+      if (smoothScroll) {
+        setTimeout(() => {
+          document.getElementById('module-info-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 50);
+      }
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      updateLangButtonStyles();
+      updateHeaderTexts();
+      renderModuleGrid();
+      if (selectedModuleId) {
+         renderModuleInfoPanel();
+         renderCategoriesNav();
+      }
+      renderQuestions();
+    }
+
+    function updateLangButtonStyles() {
+      const btnPt = document.getElementById('lang-btn-pt');
+      const btnEn = document.getElementById('lang-btn-en');
+      
+      if (currentLang === 'pt') {
+        btnPt.className = 'px-2.5 py-1 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm flex items-center gap-1 font-bold';
+        btnEn.className = 'px-2.5 py-1 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 flex items-center gap-1 font-medium';
+      } else {
+        btnEn.className = 'px-2.5 py-1 rounded-lg transition-all duration-200 bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm flex items-center gap-1 font-bold';
+        btnPt.className = 'px-2.5 py-1 rounded-lg transition-all duration-200 text-slate-600 dark:text-slate-400 hover:text-slate-900 flex items-center gap-1 font-medium';
+      }
+    }
+
+    function updateHeaderTexts() {
+      const t = i18n[currentLang];
+      
+      const titleObj = dataset.title || {};
+      const descObj = dataset.description || {};
+
+      const titleEl = document.getElementById('app-title');
+      const descEl = document.getElementById('app-description');
+      
+      if (titleEl) titleEl.innerText = getText(titleObj, "");
+      if (descEl) descEl.innerText = getText(descObj, "");
+
+      const safeSet = (id, val) => { const el = document.getElementById(id); if (el) el.innerText = val; };
+
+      safeSet('ui-label-providers', t.providers_label);
+      safeSet('ui-label-certifications', t.certifications_label);
+      safeSet('ui-label-categories', t.categories_label);
+      safeSet('ui-load-json', t.load_json);
+      safeSet('ui-btn-print', t.print_btn);
+      safeSet('ui-label-per-page', t.per_page_label);
+      safeSet('ui-starred-label', t.starred_label);
+      safeSet('ui-btn-builder', currentLang === 'pt' ? 'Criar / Editar JSON' : 'Create / Edit JSON');
+      safeSet('ui-btn-prev', t.btn_prev);
+      safeSet('ui-btn-next', t.btn_next);
+      safeSet('modal-esc-hint', t.esc_to_close);
+      safeSet('modal-close-btn', t.close_modal);
+
+
+    }
+
+    // Items Per Page Handling (10, 25, 50, 100, ALL)
+    function setItemsPerPage(val) {
+      itemsPerPage = val;
+      currentPage = 1;
+      updateItemsPerPageButtons();
+      renderQuestions();
+      saveSession();
+    }
+
+    function updateItemsPerPageButtons() {
+      [1, 10, 25, 50, 100, 'ALL'].forEach(v => {
+        const btn = document.getElementById(`per-page-${v}`);
+        if (!btn) return;
+
+        if (v === itemsPerPage) {
+          btn.className = 'px-2 py-0.5 rounded font-mono font-bold bg-indigo-600 text-white shadow-sm';
+        } else {
+          btn.className = 'px-2 py-0.5 rounded font-mono font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+        }
+      });
+    }
+
+    function changePage(delta) {
+      currentPage += delta;
+      renderQuestions();
+      saveSession();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ── Module Navigation Logic ──
+    function renderModuleGrid() {
+      const container = document.getElementById('modules-grid');
+      if (!dataset.modules || dataset.modules.length === 0) {
+        container.innerHTML = `<div class="text-slate-500 text-sm">Nenhum módulo encontrado no JSON.</div>`;
+        return;
+      }
+
+      // Group modules by their 'group' field
+      const groups = {};
+      dataset.modules.forEach(mod => {
+        const groupName = mod.group || 'Geral';
+        if (!groups[groupName]) {
+          groups[groupName] = {
+            title: groupName,
+            icon: mod.group_icon || 'fa-solid fa-layer-group',
+            items: []
+          };
+        }
+        groups[groupName].items.push(mod);
+      });
+
+      // Render panels for each group
+      container.innerHTML = Object.values(groups).map(g => {
+        const count = g.items.length;
+        let colsClass = '';
+        if (count === 1) colsClass = 'cols-1';
+        else if (count === 3) colsClass = 'cols-3';
+
+        const cardsHtml = g.items.map(mod => {
+          const isSelected = (selectedModuleId === mod.id);
+          const accentColor = mod.accent || '#38bdf8';
+          const iconClass = mod.icon || 'fa-solid fa-certificate';
+          const tagText = mod.tag || mod.code || 'CERT';
+
+          return `
+            <a class="card ${isSelected ? 'active-card' : ''}"
+               style="--accent: ${accentColor}"
+               onclick="selectModule('${mod.id}'); return false;"
+               href="#"
+               title="${escapeHtml(mod.name)} (${mod.code})">
+              <i class="${iconClass}"></i>
+              <p class="tip">${escapeHtml(mod.name)}</p>
+              <p class="second-text">${escapeHtml(tagText)}</p>
+            </a>
+          `;
+        }).join('');
+
+        return `
+          <div class="panel">
+            <p class="panel-title"><i class="${g.icon}"></i> ${escapeHtml(g.title)}</p>
+            <div class="cards ${colsClass}">
+              ${cardsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectModule(moduleId, smoothScroll = true) {
+      fetchModuleQuestions(moduleId, smoothScroll);
+    }
+
+    function clearModuleSelection() {
+      selectedModuleId = null;
+      selectedCategoryId = 'ALL';
+      currentPage = 1;
+
+      const wrapQ = document.getElementById('questions-view-wrapper');
+      const wrapG = document.getElementById('guide-view-wrapper');
+      const wrapP = document.getElementById('pdfs-view-wrapper');
+      if (wrapQ) wrapQ.classList.add('hidden');
+      if (wrapG) wrapG.classList.add('hidden');
+      if (wrapP) wrapP.classList.add('hidden');
+      
+      renderModuleGrid();
+      renderModuleInfoPanel(); // will hide it
+      renderQuestions(); // will show welcome screen
+      saveSession();
+    }
+
+    function renderModuleInfoPanel() {
+      const panel = document.getElementById('module-info-panel');
+      if (!selectedModuleId) {
+        panel.classList.add('hidden');
+        return;
+      }
+      
+      const mod = (dataset.modules || []).find(m => m.id === selectedModuleId);
+      if (!mod) {
+        panel.classList.add('hidden');
+        return;
+      }
+
+      panel.classList.remove('hidden');
+
+      // Update header
+      document.getElementById('module-info-number').innerText = mod.number;
+      document.getElementById('module-info-group').innerText = mod.group;
+      document.getElementById('module-info-code').innerText = mod.code;
+      document.getElementById('module-info-name').innerText = mod.name;
+      document.getElementById('module-info-level').innerText = mod.level;
+      document.getElementById('module-info-weight').innerText = mod.weight;
+
+      // Update header color based on group_color
+      const header = document.getElementById('module-info-header');
+      header.className = 'px-6 py-4 flex flex-wrap items-start justify-between gap-4 transition-colors duration-300';
+      const colorGradients = {
+        emerald: 'bg-gradient-to-r from-emerald-600 to-emerald-800',
+        blue: 'bg-gradient-to-r from-blue-600 to-blue-800',
+        amber: 'bg-gradient-to-r from-amber-500 to-amber-700',
+        purple: 'bg-gradient-to-r from-purple-600 to-purple-800',
+        indigo: 'bg-gradient-to-r from-indigo-600 to-indigo-800',
+        violet: 'bg-gradient-to-r from-violet-600 to-violet-800'
+      };
+      header.classList.add(...(colorGradients[mod.group_color] || colorGradients['indigo']).split(' '));
+
+      // Render Areas Table
+      const areasContainer = document.getElementById('module-areas-table');
+      if (mod.areas && mod.areas.length > 0) {
+        areasContainer.innerHTML = mod.areas.map(area => {
+          const pctMatch = area.weight.match(/(\d+)/);
+          const pct = pctMatch ? parseInt(pctMatch[1]) : 0;
+          return `
+            <div class="flex items-center justify-between text-sm py-1.5 border-b border-slate-100 dark:border-slate-800/60 last:border-0">
+              <span class="text-slate-700 dark:text-slate-300 font-medium">${escapeHtml(area.name)}</span>
+              <div class="flex items-center gap-3">
+                <div class="w-16 sm:w-24 bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                  <div class="h-full bg-indigo-500 rounded-full" style="width: ${pct}%"></div>
+                </div>
+                <span class="font-bold text-slate-900 dark:text-white w-8 text-right text-xs">${area.weight}</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        areasContainer.innerHTML = '<p class="text-xs text-slate-500">Nenhuma área definida.</p>';
+      }
+    }
+
+    // Render Category Pills
+    function renderCategoriesNav() {
+      const container = document.getElementById('categories-nav-container');
+      const wrapper = document.getElementById('module-categories-wrapper');
+      const t = i18n[currentLang];
+
+      if (!selectedModuleId) {
+        wrapper.classList.add('hidden');
+        return;
+      }
+
+      const mod = dataset.modules.find(m => m.id === selectedModuleId);
+      if (!mod) return;
+
+      let relevantQuestions = dataset.questions; // the questions array is already just this module's questions
+
+      const categories = [...new Set(relevantQuestions.map(q => getText(q.category, '')).filter(Boolean))];
+      
+      if (categories.length === 0) {
+        wrapper.classList.add('hidden');
+        return;
+      }
+
+      wrapper.classList.remove('hidden');
+      const catList = ['ALL', ...categories];
+
+      container.innerHTML = catList.map(cat => {
+        const label = cat === 'ALL' ? t.all_categories : cat;
+        return `
+          <button id="cat-btn-${encodeURIComponent(cat)}" onclick="selectCategory('${escapeQuotes(cat)}')" class="px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 dark:border-slate-700">
+            ${escapeHtml(label)}
+          </button>
+        `;
+      }).join('');
+
+      updateCatButtonsStyle(catList);
+    }
+
+    function selectCategory(cat) {
+      selectedCategoryId = cat;
+      currentPage = 1;
+      
+      const mod = dataset.modules.find(m => m.id === selectedModuleId);
+      let relevantQuestions = mod ? dataset.questions : [];
+      
+      const catList = ['ALL', ...new Set(relevantQuestions.map(q => getText(q.category, '')).filter(Boolean))];
+      updateCatButtonsStyle(catList);
+      
+      renderQuestions();
+      saveSession();
+    }
+
+    function updateCatButtonsStyle(catList) {
+      catList.forEach(cat => {
+        const btn = document.getElementById(`cat-btn-${encodeURIComponent(cat)}`);
+        if (!btn) return;
+
+        if (cat === selectedCategoryId) {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700';
+        } else {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-slate-900 hover:bg-slate-200 border border-slate-200 dark:border-slate-700';
+        }
+      });
+    }
+
+    // Render Filtered & Paginated Questions
+    function renderQuestions() {
+      const container = document.getElementById('questions-list');
+      const pagination = document.getElementById('pagination-bottom');
+      const welcome = document.getElementById('welcome-screen');
+      const t = i18n[currentLang];
+
+      updateItemsPerPageButtons();
+
+      if (!selectedModuleId) {
+        // Blank state
+        welcome.classList.remove('hidden');
+        container.classList.add('hidden');
+        pagination.classList.add('hidden');
+        return;
+      }
+
+      welcome.classList.add('hidden');
+      container.classList.remove('hidden');
+      pagination.classList.remove('hidden');
+
+      const mod = dataset.modules.find(m => m.id === selectedModuleId);
+      if (!mod) return;
+
+      // Filter questions by category and starred status
+      const filtered = dataset.questions.filter(q => {
+        const qCat = getText(q.category, '');
+        const matchCat = (selectedCategoryId === 'ALL' || qCat === selectedCategoryId);
+        const matchStar = (!filterOnlyStarred || starredQuestionIds.has(q.id));
+
+        return matchCat && matchStar;
+      });
+
+      const totalFiltered = filtered.length;
+      
+      // Calculate Pagination
+      const effectiveItemsPerPage = (itemsPerPage === 'ALL') ? (totalFiltered || 1) : itemsPerPage;
+      const totalPages = Math.ceil(totalFiltered / effectiveItemsPerPage) || 1;
+
+      if (currentPage > totalPages) currentPage = totalPages;
+      if (currentPage < 1) currentPage = 1;
+
+      const startIndex = (currentPage - 1) * effectiveItemsPerPage;
+      const endIndex = (itemsPerPage === 'ALL') ? totalFiltered : Math.min(startIndex + effectiveItemsPerPage, totalFiltered);
+
+      const paginatedQuestions = filtered.slice(startIndex, endIndex);
+
+      // Update Pagination Indicators
+      document.getElementById('btn-prev-page-bottom').disabled = (currentPage === 1);
+      document.getElementById('btn-next-page-bottom').disabled = (currentPage === totalPages);
+
+      const rangeText = t.page_range
+        .replace('{start}', totalFiltered > 0 ? startIndex + 1 : 0)
+        .replace('{end}', endIndex)
+        .replace('{total}', totalFiltered);
+
+      document.getElementById('filtered-range-text-bottom').innerText = rangeText;
+
+      if (paginatedQuestions.length === 0) {
+        container.innerHTML = `
+          <div class="tech-card rounded-2xl p-12 text-center text-slate-500 dark:text-slate-400 space-y-3">
+            <i class="fa-solid fa-folder-open text-3xl text-slate-400 dark:text-slate-600"></i>
+            <p class="font-bold text-slate-800 dark:text-slate-200">${t.no_questions_title}</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">${t.no_questions_sub}</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = paginatedQuestions.map((q, idx) => renderQuestionCard(q, startIndex + idx)).join('');
+    }
+
+    function renderQuickMapIndex(questions) {
+      // Intentionally empty as the map has been removed
+    }
+
+    // Render Individual Technical Question Card
+    function renderQuestionCard(q, globalIdx) {
+      const t = i18n[currentLang];
+      const providerName = getProviderName(q.provider);
+      const certName = getCertName(q.certification);
+      const qCategory = getText(q.category, '');
+      const qQuestion = getText(q.question, '');
+      const qCorrect = getText(q.correct_answer, '');
+      const qExplanation = getText(q.explanation, '');
+      const isStarred = starredQuestionIds.has(q.id);
+
+      return `
+        <div id="q-card-${q.id}" class="tech-card rounded-2xl p-6 sm:p-8 space-y-6 transition-all duration-200">
+          
+          <!-- Card Header / Metadata & Star Button -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-200 dark:border-slate-700/80">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="bg-slate-900 dark:bg-indigo-950 text-white dark:text-indigo-300 text-xs px-3 py-1 rounded-lg font-mono font-bold">
+                ${q.id || `Q${globalIdx + 1}`}
+              </span>
+              
+              ${providerName ? `
+                <span class="bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-slate-700 text-xs px-2.5 py-1 rounded-lg font-semibold flex items-center gap-1.5">
+                  <i class="${getProviderIcon(q.provider)}"></i>
+                  ${escapeHtml(providerName)}
+                </span>
+              ` : ''}
+
+              ${certName ? `
+                <span class="bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800 text-xs px-2.5 py-1 rounded-lg font-semibold">
+                  ${escapeHtml(certName)}
+                </span>
+              ` : ''}
+
+              ${qCategory ? `
+                <span class="bg-slate-50 dark:bg-slate-800/60 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 text-xs px-2.5 py-1 rounded-lg font-medium">
+                  ${escapeHtml(qCategory)}
+                </span>
+              ` : ''}
+            </div>
+
+            <!-- Bookmark / Star Button -->
+            <button onclick="toggleStar('${q.id}')" title="Marcar como favorita / Bookmark" class="text-sm px-2.5 py-1 rounded-lg border transition ${isStarred ? 'bg-amber-100 border-amber-300 text-amber-600 dark:bg-amber-950 dark:border-amber-700 dark:text-amber-400' : 'bg-slate-50 border-slate-200 text-slate-400 dark:bg-slate-800 dark:border-slate-700 hover:text-amber-500'} no-print">
+              <i class="fa-solid fa-star"></i>
+            </button>
+          </div>
+
+          <!-- Question Prompt -->
+          <div class="space-y-4">
+            <h2 class="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100 leading-relaxed">
+              ${escapeHtml(qQuestion)}
+            </h2>
+
+            ${q.code_snippet ? `
+              <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 overflow-x-auto relative group">
+                <button onclick="copyCode(this)" data-code="${escapeHtml(q.code_snippet)}" class="absolute right-3 top-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs px-2.5 py-1 rounded-lg border border-slate-700 transition font-medium no-print">
+                  <i class="fa-regular fa-copy mr-1"></i> ${t.copy_code}
+                </button>
+                <pre class="text-xs sm:text-sm text-cyan-300 font-mono leading-relaxed"><code>${escapeHtml(q.code_snippet)}</code></pre>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Technical Answer & Explanation Block -->
+          <div class="space-y-4 bg-slate-50 dark:bg-slate-900/60 -mx-6 sm:-mx-8 -mb-6 sm:-mb-8 p-6 sm:p-8 rounded-b-2xl border-t border-slate-200 dark:border-slate-800">
+            
+            <!-- Resposta Correta Badge -->
+            <div class="bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-300 dark:border-emerald-700/60 rounded-xl p-4 space-y-1">
+              <div class="flex items-center gap-2 text-xs font-bold text-emerald-800 dark:text-emerald-400 uppercase tracking-wider">
+                <i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400 text-sm"></i>
+                <span>${t.correct_answer}</span>
+              </div>
+              <div class="text-sm sm:text-base font-extrabold text-emerald-950 dark:text-emerald-100">
+                ${escapeHtml(qCorrect)}
+              </div>
+            </div>
+
+            <!-- Explicação Objetiva -->
+            ${qExplanation ? `
+              <div class="space-y-1.5">
+                <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-info text-indigo-600 dark:text-indigo-400"></i> ${t.short_explanation}
+                </h4>
+                <div class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed bg-white dark:bg-slate-950/80 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                  ${formatMarkdownSimple(qExplanation)}
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Referências Oficiais & Botão de Explicação Detalhada (Pop-up) -->
+            ${(q.references && q.references.length > 0) || q.detailed_explanation ? `
+              <div class="space-y-3 pt-2 border-t border-slate-200/80 dark:border-slate-800">
+                
+                ${q.references && q.references.length > 0 ? `
+                  <div class="space-y-2">
+                    <h4 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <i class="fa-solid fa-arrow-up-right-from-square text-indigo-600 dark:text-indigo-400"></i> ${t.official_reference}
+                    </h4>
+                    <div class="flex flex-wrap gap-2">
+                      ${q.references.map(ref => `
+                        <a href="${escapeHtml(ref.url)}" target="_blank" rel="noopener noreferrer" class="bg-white dark:bg-slate-950 hover:bg-indigo-50 dark:hover:bg-indigo-950/80 border border-slate-300 dark:border-slate-800 hover:border-indigo-400 text-indigo-700 dark:text-indigo-300 text-xs px-3 py-1.5 rounded-lg flex items-center gap-2 transition font-medium shadow-sm group">
+                          <i class="fa-solid fa-external-link text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"></i>
+                          <span>${escapeHtml(ref.title || ref.url)}</span>
+                        </a>
+                      `).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+
+                <!-- Item / Botão de Pop-up para Explicação Detalhada (100+ Linhas) -->
+                ${q.detailed_explanation ? `
+                  <div class="pt-1">
+                    <button onclick="openExplanationModal('${q.id}')" class="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold text-xs px-4 py-2 rounded-xl flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-200 group no-print">
+                      <i class="fa-solid fa-book-open text-indigo-200 group-hover:scale-110 transition-transform"></i>
+                      <span>${t.detailed_explanation_btn}</span>
+                      <i class="fa-solid fa-arrow-right text-[10px] opacity-70 group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    
+                    <!-- Bloco de Impressão (Visível apenas em Ctrl+P / PDF) -->
+                    <div class="hidden print:block mt-6 pt-6 border-t-2 border-slate-300 page-break-inside-avoid">
+                      <h3 class="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-book-open text-slate-500"></i> ${t.detailed_explanation_btn}
+                      </h3>
+                      <div class="text-[13px] text-slate-800 leading-relaxed print-markdown-container">
+                        ${formatMarkdownExtended(getText(q.detailed_explanation, ''))}
+                      </div>
+                    </div>
+                  </div>
+                ` : ''}
+
+              </div>
+            ` : ''}
+
+          </div>
+
+        </div>
+      `;
+    }
+
+    // Modal Pop-up Control Logic
+    function openExplanationModal(questionId) {
+      const q = dataset.questions.find(item => item.id === questionId);
+      if (!q || !q.detailed_explanation) return;
+
+      const t = i18n[currentLang];
+      const modal = document.getElementById('explanation-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const container = document.getElementById('modal-container');
+      const body = document.getElementById('modal-body');
+      
+      const qTitle = getText(q.question, 'Explicação Detalhada');
+      const qCert = getCertName(q.certification);
+
+      document.getElementById('modal-question-id').innerText = q.id;
+      document.getElementById('modal-title').innerText = `${t.detailed_explanation_title} ${qCert ? `• ${qCert}` : ''}`;
+      document.getElementById('modal-subtitle').innerText = qTitle.length > 80 ? qTitle.substring(0, 80) + '...' : qTitle;
+      
+      const detailedText = getText(q.detailed_explanation, '');
+      body.innerHTML = formatMarkdownExtended(detailedText);
+
+      // Reset scroll & progress
+      body.scrollTop = 0;
+      resetModalProgress();
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        container.classList.remove('scale-95', 'opacity-0');
+        container.classList.add('scale-100', 'opacity-100');
+        // Check if content is long enough to show progress indicators
+        updateModalScrollUI(body);
+      }, 10);
+    }
+
+    function closeExplanationModal() {
+      const modal = document.getElementById('explanation-modal');
+      const backdrop = document.getElementById('modal-backdrop');
+      const container = document.getElementById('modal-container');
+
+      backdrop.classList.add('opacity-0');
+      container.classList.remove('scale-100', 'opacity-100');
+      container.classList.add('scale-95', 'opacity-0');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+        resetModalProgress();
+      }, 200);
+    }
+
+    // ── Modal scroll progress tracking (for long A4-style content) ──
+    function onModalScroll(bodyEl) {
+      updateModalScrollUI(bodyEl);
+    }
+
+    function updateModalScrollUI(bodyEl) {
+      const scrollTop = bodyEl.scrollTop;
+      const scrollHeight = bodyEl.scrollHeight - bodyEl.clientHeight;
+
+      if (scrollHeight <= 10) {
+        // Content fits on screen — hide all indicators
+        document.getElementById('modal-scroll-progress').style.width = '100%';
+        document.getElementById('modal-page-indicator').classList.add('hidden');
+        document.getElementById('modal-read-pct').innerText = '';
+        document.getElementById('modal-scroll-top-btn').classList.add('hidden');
+        return;
+      }
+
+      const pct = Math.round((scrollTop / scrollHeight) * 100);
+      document.getElementById('modal-scroll-progress').style.width = pct + '%';
+
+      // Approximate A4 pages: each ~1120px of scroll ≈ 1 page
+      const pageHeight = 1120;
+      const currentPage = Math.floor(scrollTop / pageHeight) + 1;
+      const totalPages = Math.ceil((bodyEl.scrollHeight) / pageHeight);
+
+      const pageIndicator = document.getElementById('modal-page-indicator');
+      if (totalPages > 1) {
+        pageIndicator.classList.remove('hidden');
+        pageIndicator.innerText = `${currentPage}/${totalPages}p`;
+      } else {
+        pageIndicator.classList.add('hidden');
+      }
+
+      // Read percentage in footer
+      document.getElementById('modal-read-pct').innerText = pct > 0 ? `${pct}% lido` : '';
+
+      // Show scroll-to-top button after scrolling 200px
+      const topBtn = document.getElementById('modal-scroll-top-btn');
+      if (scrollTop > 200) {
+        topBtn.classList.remove('hidden');
+      } else {
+        topBtn.classList.add('hidden');
+      }
+    }
+
+    function resetModalProgress() {
+      document.getElementById('modal-scroll-progress').style.width = '0%';
+      document.getElementById('modal-page-indicator').classList.add('hidden');
+      document.getElementById('modal-read-pct').innerText = '';
+      document.getElementById('modal-scroll-top-btn').classList.add('hidden');
+    }
+
+    function modalScrollToTop() {
+      const body = document.getElementById('modal-body');
+      body.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Rich Markdown Formatter for 100+ Lines Modal Content
+    function formatMarkdownExtended(markdownText) {
+      if (!markdownText) return '';
+
+      // Escape HTML for safety except our generated markdown elements
+      let text = markdownText;
+
+      // Code blocks ( ```bash ... ``` )
+      text = text.replace(/```([a-z0-9_]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+        const cleanCode = escapeHtml(code.trim());
+        return `
+          <div class="my-4 bg-slate-900 border border-slate-800 rounded-xl p-4 overflow-x-auto relative group">
+            <button onclick="copyCode(this)" data-code="${cleanCode}" class="absolute right-3 top-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] px-2.5 py-1 rounded-lg border border-slate-700 transition font-medium no-print">
+              <i class="fa-regular fa-copy mr-1"></i> Copiar
+            </button>
+            <div class="text-[10px] uppercase font-mono text-slate-500 font-bold mb-1">${lang || 'code'}</div>
+            <pre class="text-xs sm:text-sm text-cyan-300 font-mono leading-relaxed"><code>${cleanCode}</code></pre>
+          </div>
+        `;
+      });
+
+      // Headers
+      text = text.replace(/^### (.*$)/gim, '<h3 class="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white mt-6 mb-3 pb-1 border-b border-slate-200 dark:border-slate-800">$1</h3>');
+      text = text.replace(/^#### (.*$)/gim, '<h4 class="text-sm sm:text-base font-bold text-indigo-700 dark:text-indigo-400 mt-5 mb-2.5">$1</h4>');
+      text = text.replace(/^##### (.*$)/gim, '<h5 class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-4 mb-2">$1</h5>');
+
+      // Horizontal Rules
+      text = text.replace(/^---$/gim, '<hr class="my-6 border-slate-200 dark:border-slate-800">');
+
+      // Markdown Tables (| header | header |\n| --- | --- |\n| cell | cell |)
+      text = text.replace(/((?:\|(?:[^\n]+)\|(?:\r?\n))+)/g, (match) => {
+        const lines = match.trim().split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length < 2) return match;
+
+        let tableHtml = '<div class="my-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><table class="w-full text-left border-collapse text-xs sm:text-sm">';
+        
+        lines.forEach((line, idx) => {
+          if (line.includes('---')) return; // skip separator row
+
+          const cells = line.split('|').slice(1, -1).map(c => c.trim());
+          if (idx === 0) {
+            tableHtml += '<thead class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold"><tr>';
+            cells.forEach(cell => {
+              tableHtml += `<th class="p-3 border-b border-slate-200 dark:border-slate-700">${formatInlineMarkdown(cell)}</th>`;
+            });
+            tableHtml += '</tr></thead><tbody>';
+          } else {
+            const bgClass = idx % 2 === 0 ? 'bg-slate-50/50 dark:bg-slate-900/50' : 'bg-white dark:bg-slate-900';
+            tableHtml += `<tr class="${bgClass} border-b border-slate-100 dark:border-slate-800/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition">`;
+            cells.forEach(cell => {
+              tableHtml += `<td class="p-3">${formatInlineMarkdown(cell)}</td>`;
+            });
+            tableHtml += '</tr>';
+          }
+        });
+
+        tableHtml += '</tbody></table></div>';
+        return tableHtml;
+      });
+
+      // Paragraphs & Inline Formatting
+      const blocks = text.split(/\n\n+/);
+      return blocks.map(block => {
+        if (block.startsWith('<h') || block.startsWith('<div') || block.startsWith('<hr')) {
+          return block;
+        }
+        
+        // Unordered lists
+        if (block.trim().startsWith('- ') || block.trim().startsWith('* ')) {
+          const items = block.trim().split('\n').map(item => {
+            const cleanItem = item.replace(/^[-*]\s+/, '');
+            return `<li class="ml-4 list-disc text-slate-700 dark:text-slate-300 my-1">${formatInlineMarkdown(cleanItem)}</li>`;
+          }).join('');
+          return `<ul class="my-3 space-y-1">${items}</ul>`;
+        }
+
+        // Ordered lists
+        if (/^\d+\.\s+/.test(block.trim())) {
+          const items = block.trim().split('\n').map(item => {
+            const cleanItem = item.replace(/^\d+\.\s+/, '');
+            return `<li class="ml-4 list-decimal text-slate-700 dark:text-slate-300 my-1">${formatInlineMarkdown(cleanItem)}</li>`;
+          }).join('');
+          return `<ol class="my-3 space-y-1">${items}</ol>`;
+        }
+
+        return `<p class="my-2.5 text-slate-700 dark:text-slate-300 leading-relaxed">${formatInlineMarkdown(block)}</p>`;
+      }).join('');
+    }
+
+    function formatInlineMarkdown(str) {
+      if (!str) return '';
+      return str
+        .replace(/`([^`]+)`/g, '<code class="bg-slate-100 dark:bg-slate-800 text-indigo-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 rounded font-mono text-xs font-semibold">$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-slate-900 dark:text-slate-100 font-bold">$1</strong>')
+        .replace(/_([^_]+)_/g, '<em class="italic">$1</em>');
+    }
+
+    function formatMarkdownSimple(text) {
+      if (!text) return '';
+      return formatInlineMarkdown(text).replace(/\n/g, '<br>');
+    }
+
+    // Multilingual Text Helper
+    function getText(obj, fallback = '') {
+      if (!obj) return fallback;
+      if (typeof obj === 'string') return obj;
+      if (typeof obj === 'object') {
+        return obj[currentLang] || obj['pt'] || obj['en'] || fallback;
+      }
+      return fallback;
+    }
+
+    function getProviderName(providerId) {
+      const p = (dataset.providers || []).find(prov => prov.id === providerId);
+      return p ? getText(p.name, providerId) : providerId;
+    }
+
+    function getProviderIcon(providerId) {
+      const p = (dataset.providers || []).find(prov => prov.id === providerId);
+      return p && p.icon ? p.icon : 'fa-solid fa-cube';
+    }
+
+    function getCertName(certId) {
+      let foundName = certId;
+      (dataset.providers || []).forEach(p => {
+        (p.certifications || []).forEach(c => {
+          if (c.id === certId) foundName = getText(c.name, certId);
+        });
+      });
+      return foundName;
+    }
+
+    function escapeHtml(str) {
+      if (typeof str !== 'string') return str;
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function escapeQuotes(str) {
+      if (typeof str !== 'string') return str;
+      return str.replace(/'/g, "\\'");
+    }
+
+    function copyCode(btn) {
+      const t = i18n[currentLang];
+      const code = btn.getAttribute('data-code');
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400 mr-1"></i> ${t.code_copied}`;
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 2000);
+      });
+    }
+
+    function showErrorMessage(msg) {
+      const container = document.getElementById('questions-list');
+      container.innerHTML = `
+        <div class="tech-card rounded-2xl p-8 border-rose-300 text-center space-y-4">
+          <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto text-xl">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">Atenção</h3>
+          <p class="text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">${msg}</p>
+          <div class="pt-2">
+            <label for="json-file-input" class="cursor-pointer inline-flex items-center gap-2 bg-slate-900 text-white text-xs px-4 py-2.5 rounded-xl font-semibold transition shadow-md">
+              <i class="fa-solid fa-file-code text-indigo-400"></i> Carregar JSON Manualmente
+            </label>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+
+</body>
+</html>

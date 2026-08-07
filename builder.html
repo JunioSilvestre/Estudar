@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criador & Gerador de JSON - Technical Certification Hub</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- FontAwesome Icons CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Devicon Brand Icons CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+  
+  <style>
+    :root {
+      --bg-main: #f8fafc;
+      --card-bg: #ffffff;
+      --card-border: #e2e8f0;
+      --text-main: #0f172a;
+    }
+    .dark {
+      --bg-main: #0f172a;
+      --card-bg: #1e293b;
+      --card-border: #334155;
+      --text-main: #f8fafc;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+    .tech-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+    }
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .dark ::-webkit-scrollbar-thumb { background: #334155; }
+
+    /* ── Mobile: Header controls ──────────────────── */
+    @media (max-width: 640px) {
+      header > div { flex-direction: column; align-items: flex-start; }
+      header .flex.flex-wrap.items-center.gap-2 { width: 100%; flex-wrap: wrap; }
+    }
+
+    /* ── Mobile: Form grids ───────────────────────── */
+    @media (max-width: 640px) {
+      .grid.grid-cols-1.md\:grid-cols-4,
+      .grid.grid-cols-1.sm\:grid-cols-2.md\:grid-cols-4 {
+        grid-template-columns: 1fr;
+      }
+      .grid.grid-cols-1.md\:grid-cols-2 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Mobile: JSON Preview textarea ───────────── */
+    @media (max-width: 640px) {
+      #json-preview-code { font-size: 0.625rem; }
+    }
+
+    /* ── 2K (2560px) ──────────────────────────────── */
+    @media (min-width: 2560px) {
+      html { font-size: 20px; }
+      .max-w-7xl { max-width: 144rem !important; }
+    }
+    /* ── 4K (3840px) ──────────────────────────────── */
+    @media (min-width: 3840px) {
+      html { font-size: 28px; }
+      .max-w-7xl { max-width: 180rem !important; }
+    }
+    /* ── 8K (7680px) ──────────────────────────────── */
+    @media (min-width: 7680px) {
+      html { font-size: 48px; }
+      .max-w-7xl { max-width: 240rem !important; }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-indigo-600 selection:text-white">
+
+  <!-- Header Sticky Top -->
+  <header class="tech-card sticky top-0 z-50 py-3.5 px-4 sm:px-8 border-b shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white shadow-md">
+          <i class="fa-solid fa-file-pen text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-extrabold tracking-tight flex items-center gap-2">
+            Criador & Gerador de JSON
+            <span class="bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-[10px] px-2 py-0.5 rounded-full uppercase font-mono font-bold">
+              v4.0 Builder
+            </span>
+          </h1>
+          <p class="text-xs text-slate-500 dark:text-slate-400">
+            Crie, edite, importe e exporte seus arquivos JSON formatados com pop-up detalhado
+          </p>
+        </div>
+      </div>
+
+      <!-- Control Buttons -->
+      <div class="flex flex-wrap items-center gap-2">
+        
+        <button onclick="toggleTheme()" class="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs p-2 rounded-xl border border-slate-200 dark:border-slate-700 transition" title="Alternar Tema">
+          <i id="theme-icon" class="fa-solid fa-moon text-sm"></i>
+        </button>
+
+        <button onclick="confirmNewDataset()" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 font-medium transition shadow-sm" title="Criar Novo Dataset em Branco">
+          <i class="fa-solid fa-file-circle-plus text-indigo-600 dark:text-indigo-400"></i>
+          <span>Novo em Branco</span>
+        </button>
+
+        <label class="cursor-pointer bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 font-medium transition shadow-sm">
+          <i class="fa-solid fa-upload text-indigo-600 dark:text-indigo-400"></i>
+          <span>Importar JSON</span>
+          <input type="file" accept=".json" class="hidden" onchange="importJsonFile(event)">
+        </label>
+
+        <button onclick="loadDefaultTemplate()" class="bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs px-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 flex items-center gap-1.5 font-medium transition shadow-sm">
+          <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i>
+          <span>Carregar Exemplo</span>
+        </button>
+
+        <button onclick="downloadJsonFile()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-2 shadow-md transition">
+          <i class="fa-solid fa-download"></i>
+          <span>Baixar JSON (.json)</span>
+        </button>
+
+        <!-- PDF Viewer Button -->
+        <button onclick="openPdfModal()" class="bg-rose-600 hover:bg-rose-700 text-white text-xs px-3.5 py-2 rounded-xl font-semibold flex items-center gap-1.5 shadow-sm transition">
+          <i class="fa-solid fa-file-pdf"></i>
+          <span>📄 PDFs do Módulo</span>
+        </button>
+
+        <a href="index.html" target="_blank" class="bg-slate-900 dark:bg-indigo-600 hover:bg-slate-800 dark:hover:bg-indigo-700 text-white text-xs px-3.5 py-2 rounded-xl font-semibold flex items-center gap-1.5 shadow-sm transition">
+          <i class="fa-solid fa-eye"></i>
+          <span>Ver no Hub</span>
+        </a>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-8 space-y-8">
+
+    <!-- Section 1: Configuração do Dataset -->
+    <section class="tech-card rounded-2xl p-6 space-y-4 shadow-sm">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h2 class="text-base font-bold flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-indigo-600 dark:text-indigo-400"></i>
+          Configuração do Módulo (Dataset)
+        </h2>
+        <span class="text-xs text-slate-400 font-mono">1 Arquivo = 1 Módulo</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Módulo Alvo:</label>
+          <select id="meta-module-id" onchange="updateDatasetFromInputs()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-indigo-500">
+            <option value="" disabled selected>⏳ Carregando módulos...</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-600 dark:text-slate-400 mb-1">Idioma Base:</label>
+          <select id="meta-language" onchange="updateDatasetFromInputs()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-semibold focus:outline-none focus:border-indigo-500">
+            <option value="pt-BR">🇧🇷 Português (pt-BR)</option>
+            <option value="en-US">🇺🇸 Inglês (en-US)</option>
+          </select>
+        </div>
+
+      </div>
+
+      <div class="mt-4 flex flex-wrap items-center justify-between bg-slate-100 dark:bg-slate-800 p-3 rounded-xl border border-slate-200 dark:border-slate-700">
+        <span class="text-xs font-bold text-slate-600 dark:text-slate-400 flex items-center gap-1.5"><i class="fa-solid fa-file-export"></i> Arquivo JSON de Saída:</span>
+        <span id="filename-preview" class="bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 font-mono font-bold px-3 py-1 rounded-lg text-xs tracking-tight shadow-sm border border-indigo-200 dark:border-indigo-800/50">mod-XX.json</span>
+      </div>
+
+    </section>
+
+    <!-- Section 2: Quick Import Text / Markdown -->
+    <section class="tech-card rounded-2xl p-6 space-y-4 shadow-sm">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h2 class="text-base font-bold flex items-center gap-2">
+          <i class="fa-solid fa-bolt text-amber-500"></i>
+          Importador Rápido de Texto Bruto
+        </h2>
+        <span class="text-xs text-slate-400">Cole rascunhos de perguntas e crie rapidamente</span>
+      </div>
+
+      <div class="space-y-3">
+        <textarea id="quick-import-text" rows="3" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs font-mono focus:outline-none focus:border-indigo-500" placeholder="Exemplo de formato para colar:&#10;Pergunta: Qual comando exibe o uso de memória RAM em tempo real?&#10;Resposta: free -m (ou top)&#10;Explicação: O comando free exibe a memória livre e utilizada."></textarea>
+        
+        <div class="flex justify-end">
+          <button onclick="parseQuickImportText()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2 rounded-xl font-bold flex items-center gap-1.5 transition shadow-sm">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>Parsear & Adicionar Próxima Questão</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: List & Form of Questions -->
+    <section class="space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <h2 class="text-lg font-extrabold flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-indigo-600 dark:text-indigo-400"></i>
+            Questões do Dataset
+          </h2>
+          <span id="questions-counter-badge" class="bg-slate-900 dark:bg-indigo-950 text-white dark:text-indigo-300 text-xs px-3 py-1 rounded-xl font-mono font-bold">
+            0 Questões
+          </span>
+          <span id="json-validity-badge" class="bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 text-xs px-3 py-1 rounded-xl font-bold flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i> JSON Válido
+          </span>
+        </div>
+
+        <button onclick="addNewQuestion()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-4 py-2.5 rounded-xl font-bold flex items-center gap-2 shadow-md transition">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span id="btn-add-header-text">Adicionar Questão #01</span>
+        </button>
+      </div>
+
+      <!-- Container of Questions Cards -->
+      <div id="builder-questions-list" class="space-y-6">
+        <!-- Rendered Dynamically -->
+      </div>
+
+      <!-- Bottom Add Button -->
+      <div id="bottom-add-container" class="pt-2">
+        <button onclick="addNewQuestion()" class="w-full py-4 bg-slate-100 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-indigo-950/40 border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl text-slate-700 dark:text-slate-300 font-bold text-sm flex items-center justify-center gap-2 transition shadow-sm group">
+          <i class="fa-solid fa-circle-plus text-indigo-600 text-lg group-hover:scale-110 transition"></i>
+          <span id="btn-add-bottom-text">Adicionar Questão #01</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Section 4: Live JSON Preview & Validation -->
+    <section class="tech-card rounded-2xl p-6 space-y-4 shadow-sm">
+      <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
+        <h2 class="text-base font-bold flex items-center gap-2">
+          <i class="fa-solid fa-code text-indigo-600 dark:text-indigo-400"></i>
+          Visualização do JSON Gerado em Tempo Real
+        </h2>
+        <div class="flex items-center gap-2">
+          <button onclick="copyGeneratedJson()" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold transition">
+            <i class="fa-regular fa-copy mr-1"></i> Copiar Código JSON
+          </button>
+          <button onclick="downloadJsonFile()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs px-3.5 py-1.5 rounded-lg font-bold transition">
+            <i class="fa-solid fa-download mr-1"></i> Baixar JSON
+          </button>
+        </div>
+      </div>
+
+      <div class="bg-slate-950 border border-slate-800 rounded-xl p-4 overflow-x-auto">
+        <pre><code id="json-preview-code" class="text-xs text-cyan-300 font-mono leading-relaxed">// O JSON gerado aparecerá aqui automaticamente...</code></pre>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="py-6 border-t border-slate-200 dark:border-slate-800 text-center text-xs text-slate-500 font-medium">
+    <p>Gerador & Editor de JSON • Compatível 100% com o Technical Certification Hub</p>
+  </footer>
+
+  <!-- Application Builder Logic -->
+  <script>
+    let builderData = {
+      module_id: "mod-01-linux-essentials",
+      language: "pt-BR",
+      questions: []
+    };
+    
+    let sysModules = [];
+    let activeTabByQuestion = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check system theme
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').className = 'fa-solid fa-sun text-sm text-amber-400';
+      }
+      
+      // Load modules to populate dropdown
+      try {
+        const res = await fetch('dataset/modules.json');
+        if (res.ok) {
+          sysModules = await res.json();
+          const selector = document.getElementById('meta-module-id');
+          selector.innerHTML = '';
+          sysModules.forEach(mod => {
+            const opt = document.createElement('option');
+            opt.value = mod.id;
+            opt.textContent = `${mod.number} - ${mod.name} (${mod.code})`;
+            selector.appendChild(opt);
+          });
+          initBlankDataset();
+          restoreSession();
+        }
+      } catch(e) { console.error("Falha ao carregar modules.json"); }
+    });
+
+    function saveSession() {
+      if (builderData && builderData.questions) {
+        localStorage.setItem('builderDataSession', JSON.stringify(builderData));
+      }
+    }
+
+    function restoreSession() {
+      const saved = localStorage.getItem('builderDataSession');
+      if (saved) {
+        if (confirm('Uma sessão não salva foi encontrada. Deseja restaurar o último progresso?')) {
+          try {
+            builderData = JSON.parse(saved);
+            document.getElementById('meta-module-id').value = builderData.module_id || (sysModules[0] ? sysModules[0].id : "");
+            document.getElementById('meta-language').value = builderData.language || 'pt-BR';
+            renderQuestionsList();
+            updateDatasetFromInputs();
+          } catch (e) {
+            console.error('Falha ao restaurar sessão.', e);
+          }
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const htmlEl = document.documentElement;
+      const iconEl = document.getElementById('theme-icon');
+      if (htmlEl.classList.contains('dark')) {
+        htmlEl.classList.remove('dark');
+        iconEl.className = 'fa-solid fa-moon text-sm';
+      } else {
+        htmlEl.classList.add('dark');
+        iconEl.className = 'fa-solid fa-sun text-sm text-amber-400';
+      }
+    }
+
+    function initBlankDataset() {
+      const selectedModuleId = document.getElementById('meta-module-id').value || (sysModules[0] ? sysModules[0].id : "mod-01-linux-essentials");
+      builderData = {
+        module_id: selectedModuleId,
+        language: "pt-BR",
+        questions: []
+      };
+
+      document.getElementById('meta-module-id').value = selectedModuleId;
+      document.getElementById('meta-language').value = "pt-BR";
+
+      // Adiciona a primeira questão em branco (#01)
+      addNewQuestion(true);
+    }
+
+    function confirmNewDataset() {
+      if (builderData.questions.length > 0) {
+        if (!confirm('Deseja iniciar um novo dataset em branco? Todas as alterações não salvas serão perdidas.')) {
+          return;
+        }
+      }
+      initBlankDataset();
+    }
+
+    function loadDefaultTemplate() {
+      builderData = {
+        module_id: sysModules[0] ? sysModules[0].id : "mod-01-linux-essentials",
+        language: "pt-BR",
+        questions: [
+          {
+            question_number: "01",
+            id: "Q-01",
+            category: "Fundamentos de Linux e Open Source",
+            question: "Qual comando e opções do utilitário GNU grep permite buscar recursivamente uma string de texto em todos os arquivos de uma estrutura de diretórios, ignorando diferenças entre maiúsculas e minúsculas?",
+            correct_answer: "grep -ri \"padrao\" /caminho/do/diretorio",
+            explanation: "A opção `-r` ativa a busca recursiva em subdiretórios, e `-i` desativa a sensibilidade a maiúsculas/minúsculas.",
+            code_snippet: "grep -ri \"error\" /var/log/",
+            references: [
+              {
+                title: "GNU Grep Manual - Official Documentation",
+                url: "https://www.gnu.org/software/grep/manual/grep.html"
+              }
+            ],
+            detailed_explanation: "### 🔍 Análise Detalhada e Guia Completo do Comando `grep`\n\nO utilitário **GNU `grep`** (Global Regular Expression Print) é uma das ferramentas fundamentais do ecossistema Linux/POSIX.\n\n---\n\n#### 1. Sintaxe Fundamental do Comando\n```bash\ngrep [OPÇÕES] PADRÃO [ARQUIVO...]\n```\n\n---\n\n#### 2. Tabela Comparativa de Flags\n\n| Flag | Descrição | Exemplo de Uso |\n| :--- | :--- | :--- |\n| **`-i`** | Ignora maiúsculas e minúsculas | `grep -i \"root\" /etc/passwd` |\n| **`-r`** | Percorre subdiretórios recursivamente | `grep -r \"UUID\" /etc/` |"
+          }
+        ]
+      };
+
+      const sel = document.getElementById('meta-module-id');
+      if (sel.options.length > 0) sel.value = builderData.module_id;
+      document.getElementById('meta-language').value = builderData.language;
+
+      renderQuestionsList();
+      updateDatasetFromInputs();
+    }
+
+    function buildFilename() {
+      const modId = document.getElementById('meta-module-id').value || 'mod-XX';
+      return `${modId}.json`;
+    }
+
+    function updateDatasetFromInputs() {
+      const newModuleId = document.getElementById('meta-module-id').value;
+      if (newModuleId && builderData.module_id !== newModuleId) {
+        builderData.module_id = newModuleId;
+        // Se mudou de módulo, renderizar a lista de novo para atualizar as opções de categoria
+        renderQuestionsList(); 
+      }
+      builderData.language = document.getElementById('meta-language').value;
+      
+      const fName = buildFilename();
+      document.getElementById('filename-preview').innerText = fName;
+
+      updateJsonPreview();
+      saveSession();
+    }
+
+    // Calcula o próximo número sequencial para as questões (ex: 01, 02, 03...)
+    function getNextQuestionNumber() {
+      if (!builderData.questions || builderData.questions.length === 0) {
+        return 1;
+      }
+
+      let maxNum = 0;
+      builderData.questions.forEach((q, idx) => {
+        // Tenta ler o número explicito da questão se existir
+        if (q.question_number && !isNaN(parseInt(q.question_number, 10))) {
+          const num = parseInt(q.question_number, 10);
+          if (num > maxNum) maxNum = num;
+        } else if (q.id) {
+          // Tenta extrair dígitos do ID (ex: Q-05 -> 5 ou Q-LPIC101-12 -> 12)
+          const matches = q.id.match(/\d+/g);
+          if (matches && matches.length > 0) {
+            const lastNum = parseInt(matches[matches.length - 1], 10);
+            if (lastNum > maxNum) maxNum = lastNum;
+          }
+        }
+      });
+
+      return Math.max(maxNum + 1, builderData.questions.length + 1);
+    }
+
+    function formatQuestionNumber(num) {
+      const n = parseInt(num, 10);
+      if (isNaN(n)) return "01";
+      return n < 10 ? `0${n}` : `${n}`;
+    }
+
+    function updateAddButtonsText() {
+      const nextNum = getNextQuestionNumber();
+      const numStr = formatQuestionNumber(nextNum);
+      
+      const btnHeader = document.getElementById('btn-add-header-text');
+      const btnBottom = document.getElementById('btn-add-bottom-text');
+      
+      if (btnHeader) btnHeader.innerText = `Adicionar Questão #${numStr}`;
+      if (btnBottom) btnBottom.innerText = `Adicionar Questão #${numStr}`;
+    }
+
+    function renderQuestionsList() {
+      const container = document.getElementById('builder-questions-list');
+      const counter = document.getElementById('questions-counter-badge');
+
+      counter.innerText = `${builderData.questions.length} Questões`;
+      updateAddButtonsText();
+
+      if (builderData.questions.length === 0) {
+        container.innerHTML = `
+          <div class="tech-card rounded-2xl p-12 text-center text-slate-400 space-y-4">
+            <i class="fa-solid fa-folder-plus text-4xl text-indigo-500"></i>
+            <div>
+              <p class="font-bold text-base text-slate-700 dark:text-slate-300">Nenhuma questão no dataset.</p>
+              <p class="text-xs text-slate-500 mt-1">Clique no botão abaixo para incluir a primeira questão.</p>
+            </div>
+            <button onclick="addNewQuestion()" class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs px-5 py-2.5 rounded-xl font-bold transition shadow-md">
+              <i class="fa-solid fa-plus-circle"></i>
+              <span>Criar Questão #01</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = builderData.questions.map((q, idx) => renderQuestionEditorCard(q, idx)).join('');
+    }
+
+    function renderQuestionEditorCard(q, idx) {
+      const activeTab = activeTabByQuestion[q.id] || 'edit';
+      const refList = q.references || [];
+      const numDisplay = q.question_number || formatQuestionNumber(idx + 1);
+
+      return `
+        <div id="q-editor-${q.id}" class="tech-card rounded-2xl p-6 space-y-5 relative shadow-sm border-l-4 border-l-indigo-600 transition hover:shadow-md">
+          
+          <!-- Card Header Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-700">
+            <div class="flex items-center gap-2.5">
+              <span class="bg-indigo-600 text-white text-xs px-3 py-1 rounded-lg font-mono font-extrabold shadow-sm" title="Posição da Questão">
+                #${numDisplay}
+              </span>
+              <span class="text-xs font-bold text-slate-400">ID:</span>
+              <input type="text" value="${escapeHtml(q.id)}" oninput="updateQuestionField('${q.id}', 'id', this.value)" class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs font-mono font-bold px-2.5 py-1 rounded-lg w-36 focus:outline-none focus:border-indigo-500" placeholder="Q-01">
+            </div>
+
+            <div class="flex items-center gap-1.5">
+              <button onclick="moveQuestion(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} class="px-2 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs rounded-lg disabled:opacity-30 transition" title="Mover para Cima">
+                <i class="fa-solid fa-arrow-up"></i>
+              </button>
+              <button onclick="moveQuestion(${idx}, 1)" ${idx === builderData.questions.length - 1 ? 'disabled' : ''} class="px-2 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 text-xs rounded-lg disabled:opacity-30 transition" title="Mover para Baixo">
+                <i class="fa-solid fa-arrow-down"></i>
+              </button>
+              <button onclick="duplicateQuestion(${idx})" class="px-2.5 py-1 bg-slate-100 dark:bg-slate-800 hover:bg-indigo-50 text-indigo-600 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 transition" title="Duplicar Questão">
+                <i class="fa-regular fa-copy mr-1"></i> Duplicar
+              </button>
+              <button onclick="deleteQuestion(${idx})" class="px-2.5 py-1 bg-rose-50 dark:bg-rose-950/60 hover:bg-rose-600 hover:text-white text-rose-600 dark:text-rose-400 text-xs font-semibold rounded-lg border border-rose-200 dark:border-rose-800 transition" title="Excluir Questão">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Metadata Fields: Sequential Number, Category -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase mb-1">
+                <i class="fa-solid fa-lock text-[10px] mr-1"></i> Nº Questão (Fixo):
+              </label>
+              <input type="text" value="${escapeHtml(numDisplay)}" readonly class="w-full bg-slate-200/70 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 text-indigo-700 dark:text-indigo-300 text-xs font-mono font-extrabold px-3 py-1.5 rounded-xl cursor-not-allowed select-none" title="Número da questão fixado sequencialmente">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Área de Conhecimento (Categoria):</label>
+              <select onchange="updateQuestionField('${q.id}', 'category', this.value)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-1.5 text-xs font-medium focus:outline-none focus:border-indigo-500">
+                <option value="" disabled ${!q.category ? 'selected' : ''}>-- Selecione uma Área --</option>
+                ${(sysModules.find(m => m.id === builderData.module_id)?.areas || []).map(area => 
+                  `<option value="${escapeHtml(area.name)}" ${getTextStr(q.category) === area.name ? 'selected' : ''}>${escapeHtml(area.name)}</option>`
+                ).join('')}
+              </select>
+            </div>
+          </div>
+
+          <!-- Question Prompt -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Enunciado da Questão:</label>
+            <textarea rows="2" oninput="updateQuestionField('${q.id}', 'question', this.value)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs font-semibold focus:outline-none focus:border-indigo-500" placeholder="Digite o enunciado ou a pergunta da questão aqui...">${escapeHtml(getTextStr(q.question))}</textarea>
+          </div>
+
+          <!-- Correct Answer & Code Snippet -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-[11px] font-bold text-emerald-600 dark:text-emerald-400 uppercase mb-1">Resposta Correta:</label>
+              <input type="text" value="${escapeHtml(getTextStr(q.correct_answer))}" oninput="updateQuestionField('${q.id}', 'correct_answer', this.value)" class="w-full bg-emerald-50/50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700 rounded-xl px-3 py-2 text-xs font-bold text-emerald-950 dark:text-emerald-200 focus:outline-none" placeholder="Digite a resposta correta ou comando exato...">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Snippet de Código Opcional:</label>
+              <input type="text" value="${escapeHtml(q.code_snippet || '')}" oninput="updateQuestionField('${q.id}', 'code_snippet', this.value)" class="w-full bg-slate-900 border border-slate-800 text-cyan-300 rounded-xl px-3 py-2 text-xs font-mono focus:outline-none" placeholder="ex: grep -ri 'error' /var/log/">
+            </div>
+          </div>
+
+          <!-- Short Explanation -->
+          <div>
+            <label class="block text-[11px] font-bold text-slate-500 uppercase mb-1">Explicação Objetiva Curta (1 a 2 linhas):</label>
+            <textarea rows="2" oninput="updateQuestionField('${q.id}', 'explanation', this.value)" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl p-3 text-xs font-medium focus:outline-none focus:border-indigo-500" placeholder="Resumo direto e objetivo do motivo da resposta estar correta...">${escapeHtml(getTextStr(q.explanation))}</textarea>
+          </div>
+
+          <!-- Official References Dynamic List -->
+          <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+            <div class="flex items-center justify-between">
+              <label class="text-[11px] font-bold text-slate-500 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-link text-indigo-500"></i> Referências Oficiais
+              </label>
+              <button onclick="addReference('${q.id}')" class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 hover:underline">
+                + Adicionar Link
+              </button>
+            </div>
+
+            <div class="space-y-2">
+              ${refList.length === 0 ? '<p class="text-[11px] text-slate-400 italic">Nenhuma referência adicionada. Clique em "+ Adicionar Link" acima.</p>' : ''}
+              ${refList.map((ref, rIdx) => `
+                <div class="flex items-center gap-2">
+                  <input type="text" value="${escapeHtml(ref.title || '')}" oninput="updateReferenceField('${q.id}', ${rIdx}, 'title', this.value)" class="w-1/3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1 text-xs" placeholder="Título da Ref.">
+                  <input type="text" value="${escapeHtml(ref.url || '')}" oninput="updateReferenceField('${q.id}', ${rIdx}, 'url', this.value)" class="w-2/3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1 text-xs font-mono" placeholder="https://www.gnu.org/...">
+                  <button onclick="deleteReference('${q.id}', ${rIdx})" class="text-rose-500 hover:text-rose-700 text-xs px-1">
+                    <i class="fa-solid fa-xmark"></i>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Detailed Explanation Editor (100+ lines capacity with Live Preview) -->
+          <div class="pt-3 border-t border-slate-200 dark:border-slate-700 space-y-3">
+            
+            <div class="flex items-center justify-between">
+              <label class="text-[11px] font-bold text-indigo-600 dark:text-indigo-400 uppercase flex items-center gap-1.5">
+                <i class="fa-solid fa-book-open"></i> Explicação Detalhada do Pop-up (em Markdown)
+              </label>
+
+              <!-- Tabs: Editar vs Visualizar Preview -->
+              <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-0.5 rounded-lg border border-slate-300 dark:border-slate-700 text-[11px] font-bold">
+                <button onclick="switchTab('${q.id}', 'edit')" class="px-2.5 py-1 rounded-md transition ${activeTab === 'edit' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-white shadow-sm' : 'text-slate-500'}">
+                  ✍️ Editar Texto
+                </button>
+                <button onclick="switchTab('${q.id}', 'preview')" class="px-2.5 py-1 rounded-md transition ${activeTab === 'preview' ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-white shadow-sm' : 'text-slate-500'}">
+                  👁️ Visualizar Pop-up
+                </button>
+              </div>
+            </div>
+
+            <!-- Tab Content: Edit -->
+            <div class="${activeTab === 'edit' ? 'block' : 'hidden'}">
+              <textarea rows="14" oninput="updateQuestionField('${q.id}', 'detailed_explanation', this.value)" class="w-full bg-slate-900 border border-slate-800 text-slate-100 rounded-xl p-4 text-xs font-mono leading-relaxed focus:outline-none focus:border-indigo-500 resize-y" placeholder="Escreva a explicação detalhada completa em Markdown...&#10;### 🔍 Título Principal&#10;&#10;#### 1. Conceito&#10;- Item 1&#10;- Item 2&#10;&#10;\`\`\`bash&#10;grep -ri 'padrao' /caminho/&#10;\`\`\`">${escapeHtml(getTextStr(q.detailed_explanation))}</textarea>
+            </div>
+
+            <!-- Tab Content: Live Preview -->
+            <div class="${activeTab === 'preview' ? 'block' : 'hidden'} bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl p-5 shadow-inner max-h-96 overflow-y-auto">
+              <div class="text-xs text-slate-800 dark:text-slate-200 space-y-4">
+                ${formatMarkdownPreview(getTextStr(q.detailed_explanation))}
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      `;
+    }
+
+    function getTextStr(val) {
+      if (!val) return '';
+      if (typeof val === 'string') return val;
+      if (typeof val === 'object') return val.pt || val.en || '';
+      return '';
+    }
+
+    function updateQuestionField(qId, field, val) {
+      const q = builderData.questions.find(item => item.id === qId);
+      if (!q) return;
+
+      if (field === 'id') q.id = val;
+      else if (field === 'question_number') q.question_number = val;
+      else if (field === 'category') q.category = val;
+      else if (field === 'provider') q.provider = val;
+      else if (field === 'certification') q.certification = val;
+      else if (field === 'question') q.question = val;
+      else if (field === 'correct_answer') q.correct_answer = val;
+      else if (field === 'explanation') q.explanation = val;
+      else if (field === 'code_snippet') q.code_snippet = val;
+      else if (field === 'detailed_explanation') q.detailed_explanation = val;
+
+      updateJsonPreview();
+    }
+
+    function addReference(qId) {
+      const q = builderData.questions.find(item => item.id === qId);
+      if (!q) return;
+      if (!q.references) q.references = [];
+
+      q.references.push({ title: "", url: "" });
+      renderQuestionsList();
+      updateJsonPreview();
+    }
+
+    function updateReferenceField(qId, rIdx, field, val) {
+      const q = builderData.questions.find(item => item.id === qId);
+      if (!q || !q.references || !q.references[rIdx]) return;
+
+      q.references[rIdx][field] = val;
+      updateJsonPreview();
+    }
+
+    function deleteReference(qId, rIdx) {
+      const q = builderData.questions.find(item => item.id === qId);
+      if (!q || !q.references) return;
+
+      q.references.splice(rIdx, 1);
+      renderQuestionsList();
+      updateJsonPreview();
+    }
+
+    function switchTab(qId, tabName) {
+      activeTabByQuestion[qId] = tabName;
+      renderQuestionsList();
+    }
+
+    // Adiciona nova questão sequencial
+    function addNewQuestion(isInitial = false) {
+      const nextNumInt = isInitial ? 1 : getNextQuestionNumber();
+      const nextNumStr = formatQuestionNumber(nextNumInt);
+      const newId = `Q-${nextNumStr}`;
+
+      const newQuestion = {
+        question_number: nextNumStr,
+        id: newId,
+        provider: "",
+        certification: "",
+        category: "",
+        question: "",
+        correct_answer: "",
+        explanation: "",
+        code_snippet: "",
+        references: [],
+        detailed_explanation: ""
+      };
+
+      builderData.questions.push(newQuestion);
+      renderQuestionsList();
+      updateJsonPreview();
+
+      if (!isInitial) {
+        setTimeout(() => {
+          const cardEl = document.getElementById(`q-editor-${newId}`);
+          if (cardEl) {
+            cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        }, 50);
+      }
+    }
+
+    function duplicateQuestion(idx) {
+      const orig = builderData.questions[idx];
+      if (!orig) return;
+
+      const nextNumInt = getNextQuestionNumber();
+      const nextNumStr = formatQuestionNumber(nextNumInt);
+
+      const clone = JSON.parse(JSON.stringify(orig));
+      clone.question_number = nextNumStr;
+      clone.id = `Q-${nextNumStr}`;
+
+      builderData.questions.splice(idx + 1, 0, clone);
+
+      renderQuestionsList();
+      updateJsonPreview();
+    }
+
+    function moveQuestion(idx, delta) {
+      const targetIdx = idx + delta;
+      if (targetIdx < 0 || targetIdx >= builderData.questions.length) return;
+
+      const temp = builderData.questions[idx];
+      builderData.questions[idx] = builderData.questions[targetIdx];
+      builderData.questions[targetIdx] = temp;
+
+      renderQuestionsList();
+      updateJsonPreview();
+    }
+
+    function deleteQuestion(idx) {
+      if (confirm('Tem certeza que deseja excluir esta questão?')) {
+        builderData.questions.splice(idx, 1);
+        renderQuestionsList();
+        updateJsonPreview();
+        saveSession();
+      }
+    }
+
+    function parseQuickImportText() {
+      const text = document.getElementById('quick-import-text').value.trim();
+      if (!text) return;
+
+      const nextNumInt = getNextQuestionNumber();
+      const nextNumStr = formatQuestionNumber(nextNumInt);
+      let qId = `Q-${nextNumStr}`;
+      let provider = "";
+      let certification = "";
+      let category = "Importados";
+      let questionText = "";
+      let answerText = "";
+      let explanationText = "";
+      let codeSnippet = "";
+
+      const lines = text.split('\n');
+      lines.forEach(l => {
+        const line = l.trim();
+        if (/^ID:/i.test(line)) qId = line.replace(/^ID:/i, '').trim();
+        else if (/^(Provedor|Provider):/i.test(line)) provider = line.replace(/^(Provedor|Provider):/i, '').trim();
+        else if (/^(Certificação|Certificacao|Cert):/i.test(line)) certification = line.replace(/^(Certificação|Certificacao|Cert):/i, '').trim();
+        else if (/^(Categoria|Category):/i.test(line)) category = line.replace(/^(Categoria|Category):/i, '').trim();
+        else if (/^(Pergunta|Question):/i.test(line)) questionText = line.replace(/^(Pergunta|Question):/i, '').trim();
+        else if (/^(Resposta|Answer):/i.test(line)) answerText = line.replace(/^(Resposta|Answer):/i, '').trim();
+        else if (/^(Explicação|Explanation):/i.test(line)) explanationText = line.replace(/^(Explicação|Explanation):/i, '').trim();
+        else if (/^(Código|Codigo|Code):/i.test(line)) codeSnippet = line.replace(/^(Código|Codigo|Code):/i, '').trim();
+        else if (!questionText) questionText += (questionText ? " " : "") + line;
+      });
+
+      builderData.questions.push({
+        question_number: nextNumStr,
+        id: qId,
+        provider: provider,
+        certification: certification,
+        category: category,
+        question: questionText || "",
+        correct_answer: answerText || "",
+        explanation: explanationText || "",
+        code_snippet: codeSnippet || "",
+        references: [],
+        detailed_explanation: ""
+      });
+
+      document.getElementById('quick-import-text').value = '';
+      renderQuestionsList();
+      updateJsonPreview();
+      saveSession();
+    }
+
+    function importJsonFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const json = JSON.parse(e.target.result);
+          if (json.title) builderData.title = typeof json.title === 'string' ? json.title : json.title.pt || json.title.en || '';
+          if (json.exam) builderData.exam = json.exam;
+          if (json.description) builderData.description = typeof json.description === 'string' ? json.description : json.description.pt || json.description.en || '';
+          if (json.language) builderData.language = json.language;
+          if (json.providers) builderData.providers = json.providers;
+          if (Array.isArray(json.questions)) {
+            builderData.questions = json.questions.map((q, idx) => {
+              const numStr = q.question_number || formatQuestionNumber(idx + 1);
+              return {
+                ...q,
+                question_number: numStr
+              };
+            });
+          }
+
+          document.getElementById('meta-title').value = builderData.title || '';
+          document.getElementById('meta-exam').value = builderData.exam || '';
+          document.getElementById('meta-description').value = builderData.description || '';
+          
+          // Extract parts from filename for the builder fields
+          let baseFilename = (file.name || 'dataset').replace(/\.json$/i, '');
+          // Try to auto-detect language prefix (br- / en-)
+          if (baseFilename.startsWith('br-')) {
+            document.getElementById('meta-language').value = 'pt-BR';
+            baseFilename = baseFilename.replace(/^br-/, '');
+          } else if (baseFilename.startsWith('en-')) {
+            document.getElementById('meta-language').value = 'en-US';
+            baseFilename = baseFilename.replace(/^en-/, '');
+          }
+          document.getElementById('meta-file-extra').value = baseFilename;
+          document.getElementById('filename-preview').innerText = file.name;
+
+          renderQuestionsList();
+          updateJsonPreview();
+          saveSession();
+          alert(`JSON importado com sucesso! Total de ${builderData.questions.length} questões carregadas.`);
+        } catch (err) {
+          alert('Erro ao importar JSON: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+
+    function syncBuilderProviders() {
+      if (!builderData.providers) builderData.providers = [];
+
+      const knownProviderIcons = {
+        linux: 'devicon-linux-plain colored text-xl',
+        azure: 'devicon-azure-plain colored text-xl',
+        aws: 'devicon-amazonwebservices-plain-wordmark colored text-2xl',
+        gcp: 'devicon-googlecloud-plain colored text-xl',
+        docker: 'devicon-docker-plain colored text-xl',
+        kubernetes: 'devicon-kubernetes-plain colored text-xl'
+      };
+
+      const knownProviderNames = {
+        linux: 'Linux Professional Institute',
+        azure: 'Microsoft Azure',
+        aws: 'AWS (Amazon Web Services)',
+        gcp: 'Google Cloud Platform',
+        docker: 'Docker',
+        kubernetes: 'Kubernetes'
+      };
+
+      (builderData.questions || []).forEach(q => {
+        if (!q.provider) return;
+        const pId = q.provider.trim();
+        let prov = builderData.providers.find(p => p.id === pId);
+        if (!prov) {
+          prov = {
+            id: pId,
+            name: knownProviderNames[pId.toLowerCase()] || pId.toUpperCase(),
+            icon: knownProviderIcons[pId.toLowerCase()] || 'devicon-linux-plain colored text-xl',
+            certifications: []
+          };
+          builderData.providers.push(prov);
+        }
+        if (!prov.certifications) prov.certifications = [];
+
+        if (q.certification) {
+          const cId = q.certification.trim();
+          let cert = prov.certifications.find(c => c.id === cId);
+          if (!cert) {
+            prov.certifications.push({
+              id: cId,
+              name: cId.toUpperCase()
+            });
+          }
+        }
+      });
+    }
+
+    function validateBuilderDataset() {
+      const badge = document.getElementById('json-validity-badge');
+      if (!badge) return;
+
+      if (!builderData.questions || builderData.questions.length === 0) {
+        badge.className = "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 text-xs px-3 py-1 rounded-xl font-bold flex items-center gap-1.5";
+        badge.innerHTML = '<i class="fa-solid fa-triangle-exclamation text-amber-600"></i> Sem Questões';
+        return;
+      }
+
+      let invalidCount = 0;
+      builderData.questions.forEach((q, idx) => {
+        const qPrompt = getTextStr(q.question);
+        const qAns = getTextStr(q.correct_answer);
+        const cardEl = document.getElementById(`q-editor-${q.id}`);
+        
+        if (!q.id || !qPrompt.trim() || !qAns.trim()) {
+          invalidCount++;
+          if (cardEl) {
+            cardEl.classList.add('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/20');
+            cardEl.classList.remove('border-l-indigo-600', 'border-slate-200', 'dark:border-slate-700', 'bg-white', 'dark:bg-slate-900');
+          }
+        } else {
+          if (cardEl) {
+            cardEl.classList.remove('border-rose-500', 'bg-rose-50', 'dark:bg-rose-950/20');
+            cardEl.classList.add('border-l-indigo-600', 'bg-white');
+          }
+        }
+      });
+
+      if (invalidCount === 0) {
+        badge.className = "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 text-xs px-3 py-1 rounded-xl font-bold flex items-center gap-1.5";
+        badge.innerHTML = '<i class="fa-solid fa-circle-check text-emerald-600 dark:text-emerald-400"></i> JSON Válido';
+      } else {
+        badge.className = "bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300 text-xs px-3 py-1 rounded-xl font-bold flex items-center gap-1.5";
+        badge.innerHTML = `<i class="fa-solid fa-circle-exclamation text-rose-600"></i> ${invalidCount} Questão(ões) Incompleta(s)`;
+      }
+    }
+
+    function updateJsonPreview() {
+      syncBuilderProviders();
+      validateBuilderDataset();
+      saveSession();
+
+      const codeEl = document.getElementById('json-preview-code');
+      if (!codeEl) return;
+
+      const jsonStr = JSON.stringify(builderData, null, 2);
+      codeEl.innerText = jsonStr;
+    }
+
+    function copyGeneratedJson() {
+      const jsonStr = JSON.stringify(builderData, null, 2);
+      navigator.clipboard.writeText(jsonStr).then(() => {
+        alert('Código JSON copiado para a área de transferência!');
+      });
+    }
+
+    function downloadJsonFile() {
+      const jsonStr = JSON.stringify(builderData, null, 2);
+      const filename = buildFilename();
+      const lang = document.getElementById('meta-language').value === 'en-US' ? 'en' : 'pt';
+
+      // Download the JSON file
+      const blob = new Blob([jsonStr], { type: 'application/json;charset=utf-8;' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = filename;
+      link.click();
+
+      // Show manifest entry instruction
+      const title = builderData.title || filename;
+      const flag = lang === 'pt' ? '🇧🇷' : '🇺🇸';
+      const langCode = lang === 'pt' ? 'pt' : 'en';
+      const manifestEntry = JSON.stringify({
+        file: filename,
+        label: `${flag} ${title}`,
+        lang: langCode,
+        default: false
+      }, null, 2);
+
+      showManifestHint(filename, manifestEntry);
+    }
+
+    function showManifestHint(filename, entry) {
+      // Remove old hint if exists
+      const old = document.getElementById('manifest-hint-banner');
+      if (old) old.remove();
+
+      const banner = document.createElement('div');
+      banner.id = 'manifest-hint-banner';
+      banner.className = 'fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-full max-w-xl px-4';
+      banner.innerHTML = `
+        <div class="tech-card rounded-2xl p-4 shadow-2xl border-l-4 border-l-emerald-500 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-emerald-700 dark:text-emerald-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-circle-check"></i> Arquivo baixado: <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">${filename}</code>
+            </span>
+            <button onclick="document.getElementById('manifest-hint-banner').remove()" class="text-slate-400 hover:text-slate-700 dark:hover:text-white ml-2">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <p class="text-slate-600 dark:text-slate-400">
+            Mova o arquivo para a pasta <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">dataset/</code> e adicione esta entrada em <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">dataset/manifest.json</code> para aparecer no menu:
+          </p>
+          <div class="bg-slate-900 rounded-xl p-3 flex items-start justify-between gap-2">
+            <pre class="text-cyan-300 font-mono text-[11px] leading-relaxed overflow-x-auto">${escapeHtml(entry)}</pre>
+            <button onclick="navigator.clipboard.writeText(${JSON.stringify(entry)}).then(() => { this.innerHTML = '<i class=\\'fa-solid fa-check text-emerald-400\\'></i>'; setTimeout(() => this.innerHTML = '<i class=\\'fa-regular fa-copy\\'></i> Copiar', 1500) })"
+              class="shrink-0 bg-slate-700 hover:bg-slate-600 text-slate-300 text-[11px] px-2.5 py-1 rounded-lg border border-slate-600 font-medium transition">
+              <i class="fa-regular fa-copy"></i> Copiar
+            </button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(banner);
+      // Auto-dismiss after 20s
+      setTimeout(() => { if (banner.isConnected) banner.remove(); }, 20000);
+    }
+
+    // Engine Markdown 1:1 Paritário com index.html
+    function formatMarkdownPreview(markdownText) {
+      if (!markdownText) return '<p class="text-slate-400 italic">Nenhum conteúdo digitado.</p>';
+
+      let text = markdownText;
+
+      // Code blocks ( ```bash ... ``` )
+      text = text.replace(/```([a-z0-9_]*)\n([\s\S]*?)```/g, (match, lang, code) => {
+        const cleanCode = escapeHtml(code.trim());
+        return `
+          <div class="my-4 bg-slate-900 border border-slate-800 rounded-xl p-4 overflow-x-auto relative group">
+            <div class="text-[10px] uppercase font-mono text-slate-500 font-bold mb-1">${lang || 'code'}</div>
+            <button onclick="copyCode(this)" data-code="${escapeQuotes(cleanCode)}" class="absolute right-3 top-3 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-[11px] px-2.5 py-1 rounded-lg border border-slate-700 transition font-medium">
+              <i class="fa-regular fa-copy mr-1"></i> Copy
+            </button>
+            <pre class="text-xs sm:text-sm text-cyan-300 font-mono leading-relaxed"><code>${cleanCode}</code></pre>
+          </div>
+        `;
+      });
+
+      // Headers
+      text = text.replace(/^### (.*$)/gim, '<h3 class="text-base sm:text-lg font-extrabold text-indigo-600 dark:text-indigo-400 mt-6 mb-3 pb-1 border-b border-slate-200 dark:border-slate-800">$1</h3>');
+      text = text.replace(/^#### (.*$)/gim, '<h4 class="text-sm sm:text-base font-bold text-slate-800 dark:text-slate-200 mt-5 mb-2.5">$1</h4>');
+      text = text.replace(/^##### (.*$)/gim, '<h5 class="text-xs sm:text-sm font-bold text-slate-700 dark:text-slate-300 mt-4 mb-2">$1</h5>');
+
+      // Horizontal Rules
+      text = text.replace(/^---$/gim, '<hr class="my-6 border-slate-200 dark:border-slate-800">');
+
+      // Markdown Tables (| header | header |\n| --- | --- |\n| cell | cell |)
+      text = text.replace(/((?:\|(?:[^\n]+)\|(?:\r?\n))+)/g, (match) => {
+        const lines = match.trim().split('\n').map(l => l.trim()).filter(Boolean);
+        if (lines.length < 2) return match;
+
+        let tableHtml = '<div class="my-4 overflow-x-auto rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm"><table class="w-full text-left border-collapse text-xs sm:text-sm">';
+        
+        lines.forEach((line, idx) => {
+          if (line.includes('---')) return; // skip separator row
+
+          const cells = line.split('|').slice(1, -1).map(c => c.trim());
+          if (idx === 0) {
+            tableHtml += '<thead class="bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white font-bold"><tr>';
+            cells.forEach(cell => {
+              tableHtml += `<th class="p-3 border-b border-slate-200 dark:border-slate-700">${formatInlineMarkdown(cell)}</th>`;
+            });
+            tableHtml += '</tr></thead><tbody>';
+          } else {
+            const bgClass = idx % 2 === 0 ? 'bg-slate-50/50 dark:bg-slate-900/50' : 'bg-white dark:bg-slate-900';
+            tableHtml += `<tr class="${bgClass} border-b border-slate-100 dark:border-slate-800/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition">`;
+            cells.forEach(cell => {
+              tableHtml += `<td class="p-3">${formatInlineMarkdown(cell)}</td>`;
+            });
+            tableHtml += '</tr>';
+          }
+        });
+
+        tableHtml += '</tbody></table></div>';
+        return tableHtml;
+      });
+
+      // Paragraphs & Inline Formatting
+      const blocks = text.split(/\n\n+/);
+      return blocks.map(block => {
+        if (block.startsWith('<h') || block.startsWith('<div') || block.startsWith('<hr')) {
+          return block;
+        }
+        
+        // Unordered lists
+        if (block.trim().startsWith('- ') || block.trim().startsWith('* ')) {
+          const items = block.trim().split('\n').map(item => {
+            const cleanItem = item.replace(/^[-*]\s+/, '');
+            return `<li class="ml-4 list-disc text-slate-700 dark:text-slate-300 my-1">${formatInlineMarkdown(cleanItem)}</li>`;
+          }).join('');
+          return `<ul class="my-3 space-y-1">${items}</ul>`;
+        }
+
+        // Ordered lists
+        if (/^\d+\.\s+/.test(block.trim())) {
+          const items = block.trim().split('\n').map(item => {
+            const cleanItem = item.replace(/^\d+\.\s+/, '');
+            return `<li class="ml-4 list-decimal text-slate-700 dark:text-slate-300 my-1">${formatInlineMarkdown(cleanItem)}</li>`;
+          }).join('');
+          return `<ol class="my-3 space-y-1">${items}</ol>`;
+        }
+
+        return `<p class="my-2.5 text-slate-700 dark:text-slate-300 leading-relaxed">${formatInlineMarkdown(block)}</p>`;
+      }).join('');
+    }
+
+    function formatInlineMarkdown(str) {
+      if (!str) return '';
+      return str
+        .replace(/`([^`]+)`/g, '<code class="bg-slate-100 dark:bg-slate-800 text-indigo-700 dark:text-cyan-300 border border-slate-300 dark:border-slate-700 px-1.5 py-0.5 rounded font-mono text-xs font-semibold">$1</code>')
+        .replace(/\*\*([^*]+)\*\*/g, '<strong class="text-slate-900 dark:text-slate-100 font-bold">$1</strong>')
+        .replace(/_([^_]+)_/g, '<em class="italic">$1</em>');
+    }
+
+    function copyCode(btn) {
+      const code = btn.getAttribute('data-code');
+      navigator.clipboard.writeText(code).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = `<i class="fa-solid fa-check text-emerald-400 mr-1"></i> Copied!`;
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+        }, 2000);
+      });
+    }
+
+    // ── PDF Viewer Modal ─────────────────────────────────────────
+    async function openPdfModal() {
+      const modal = document.getElementById('pdf-modal');
+      const body = document.getElementById('pdf-modal-body');
+      const moduleNameEl = document.getElementById('pdf-modal-module-name');
+
+      const moduleId = document.getElementById('meta-module-id').value;
+      const mod = sysModules.find(m => m.id === moduleId);
+      moduleNameEl.textContent = mod ? `${mod.number} — ${mod.name}` : moduleId;
+
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      // Loading state
+      body.innerHTML = `<div class="flex items-center justify-center py-8 text-slate-400"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Carregando...</div>`;
+
+      const mod = (sysModules || []).find(m => m.id === moduleId);
+      const modDir = mod && mod.path ? mod.path.substring(0, mod.path.lastIndexOf('/')) : `dataset/${moduleId}`;
+
+      try {
+        const res = await fetch(`${modDir}/pdfs.json`);
+        if (!res.ok) throw new Error('pdfs.json não encontrado');
+        const pdfs = await res.json();
+
+        if (!pdfs || pdfs.length === 0) {
+          body.innerHTML = `
+            <div class="text-center py-10 space-y-3">
+              <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto">
+                <i class="fa-solid fa-folder-open text-3xl text-slate-400"></i>
+              </div>
+              <p class="font-bold text-slate-700 dark:text-slate-300">Nenhum PDF cadastrado</p>
+              <p class="text-xs text-slate-500">Adicione entradas em <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">${modDir}/pdfs.json</code></p>
+              <div class="bg-slate-900 rounded-xl p-3 text-left">
+                <pre class="text-cyan-300 font-mono text-[11px]">[
+  {
+    "title": "Nome do PDF",
+    "file": "arquivo.pdf",
+    "description": "Guia de estudo oficial"
+  }
+]</pre>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        body.innerHTML = `
+          <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> ${pdfs.length} PDF(s) disponível(is) para este módulo</p>
+          <div class="space-y-2">
+            ${pdfs.map((pdf, i) => `
+              <a href="${modDir}/${pdf.file}" target="_blank" rel="noopener noreferrer"
+                class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition group cursor-pointer">
+                <div class="w-10 h-12 bg-rose-100 dark:bg-rose-950 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-rose-200 dark:group-hover:bg-rose-900 transition">
+                  <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-xl"></i>
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="font-bold text-slate-800 dark:text-slate-100 text-sm truncate">${escapeHtml(pdf.title || pdf.file)}</p>
+                  ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">${escapeHtml(pdf.description)}</p>` : ''}
+                  <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1 truncate">${escapeHtml(pdf.file)}</p>
+                </div>
+                <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-rose-500 transition shrink-0"></i>
+              </a>
+            `).join('')}
+          </div>
+        `;
+
+      } catch (err) {
+        body.innerHTML = `
+          <div class="text-center py-8 space-y-3">
+            <i class="fa-solid fa-triangle-exclamation text-3xl text-amber-500"></i>
+            <p class="font-bold text-slate-700 dark:text-slate-300">Arquivo pdfs.json não encontrado</p>
+            <p class="text-xs text-slate-500">Crie o arquivo <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">${modDir}/pdfs.json</code> para listar os PDFs.</p>
+          </div>
+        `;
+      }
+    }
+
+    function closePdfModal() {
+      document.getElementById('pdf-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function escapeQuotes(str) {
+      if (typeof str !== 'string') return str;
+      return str.replace(/'/g, "\\'");
+    }
+
+    function escapeHtml(str) {
+      if (typeof str !== 'string') return str;
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+  </script>
+
+  <!-- ── PDF Viewer Modal ───────────────────────────────────────── -->
+  <div id="pdf-modal" class="fixed inset-0 z-[200] hidden flex items-center justify-center p-4 sm:p-8">
+    <!-- Backdrop -->
+    <div id="pdf-modal-backdrop" onclick="closePdfModal()" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm"></div>
+
+    <!-- Dialog -->
+    <div class="relative w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl flex flex-col z-10 overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-rose-600">
+        <div class="flex items-center gap-3">
+          <i class="fa-solid fa-folder-open text-white text-lg"></i>
+          <div>
+            <h3 class="text-sm font-bold text-white">PDFs do Módulo</h3>
+            <p id="pdf-modal-module-name" class="text-xs text-rose-100">—</p>
+          </div>
+        </div>
+        <button onclick="closePdfModal()" class="w-8 h-8 rounded-xl bg-rose-700 hover:bg-rose-800 text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div id="pdf-modal-body" class="p-6 overflow-y-auto max-h-[60vh] space-y-3 text-sm">
+        <div class="flex items-center justify-center py-8 text-slate-400">
+          <i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Carregando...
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 flex items-center justify-between text-xs text-slate-500">
+        <span><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> Coloque PDFs na pasta do módulo e liste em <code class="font-mono bg-slate-200 dark:bg-slate-800 px-1 rounded">pdfs.json</code></span>
+        <button onclick="closePdfModal()" class="px-4 py-1.5 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-300 font-semibold transition">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

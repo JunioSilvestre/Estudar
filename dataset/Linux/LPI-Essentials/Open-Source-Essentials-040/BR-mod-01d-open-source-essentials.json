@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-01d-open-source-essentials",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Licenciamento e Comunidade Open Source",
+      "question": "Pergunta de teste para o módulo Open Source Essentials",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada para validação da certificação LPI Open Source Essentials."
+    }
+  ]
+}

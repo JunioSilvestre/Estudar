@@ -1,0 +1,478 @@
+LinuxEssentials Objectives V1.6(PT-BR)
+
+
+
+Contents
+1	Apresentação e Oficinas de Desenvolvimento de Exames
+2	FAQ
+3	Descrição Mínima do Candidato Qualificado
+4	Informação da Versão
+5	Anexos
+6	Traduções de objetivos
+7	Objetivos
+7.1	Tópico 1: A comunidade Linux e a carreira Open Source (peso: 7)
+7.1.1	1.1 A evolução do Linux e sistemas operacionais populares
+7.1.2	1.2 Principais Aplicações Open Source
+7.1.3	1.3 Entendendo o Software Open Source e suas Licenças
+7.1.4	1.4 Habilidades ICT e trabalhando no Linux
+7.2	Tópico 2: Encontrando seu caminho em um Sistema Linux (peso: 9)
+7.2.1	2.1 O básico sobre a linha de comando
+7.2.2	2.2 Usando a linha de comando para conseguir ajuda
+7.2.3	2.3 Usando diretórios e listando arquivos
+7.2.4	2.4 Criando, Movendo e Deletando Arquivos
+7.3	Tópico 3: O Poder da Linha de Comando (peso: 9)
+7.3.1	3.1 Empacotando arquivos na linha de comando
+7.3.2	3.2 Pesquisando e extraindo dados de arquivos
+7.3.3	3.3 Transformando comandos em Scripts
+7.4	Tópico 4: O Sistema Operacional Linux (peso: 8)
+7.4.1	4.1 Escolhendo um Sistema Operacional
+7.4.2	4.2 Entendendo o Hardware do Computador
+7.4.3	4.3 Onde os dados são armazenados
+7.4.4	4.4 Seu Computador na Rede
+7.5	Tópico 5: Segurança e Permissões de Arquivos (peso: 7)
+7.5.1	5.1 Segurança Básica e Identificação de Tipos de Usuários
+7.5.2	5.2 Criando Usuários e Grupos
+7.5.3	5.3 Gerenciando permissões e donos de arquivos
+7.5.4	5.4 Diretórios e arquivos especiais
+Apresentação e Oficinas de Desenvolvimento de Exames
+A descrição de todo o programa Linux Essentials é apresentada aqui.
+
+O propósito da Certificação Linux Essentials é definir o conhecimento básico necessário para o uso competente de um desktop ou dispositivo móvel com o sistema operacional Linux instalado. O programa Linux Essentials associado irá guiar e incentivar jovens (e todos aqueles que estão conhecendo Linux e outros softwares de código livre e aberto) a entender o papel do Linux e do Software Livre no contexto amplo da indústria de tecnologia da informação.
+
+FAQ
+Perguntas e respostas sobre o programa e o exame Linux Essentials estão listadas aqui.
+
+Descrição Mínima do Candidato Qualificado
+Apresentamos, aqui, a descrição de um candidato que está apenas minimamente qualificado para passar no exame LPI Linux Essentials. Essa pessoa hipotética é chamada de Candidato Minimamente Qualificado (do inglês, MQC - Minimally Qualified Candidate). Os padrões do exame Linux Essentials estão configurados de maneira que essa pessoa (e outras ainda mais capazes) podem ser certificadas, mas qualquer outra que for menos capaz não será certificada.
+
+O candidato de sucesso deve ter o conhecimento básico do mercado de Linux e Software Livre e o conhecimento dos aplicativos mais populares em Software Livre. O candidato deve conhecer os principais componentes do sistema operacional Linux e ter proficiência técnica para trabalhar com o Linux na linha de comando. O MQC tem conhecimento básico de tópicos relacionados à segurança e administração, tais como a gestão de usuários e grupos e usar a linha de comando na configuração de permissões. Aquele que possui o certificado Linux Essentials é, muito provavelmente, o usuário de alto nível de um ambiente Linux.
+
+O Portador de um Certificado Linux Essentials, tipicamente:
+
+tem um conhecimento básico das várias comunidades e licenças de software livre e de código aberto (FOSS - Free and Open Source Software);
+entende os conceitos básicos de processos, programas e os componentes de um sistema operacional;
+tem conhecimento básico do hardware de um computador;
+tem uma visão básica de segurança de sistema, usuários, grupos e permissões de arquivos em diretórios públicos e privados;
+tem o entendimento básico de como tornar um sistema acessível e é capaz de conectá-lo a outros computadores um uma rede local (LAN - Local Area Network);
+demonstra o conhecimento de aplicações em código livre e aberto no ambiente de trabalho e sabe quais são os equivalentes aos de software fechado;
+sabe navegar pelo sistema em um desktop Linux e onde procurar ajuda;
+tem habilidade rudimentar para trabalhar na linha de comando e com arquivos;
+faz simples cópias de segurança (backups) e as restaura;
+é capaz de usar um editor em modo texto, chamado a partir da linha de comando;
+sabe o que é a compressão de arquivos;
+tem a habilidade de criar e executar scripts simples.
+Informação da Versão
+A versão desses objetivos é a 1.6.
+
+Há também um sumário e informações detalhadas sobre as mudanças da versão dos objetivos 1.5 para a 1.6.
+
+Os objetivos da versão 1.5 podem ser encontrados aqui.
+
+Anexos
+Atualmente não há anexos.
+
+Traduções de objetivos
+As seguintes traduções de objetivos estão disponíveis nesta wiki:
+
+English
+Brazilian Portuguese
+Chinese (Simplified)
+Chinese (Traditional)
+Dutch
+French
+German
+Italian
+Japanese
+Spanish
+Objetivos
+Tópico 1: A comunidade Linux e a carreira Open Source (peso: 7)
+1.1 A evolução do Linux e sistemas operacionais populares
+Peso
+
+2
+Descrição
+
+Conhecimento de desenvolvimento em Linux e suas principais distribuições.
+
+Áreas chave de conhecimento:
+
+Distribuições
+Sistemas Embarcados
+Linux na Nuvem
+Segue uma lista parcial dos arquivos, termos e utilitários utilizados:
+
+Android
+Debian, Ubuntu (LTS)
+CentOS, openSUSE, SUSE, Red Hat
+Linux Mint, Scientific Linux
+Raspberry Pi, Raspbian
+1.2 Principais Aplicações Open Source
+Peso
+
+2
+Descrição
+
+Reconhecimento das aplicações principais, bem como seu desenvolvimento e seus usos.
+
+Áreas chave de conhecimento:
+
+Aplicações Desktop
+Aplicações em Servidores
+Linguagens de desenvolvimento
+Ferramentas de gerenciamento de pacotes e repositórios
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+OpenOffice.org, LibreOffice, Thunderbird, Firefox, GIMP
+Apache HTTPD, NGINX, MySQL, NFS, Samba
+C, Java, Perl, shell, Python, PHP, Javascript
+dpkg, apt-get, rpm, yum
+Nextcloud, ownCloud
+1.3 Entendendo o Software Open Source e suas Licenças
+Peso
+
+1
+Descrição
+
+Comunidades abertas e licenciamento de software Open Source para negócios.
+
+Áreas chave de conhecimento:
+
+Filosofia do Código Aberto
+Licenciamento
+Free Software Foundation (FSF), Open Source Initiative (OSI)
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+GPL, BSD, Creative Commons, Copyleft, Permissive
+Free Software, Open Source Software, FOSS, FLOSS
+Modelos de negócios Open Source
+1.4 Habilidades ICT e trabalhando no Linux
+Peso
+
+2
+Descrição
+
+Habilidades básicas em TIC (Tecnologia da Informação e Comunicação) e trabalhando no linux.
+
+Áreas chave de conhecimento:
+
+Habilidades no Desktop
+Chegando à linha de comando
+Usos industriais para Linux, computação em nuvem e virtualização
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+Usando um navegador, questões de privacidade, opções de configuração, procurando na web e salvando conteúdo
+Terminal e Console
+Senhas
+Questões e ferramentas relacionadas à privacidade
+Uso de aplicações Open Source populares em apresentações e projetos
+Tópico 2: Encontrando seu caminho em um Sistema Linux (peso: 9)
+2.1 O básico sobre a linha de comando
+Peso
+
+3
+Descrição
+
+Básico de como usar a linha de comando no Linux
+
+Áreas chave de conhecimento:
+
+Shell básico
+Sintaxe da linha de comando
+Variáveis
+Globbing (Englobamento)
+Uso de aspas
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+Bash
+echo
+history
+Variável de ambiente PATH
+export
+type
+2.2 Usando a linha de comando para conseguir ajuda
+Peso
+
+2
+Descrição
+
+Rodando comandos de ajuda e de navegação de vários sistemas de ajuda.
+
+
+
+Áreas chave de conhecimento:
+
+Man
+Info
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+man
+info
+páginas Man
+/usr/share/doc/
+locate
+2.3 Usando diretórios e listando arquivos
+Peso
+
+2
+Descrição
+
+Navegação no diretório home e nos diretórios do sistema. Listando arquivos em vários locais.
+
+
+
+Áreas chave de conhecimento:
+
+Arquivos, diretórios
+Arquivos e diretórios ocultos
+Home
+Caminhos relativos e absolutos
+
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+Opções comuns para ls
+Listagens recursivas
+cd
+. e ..
+home e ~
+2.4 Criando, Movendo e Deletando Arquivos
+Peso
+
+2
+Descrição
+
+Criar, mover e deletar arquivos e diretórios dentro do diretório home.
+
+
+
+Áreas chave de conhecimento:
+
+Arquivos e diretórios
+Uso de maiúsculas e minúsculas
+Englobamento e uso de aspas
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+mv, cp, rm, touch
+mkdir, rmdir
+Tópico 3: O Poder da Linha de Comando (peso: 9)
+3.1 Empacotando arquivos na linha de comando
+Peso
+
+2
+Descrição
+
+Empacotando arquivos no diretório home.
+
+Áreas chave de conhecimento:
+
+Arquivos, diretórios
+Pacotes, compressão
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+tar
+Opções comuns do tar
+gzip, bzip2
+zip, unzip
+3.2 Pesquisando e extraindo dados de arquivos
+Peso
+
+3
+Descrição
+
+Pesquisar e extrair dados de arquivos no diretório home.
+
+Áreas chave de conhecimento:
+
+Pipes da linha de comando
+Redirecionamento I/O
+Expressões regulares básicas utilizando ., [ ], *, e ?
+
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+grep
+less
+cat, head, tail
+sort
+cut
+wc
+3.3 Transformando comandos em Scripts
+Peso
+
+4
+Descrição
+
+Tornando comandos repetitivos em scripts simples.
+
+
+
+Áreas chave de conhecimento:
+
+Shell scripting básico
+Reconhecimento de editores de texto comuns (vi e nano).
+
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+#! (shebang)
+/bin/bash
+Variáveis
+Argumentos
+loops for
+echo
+Exit status
+Tópico 4: O Sistema Operacional Linux (peso: 8)
+4.1 Escolhendo um Sistema Operacional
+Peso
+
+1
+Descrição
+
+Conhecimento dos principais sistemas operacionais e distribuições Linux.
+
+
+
+Áreas chave de conhecimento:
+
+Diferenças entre Windows, Mac, Linux
+Gerenciamento do ciclo de vida das distribuições
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+GUI versus linha de comando, configuração desktop
+Ciclos de manutenção, Beta e Stable
+
+
+4.2 Entendendo o Hardware do Computador
+Peso
+
+2
+Descrição
+
+Familiaridade com os componentes utilizados para construir computadores desktop e servidores.
+
+Áreas chave de conhecimento:
+
+Hardware
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+Placas-mãe, processadores, fontes, drives ópticos, periféricos
+Discos-rígidos e partições, /dev/sd*
+Drivers
+
+
+4.3 Onde os dados são armazenados
+Peso
+
+3
+Descrição
+
+Onde vários tipos de informações são armazenadas em um sistema Linux.
+
+
+
+Áreas chave de conhecimento:
+
+Programas e configuração, pacotes e banco de dados de pacotes
+Processos, endereços de memória, mensagens do sistema; logando-se.
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+ps, top, free
+syslog, dmesg
+/etc/, /var/log/
+/boot/, /proc/, /dev/, /sys/
+4.4 Seu Computador na Rede
+Peso
+
+2
+Descrição
+
+Consultando informações vitais de configuração de rede e determinando os requisitos básicos para um computador em uma LAN.
+
+Áreas chave de conhecimento:
+
+Internet, rede, roteadores
+Consultando configuração do cliente DNS
+Consultando configuração da rede
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+route, ip route show
+ifconfig, ip addr show
+netstat, ip route show
+/etc/resolv.conf, /etc/hosts
+IPv4, IPv6
+ping
+host
+Tópico 5: Segurança e Permissões de Arquivos (peso: 7)
+5.1 Segurança Básica e Identificação de Tipos de Usuários
+Peso
+
+2
+Descrição
+
+Vários tipos de usuários em um sistema Linux.
+
+
+
+Áreas chave de conhecimento:
+
+Root e Usuários padrão
+Usuários do sistema
+
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+/etc/passwd, /etc/group
+id, who, w
+sudo, su
+5.2 Criando Usuários e Grupos
+Peso
+
+2
+Descrição
+
+Criando usuários e grupos em um sistema Linux.
+
+
+
+Áreas chave de conhecimento:
+
+Comandos de usuários e de grupos
+IDs de usuários
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+/etc/passwd, /etc/shadow, /etc/group, /etc/skel/
+id, last
+useradd, groupadd
+passwd
+5.3 Gerenciando permissões e donos de arquivos
+Peso
+
+2
+Descrição
+
+Entendendo e manipulando permissões e configurações relacionadas a donos de arquivos.
+
+
+
+Áreas chave de conhecimento:
+
+Permissões de arquivos/diretórios e seus donos.
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+ls -l, ls -a
+chmod, chown
+5.4 Diretórios e arquivos especiais
+Peso
+
+1
+Descrição
+
+Arquivos e diretórios especiais em um sistema Linux, incluindo permissões especiais.
+
+
+
+Áreas chave de conhecimento:
+
+Usando arquivos e diretórios temporários
+Links simbólicos
+Segue uma lista parcial de arquivos, termos e utilitários utilizados:
+
+/tmp/, /var/tmp/ e Sticky Bit
+ls -d
+ln -s

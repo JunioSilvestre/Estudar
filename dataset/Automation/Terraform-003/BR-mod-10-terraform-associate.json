@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-10-terraform-associate",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Compreender IaC",
+      "question": "Pergunta de teste para o módulo Terraform Associate",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

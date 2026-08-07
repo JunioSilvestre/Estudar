@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-12-grafana-associate",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Conceitos e Arquitetura do Grafana",
+      "question": "Pergunta de teste para o módulo Grafana Associate",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-06-aws-cloud-practitioner",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Conceitos de Nuvem",
+      "question": "Pergunta de teste para o módulo Cloud Practitioner",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

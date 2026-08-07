@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-12b-prometheus-pca",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Prometheus Associate",
+      "question": "Pergunta de teste para o módulo de estudo Prometheus Associate (PCA).",
+      "correct_answer": "Resposta correta de teste para validação.",
+      "explanation": "Explicação detalhada de teste para o módulo Prometheus Associate."
+    }
+  ]
+}

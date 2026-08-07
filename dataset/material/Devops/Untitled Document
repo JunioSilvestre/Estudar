@@ -1,0 +1,498 @@
+DevOps Tools Engineer Exam 701 Objectives
+Exam Objectives Version: 2.0
+
+Exam Code: 701-200
+
+About Objective Weights: Each objective is assigned a weighting value. The weights indicate the relative importance of each objective on the exam. Objectives with higher weights will be covered in the exam with more questions.
+
+Purchase Voucher
+
+Contents
+1 Introduction
+2 Candidate Description
+3 Version Information
+4 Translations of Objectives
+5 Exams and Requirements
+6 Objectives
+6.1 701 Software Engineering
+6.1.1 701.1 Modern Software Development (weight: 6)
+6.1.2 701.2 Standard Components and Platforms for Software (weight: 3)
+6.1.3 701.3 Source Code Management (weight: 6)
+6.1.4 701.4 Continuous Integration and Continuous Delivery (weight: 3)
+6.1.5 701.5 Software Composition, Licensing and Open Source (weight: 2)
+6.2 702 Application Container
+6.2.1 702.1 Application Container Management (weight: 5)
+6.2.2 702.2 Container Orchestration (weight: 3)
+6.2.3 702.3 Container Image Building (weight: 5)
+6.3 703 Kubernetes
+6.3.1 703.1 Kubernetes Architecture and Usage (weight: 4)
+6.3.2 703.2 Basic Kubernetes Operations (weight: 7)
+6.3.3 703.3 Kubernetes Package Management (weight: 2)
+6.4 704 Security and Observability
+6.4.1 704.1 Cloud Native Security (weight: 4)
+6.4.2 704.2 Prometheus Monitoring (weight: 6)
+6.4.3 704.3 Log Management and Analysis (weight: 2)
+6.4.4 704.4 Tracing (weight: 2)
+Introduction
+This is a required exam for the Linux Professional Institute DevOps Tools Engineer certification. It covers basic skills in using tools commonly used to implement DevOps.
+
+This page covers the currently released objective for the Linux Professional Institute DevOps Tools Engineer certification.
+
+
+
+Candidate Description
+The certification holder is either a professional software developer or a professional system administrator who is involved in the production of IT solutions which require a robust and efficient process to get from original source materials to a final deployed or distributable product or service with a particular focus on using Open Source technology. The certification holder has the ability to create, deliver and operate software using collaborative methods which address aspects of software development as well as system administration. In particular, the certification holder is adept at bridging the gap between the development and operations of a solution or product. The certification holder understands how these tools facilitate development and operational tasks in the delivery of stable, scalable and up to date services to users and customers.
+
+
+
+Version Information
+These objectives are A DRAFT FOR version 2.0.0.
+
+
+
+Translations of Objectives
+The following translations of the objectives are available on this wiki:
+
+English
+
+
+Exams and Requirements
+The Linux Professional Institute DevOps Tools Engineer certification is awarded after passing this exam. There is no requirement to possess any other certifications. However, LPI recommends that all Linux Professional Institute DevOps Tools Engineers maintain at least one active certification in either system administration or software development. This certification should be at a level equivalent to LPIC-1.
+
+
+
+Objectives
+701 Software Engineering
+701.1 Modern Software Development (weight: 6)
+Weight
+
+6
+Description
+
+Candidates should be able to design software solutions suitable for modern runtime environments. Candidates should understand how services handle data persistence, sessions, status information, transactions, concurrency, security, performance, availability, scaling, load balancing, messaging, monitoring and APIs. Furthermore, candidates should understand the implications of agile and DevOps on software development.
+
+Key Knowledge Areas:
+
+Understand and design service based applications
+Understand common API concepts and standards
+Understand aspects of data storage, service status and session handling
+Understand the properties of cloud native applications
+Design software to be run in containers
+Design software to be deployed to cloud services
+Awareness of risks in the migration and integration of monolithic legacy software
+Awareness of database schema updates and database migrations
+Understand the concept of agile software development
+Understand the concept of DevOps and its implications to software developers and operators
+The following is a partial list of the used files, terms and utilities:
+
+REST, JSON
+Service Oriented Architectures (SOA)
+Microservices
+Immutable servers
+Loose coupling
+Test-driven development
+
+
+701.2 Standard Components and Platforms for Software (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should understand services offered by common cloud platforms. They should be able to include these services in their application architectures and deployment toolchains and understand the required service configurations. Furthermore, the candidate should be aware of the commonly used open source implementations of the various services.
+
+Key Knowledge Areas:
+
+Features and concepts of object storage
+Features and concepts of relational and NoSQL databases
+Features and concepts of message brokers and message queues
+Features and concepts of big data services
+Features and concepts of computing services / IaaS
+Features and concepts of application runtimes / PaaS
+Features and concepts of hosted applications / SaaS
+Features and concepts of function applications / FaaS
+Features and concepts of content delivery networks
+Awareness of identity and access management in cloud services
+The following is a partial list of the used files, terms and utilities:
+
+Objects, Buckets, ACLs, S3
+MariaDB, MySQL, PostgreSQL,
+Redis, MongoDB, InfluxDB
+Elasticsearch and OpenSearch
+Kafka, MQTT
+IAM
+
+
+701.3 Source Code Management (weight: 6)
+Weight
+
+6
+Description
+
+Candidates should be able to use Git to manage and share source code. This includes creating and contributing to a repository as well as the usage of tags, branches and remote repositories. Furthermore, the candidate should be able to merge files and resolve merging conflicts.
+
+Key Knowledge Areas:
+
+Understand Git concepts and repository structure
+Manage files within a Git repository
+Manage branches and tags
+Work with remote repositories and branches as well as submodules
+Merge files and branches
+Awareness of SVN and CVS, including concepts of centralized and distributed SCM solutions
+The following is a partial list of the used files, terms and utilities:
+
+git
+.gitignore
+
+
+701.4 Continuous Integration and Continuous Delivery (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should understand the principles and components of a continuous integration and continuous delivery pipeline. Candidates should understand how CI/CD pipelines support the development and release of software and how they integrate with source code repositories and the target runtime environment. Furthermore, candidates should be aware of commonly used CI/CD platforms.
+
+Key Knowledge Areas:
+
+Understand the concepts of Continuous Integration and Continuous Delivery
+Understand the components of a CI/CD pipeline, including builds, unit, integration and acceptance tests, artifact management, delivery and deployment
+Understand the concepts of GitOps
+Understand the role of build artifacts and caches
+Understand deployment best practices
+Understand semantic versioning
+Awareness of Jenkins and Gitlab CI
+Awareness of Artifactory and Nexus
+The following is a partial list of the used files, terms and utilities:
+
+Declarative Pipeline
+Production, Staging and Development Environments
+Feature toggles
+Preview releases
+Reconciliation loops
+A/B testing
+Blue-green and canary deployment
+
+
+701.5 Software Composition, Licensing and Open Source (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the principles of software licenses. This includes how software from multiple authors and sources are combined to implement a specific service and how licensing affects such compositions. Furthermore, the candidate should understand the concepts of open source software, including the most important aspects of common open source licenses.
+
+Key Knowledge Areas:
+
+Understand how an application is build out of multiple software components
+Awareness of dependency managers like NPM, gradle or composer
+Understand the concepts proprietary and open source software
+Understand the concepts of open source software licenses
+Awareness of commonly used open source licenses (GPL, LGPL, AGPL, BSD, MIT and Apache License)
+Awareness of license compatibility and multi licensing
+The following is a partial list of the used files, terms and utilities:
+
+Software libraries
+Software Bill Of Materials
+Proprietary software
+Open Source Software and Free Software
+Copyleft open source software licenses
+Permissive open source software licenses
+
+
+702 Application Container
+702.1 Application Container Management (weight: 5)
+Weight
+
+5
+Description
+
+Candidates should be able to operate Docker and Podman containers. This includes creating and interacting with containers as well as connecting containers to networks and storage volumes.
+
+Key Knowledge Areas:
+
+Understand the Docker and Podman architecture
+Use existing images from an OCI registry
+Operate and access containers
+Understand Docker networking concepts, including overlay networks
+Understand the concepts of DNS service discovery
+Connect container to container networks and use DNS for service discovery
+Understand Docker storage concepts
+Use Docker volumes for shared and persistent container storage
+Awareness of rootless containers
+The following is a partial list of the used files, terms and utilities:
+
+docker container *
+docker network *
+docker image *
+docker volume *
+podman container *
+podman network *
+podman image *
+podman volume *
+
+
+702.2 Container Orchestration (weight: 3)
+Weight
+
+3
+Description
+
+Candidates should be able to run and manage multiple containers that work together to provide a service. This includes the orchestration of Docker containers using Docker Compose.
+
+Key Knowledge Areas:
+
+Understand the application model of Docker Compose and Podman Compose
+Create and run Docker Compose Files (version 3 or later)
+Define services, networks and volumes, along with their commonly used properties, in Docker Compose files
+Use Docker Compose to update running containers to newer images
+The following is a partial list of the used files, terms and utilities:
+
+docker compose
+podman-compose
+docker-compose.yml
+
+
+702.3 Container Image Building (weight: 5)
+Weight
+
+5
+Description
+
+Candidates should be able to set up a runtime environment for containers. This includes running containers on a local workstation as well as setting up a dedicated container host. Furthermore, candidates should be aware of other container infrastructures, storage, networking and container specific security aspects. This objective covers the feature set of Docker version 17.06 or later and Docker Machine 0.12 or later.
+
+Candidates should be able to build OCI container images. This includes creating Dockerfiles or Containerfiles, building containers and publishing container images on an existing OCI registry.
+
+Key Knowledge Areas:
+
+Create Dockerfiles and build images from Dockerfiles
+Understand OCI image names
+Upload images to a Docker registry
+Understand the principles of image scanners
+Understand security risks of container virtualization and container images and how to mitigate them
+Awareness Docker buildx, Docker Buildkit, Podman build and Buildah
+The following is a partial list of the used files, terms and utilities:
+
+docker image *
+docker login
+Dockerfile
+Containerfile
+.dockerignore
+FROM
+COPY
+ADD
+RUN
+VOLUME
+EXPOSE
+USER
+WORKDIR
+ENV
+ARG
+CMD
+ENTRYPOINT
+
+
+703 Kubernetes
+703.1 Kubernetes Architecture and Usage (weight: 4)
+Weight
+
+4
+Description
+
+Candidates should understand the major components of Kubernetes. Furthermore, candidates should be able to interact with an existing Kubernetes platform to retrieve information about the current Kubernetes state, and create, modify and delete resources.
+
+Key Knowledge Areas:
+
+Understand the major components and services in a Kubernetes cluster
+Configure kubectl to use an existing Kubernetes cluster
+Use kubectl to get information about Kubernetes resources
+Use kubectl to create, modify and delete resources
+Awareness of Kubernetes Operators
+Partial list of the used files, terms and utilities:
+
+API-Server, etcd, Controller Manager, Scheduler
+~/.kube/config
+kubectl get
+kubectl describe
+kubectl apply
+kubectl create
+kubectl run
+kubectl expose
+kubectl scale
+kubectl set
+kubectl edit
+kubectl explain
+kubectl config
+kubectl logs
+kubectl exec
+
+
+703.2 Basic Kubernetes Operations (weight: 7)
+Weight
+
+7
+Description
+
+Candidates should be able to set up applications running on Kubernetes. This includes understanding the most important kinds of Kubernetes resources, including their most important properties.
+
+Key Knowledge Areas:
+
+Understanding the use of YAML files to declare Kubernetes resources
+Understanding the principle of a Pod
+Understanding how to use Deployments, including scaling and rolling updates
+Understanding how to make services accessible using Services and Ingress
+Understanding how to use storage using PersistentVolumeClaims
+Awareness of other Kubernetes orchestration resources, i.e. DaemonSets, StatefulSets, Jobs and CronJobs
+Partial list of the used files, terms and utilities:
+
+Pods
+ReplicaSets
+Deployments
+Services
+Ingress
+PersistentVolumeClaims
+ConfigMaps
+Secrets
+
+
+703.3 Kubernetes Package Management (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should be able to use Helm to install software on Kubernetes.
+
+Key Knowledge Areas:
+
+Understanding the concepts of Charts, Releases and Values
+Installation, upgrading and uninstalling software using Helm
+Specify custom values to configure software installed using Helm
+Awareness of Kustomize
+Awareness of Flux CD and Argo CD
+The following is a partial list of the used files, terms and utilities:
+
+helm install
+helm upgrade
+helm list
+helm uninstall
+values.yaml
+
+
+704 Security and Observability
+704.1 Cloud Native Security (weight: 4)
+Weight
+
+4
+Description
+
+Candidates should understand the major kinds of IT threats against cloud native infrastructure, as well as common approaches to prevent such attacks and mitigate their risk. This includes handling security aspects of foreign software as well as common standards for authentication and authorization.
+
+Key Knowledge Areas:
+
+Understand core IT infrastructure components and their role in deployment
+Understand common IT infrastructure security risks and ways to mitigate them
+Understand supply chain security and dependencies on foreign code
+Understand common application security risks and ways to mitigate them
+Understand the concepts of asymmetric cryptography and digital certificates
+Understand the principles of common standard for authentication and authorization
+Understand how to manage user credentials and how to use advanced authentication technologies
+The following is a partial list of the used files, terms and utilities:
+
+Service exploits, brute force attacks, and denial of service attacks
+Security updates, packet filtering, load balancers and application gateways
+Cross site scripting, verbose error reports
+API authentication
+Buffer overflows, SQL injections
+API access, permissions, verbosity and rate limits
+CORS headers and CSRF tokens
+Common Vulnerabilities and Exposures (CVE)
+CVE IDs and CVE scores
+Public key, private key, X.509 certificate, certificate authority
+TLS, transport encryption
+Single sign-on (SSO)
+OAuth2, OpenID Connect and SAML
+Two-factor authentication (2FA) and multi-factor authentication (MFA)
+One-time passwords (OTP), time-based one-time passwords (TOTP)
+Authenticator applications
+Password hashing and salting
+
+
+704.2 Prometheus Monitoring (weight: 6)
+Weight
+
+6
+Description
+
+Candidates should understand the role of monitoring for application and IT infrastructures. They should be familiar with the architecture and components of Prometheus. The candidate should be able to set up Prometheus and use PromQL to query monitoring data.
+
+Key Knowledge Areas:
+
+Understand goals of IT operations and service provisioning, including nonfunctional properties such as availability, latency, responsiveness
+Understand and identify metrics and indicators to monitor and measure the technical functionality of a service
+Understand and identify metrics and indicators to monitor and measure the logical functionality of a service
+Understand the concepts of Prometheus, including Exporters, Pushgateway, Alertmanager and Grafana
+Understand the architecture of Prometheus
+Set up Prometheus and configure file based service discovery
+Monitor containers and microservices using Prometheus
+Use PromQL to retrieve log data
+Aggregate metrics for specific labels
+Aggregate metrics over time
+Awareness of common exporters
+Awareness of application instrumentation
+Awareness of Thanos
+The following is a partial list of the used files, terms and utilities:
+
+Prometheus, Exporters, AlertManager, Grafana
+Label selectors
+Instant vectors and aggregate functions
+Range vectors and aggregate functions
+Node Exporter and Blackbox Exporter
+
+
+704.3 Log Management and Analysis (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the role of log files in operations and troubleshooting. They should be understand the major properties and features of commonly used Open Source logging stacks.
+
+Key Knowledge Areas:
+
+Understand how application and system logging works
+Understand the architecture and features of commonly used open source logging stacks
+Awareness of syslogd and systemd-journald
+The following is a partial list of the used files, terms and utilities:
+
+Elasticsearch and OpenSearch
+Logstash and filebeat
+Fluentd and FluentBit
+Kibana
+Loki and promtail
+Grafana
+Graylog2
+
+
+704.4 Tracing (weight: 2)
+Weight
+
+2
+Description
+
+Candidates should understand the concepts and importance of tracing and be familiar with the architecture of OpenTelemetry.
+
+Key Knowledge Areas:
+
+Understanding the concepts of tracing
+Understanding the concepts of OpenTelemetry
+Awareness of commonly used open source telemetry analysis tools
+Awareness of application instrumentation
+The following is a partial list of the used files, terms and utilities:
+
+OpenTelemetry
+Spans and Distributed Traces
+Contexts, Span and Trace IDs
+Span attributes, events, links, status and kind
+Grafana Tempo
+Jaeger

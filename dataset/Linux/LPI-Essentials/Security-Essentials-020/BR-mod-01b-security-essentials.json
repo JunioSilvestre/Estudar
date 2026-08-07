@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-01b-security-essentials",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Segurança de Dados e Sistemas",
+      "question": "Pergunta de teste para o módulo Security Essentials",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada para validação da certificação LPI Security Essentials."
+    }
+  ]
+}

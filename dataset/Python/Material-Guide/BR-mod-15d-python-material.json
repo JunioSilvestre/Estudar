@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-15d-python-material",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Material & Guia Python",
+      "question": "Pergunta de teste para o módulo de estudo Material & Guia Python (PY-DOC).",
+      "correct_answer": "Resposta correta de teste para validação.",
+      "explanation": "Explicação detalhada de teste para o módulo Material & Guia Python."
+    }
+  ]
+}

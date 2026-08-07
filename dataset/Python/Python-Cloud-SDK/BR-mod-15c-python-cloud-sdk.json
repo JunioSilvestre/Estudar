@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-15c-python-cloud-sdk",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Python Cloud SDK (boto3)",
+      "question": "Pergunta de teste para o módulo de estudo Python Cloud SDK (boto3) (PySDK).",
+      "correct_answer": "Resposta correta de teste para validação.",
+      "explanation": "Explicação detalhada de teste para o módulo Python Cloud SDK (boto3)."
+    }
+  ]
+}

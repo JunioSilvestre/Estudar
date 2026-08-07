@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-11-github-gitlab-ci",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Conceitos de CI/CD",
+      "question": "Pergunta de teste para o módulo GitHub Actions / GitLab CI",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}

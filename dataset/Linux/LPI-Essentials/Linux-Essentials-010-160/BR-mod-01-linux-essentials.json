@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-01-linux-essentials",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Linux e Open Source",
+      "question": "Pergunta de teste para o módulo Linux Essentials",
+      "correct_answer": "Resposta correta de teste",
+      "explanation": "Explicação de teste gerada automaticamente para validação do layout."
+    }
+  ]
+}
