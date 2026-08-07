@@ -1066,7 +1066,23 @@
         }
       } catch (e) {}
 
-      pdfs = Array.from(pdfMap.values());
+      const candidatePdfs = Array.from(pdfMap.values());
+
+      // 3. Validação em Tempo Real: checar se o arquivo .pdf realmente existe no servidor/disco
+      const existingPdfs = [];
+      await Promise.all(candidatePdfs.map(async (pdf) => {
+        try {
+          const pdfFile = (pdf.file.startsWith('/') || pdf.file.includes('://')) ? pdf.file : `${pdfFolder}/${pdf.file}`;
+          const headRes = await fetch(pdfFile, { method: 'HEAD' });
+          if (headRes.ok) {
+            existingPdfs.push(pdf);
+          }
+        } catch (e) {
+          // Se falhou ao buscar o arquivo, considera deletado
+        }
+      }));
+
+      pdfs = existingPdfs;
 
       if (badge) badge.innerText = pdfs.length || 0;
 
