@@ -1,0 +1,45 @@
+{
+  "module_id": "BR-mod-exemplo-completo",
+  "title": {
+    "pt": "Modelo Completo de Questão para Certificação",
+    "en": "Master Complete Question Template for Certification"
+  },
+  "description": {
+    "pt": "Estrutura mestre demonstrando todos os recursos visuais: negrito, tabelas, blocos de código, alertas, listas e referências oficiais.",
+    "en": "Master structure demonstrating all visual features: bold, tables, code blocks, alerts, lists, and official references."
+  },
+  "questions": [
+    {
+      "id": "Q-101",
+      "question_number": "01",
+      "category": "Gerenciamento de Arquivos e Permissões",
+      "difficulty": "Intermediário",
+      "starred": false,
+      "question": {
+        "pt": "Como administrador do sistema Linux, você precisa alterar recursivamente as permissões do diretório `/var/www/html` para que o usuário **www-data** tenha acesso total e o grupo tenha apenas leitura.\n\n### 📋 Cenário e Requisitos:\nObserve a tabela abaixo com as permissões desejadas:\n\n| Alvo | Permissão Octal | Leitura (r) | Escrita (w) | Execução (x) |\n| :--- | :---: | :---: | :---: | :---: |\n| **Dono (Dono)** | `7` | `r` | `w` | `x` |\n| **Grupo (Group)** | `5` | `r` | `-` | `x` |\n| **Outros (Others)** | `0` | `-` | `-` | `-` |\n\nQual comando `chmod` e `chown` combinado deve ser executado para aplicar essas configurações de forma **recursiva**?",
+        "en": "As a Linux system administrator, you need to recursively change the permissions of the `/var/www/html` directory so that the **www-data** user has full access and the group has read-only access.\n\nWhich `chmod` and `chown` command combination should be executed recursively?"
+      },
+      "code_snippet": "# Exemplo de verificação atual de permissões no terminal:\nls -ld /var/www/html\n# drwxr-xr-x 2 root root 4096 Aug 7 19:30 /var/www/html",
+      "correct_answer": {
+        "pt": "sudo chown -R www-data:www-data /var/www/html && sudo chmod -R 750 /var/www/html",
+        "en": "sudo chown -R www-data:www-data /var/www/html && sudo chmod -R 750 /var/www/html"
+      },
+      "explanation": {
+        "pt": "### 💡 Explicação Detalhada e Análise Técnica\n\nPara atender aos requisitos com segurança, utilize a combinação dos comandos `chown` e `chmod` com a flag `-R` (recursivo):\n\n#### 1. Alteração de Proprietário (`chown`):\n* **Comando:** `sudo chown -R www-data:www-data /var/www/html`\n* **Efeito:** Define o usuário `www-data` e o grupo `www-data` como proprietários de todas as pastas e arquivos.\n\n#### 2. Permissão Octal (`chmod 750`):\n* **7 (Dono):** `rwx` (4 + 2 + 1 = 7) → Leitura, escrita e execução total.\n* **5 (Grupo):** `r-x` (4 + 0 + 1 = 5) → Leitura e execução para listar diretórios.\n* **0 (Outros):** `---` (0) → Nenhum acesso para usuários não autorizados.\n\n> [!NOTE]\n> A flag `-R` é **obrigatória** quando se deseja aplicar as alterações em todos os subdiretórios e arquivos existentes dentro da pasta.\n\n> [!TIP]\n> Em ambientes de produção web como Nginx ou Apache, o valor `750` ou `755` é recomendado para evitar expor dados sensíveis para usuários locais sem privilégios.",
+        "en": "### 💡 Detailed Technical Explanation\n\nTo securely meet the requirements, use the combination of `chown` and `chmod` commands with the `-R` (recursive) flag."
+      },
+      "official_references": [
+        {
+          "title": "Documentação Oficial GNU Coreutils - chmod",
+          "url": "https://www.gnu.org/software/coreutils/manual/html_node/chmod-invocation.html",
+          "type": "doc"
+        },
+        {
+          "title": "Manual Man-Page do Linux (chown)",
+          "url": "https://man7.org/linux/man-pages/man1/chown.1.html",
+          "type": "man"
+        }
+      ]
+    }
+  ]
+}
