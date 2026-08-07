@@ -1,1 +1,7 @@
-[]
+[
+  {
+    "title": "Linux Pocket Guide 3rd Edition",
+    "file": "Linux_Pocket_Guide_3rd_Edition.pdf",
+    "description": "Manual essencial de comandos Linux, sintaxe e shell scripting."
+  }
+]
