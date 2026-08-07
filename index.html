@@ -1025,7 +1025,9 @@
       
       let pdfs = [];
       let pdfFolder = `${modDir}/pdf`;
+      let pdfMap = new Map();
 
+      // 1. Tentar ler catalogados em index.json ou pdfs.json
       try {
         let res = await fetch(`${pdfFolder}/index.json`);
         if (!res.ok) {
@@ -1033,9 +1035,38 @@
           pdfFolder = modDir;
         }
         if (res.ok) {
-          pdfs = await res.json();
+          const list = await res.json();
+          (list || []).forEach(item => {
+            if (item && item.file) pdfMap.set(item.file, item);
+          });
         }
-      } catch (e) { pdfs = []; }
+      } catch (e) {}
+
+      // 2. Auto-Descoberta Dinâmica: varrer HTML de listagem do servidor local se disponível
+      try {
+        const dirRes = await fetch(`${pdfFolder}/`);
+        if (dirRes.ok) {
+          const htmlText = await dirRes.text();
+          const pdfMatches = htmlText.match(/href=["']?([^"'>]+\.pdf)["']?/gi);
+          if (pdfMatches) {
+            pdfMatches.forEach(m => {
+              const raw = m.replace(/href=["']?/i, '').replace(/["']$/, '');
+              const filename = decodeURIComponent(raw.split('/').pop().split('?')[0]);
+              if (filename && filename.endsWith('.pdf') && !pdfMap.has(filename)) {
+                const cleanName = filename.replace(/\.pdf$/i, '').replace(/[-_]+/g, ' ');
+                const title = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                pdfMap.set(filename, {
+                  title: title,
+                  file: filename,
+                  description: `Documento auto-detectado na pasta pdf/${filename}`
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
+
+      pdfs = Array.from(pdfMap.values());
 
       if (badge) badge.innerText = pdfs.length || 0;
 
