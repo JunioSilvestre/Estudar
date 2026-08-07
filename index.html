@@ -299,6 +299,35 @@
       background: #e2e8f0 !important;
     }
 
+    /* ── Mobile Responsive Optimizations (320px - 480px) ─────────────────── */
+    @media (max-width: 480px) {
+      .panel {
+        padding: 16px 14px;
+        gap: 14px;
+        border-radius: 16px;
+      }
+      .panel-title {
+        font-size: 1rem;
+      }
+      .cards {
+        gap: 8px;
+      }
+      .card {
+        padding: 14px 6px;
+        gap: 6px;
+        min-height: 84px;
+      }
+      .card i {
+        font-size: 1.25rem;
+      }
+      .card .tip {
+        font-size: 0.70rem;
+      }
+      .card .second-text {
+        font-size: 0.58rem;
+      }
+    }
+
     @media (max-width: 340px) {
       .cards {
         grid-template-columns: 1fr !important;
