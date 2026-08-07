@@ -14,14 +14,38 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "Fundamentos de Linux e Open Source", "weight": "10%" },
-      { "name": "Linha de comando Linux (Shell)", "weight": "25%" },
-      { "name": "Sistema de arquivos Linux", "weight": "15%" },
-      { "name": "Usuários, grupos e permissões", "weight": "15%" },
-      { "name": "Gerenciamento de software", "weight": "10%" },
-      { "name": "Redes básicas Linux", "weight": "10%" },
-      { "name": "Segurança e boas práticas", "weight": "5%" },
-      { "name": "Hardware, processos e virtualização", "weight": "10%" }
+      {
+        "name": "Fundamentos de Linux e Open Source",
+        "weight": "10%"
+      },
+      {
+        "name": "Linha de comando Linux (Shell)",
+        "weight": "25%"
+      },
+      {
+        "name": "Sistema de arquivos Linux",
+        "weight": "15%"
+      },
+      {
+        "name": "Usuários, grupos e permissões",
+        "weight": "15%"
+      },
+      {
+        "name": "Gerenciamento de software",
+        "weight": "10%"
+      },
+      {
+        "name": "Redes básicas Linux",
+        "weight": "10%"
+      },
+      {
+        "name": "Segurança e boas práticas",
+        "weight": "5%"
+      },
+      {
+        "name": "Hardware, processos e virtualização",
+        "weight": "10%"
+      }
     ]
   },
   {
@@ -39,10 +63,22 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "Segurança de Dados e Armazenamento", "weight": "25%" },
-      { "name": "Segurança de Rede e Comunicações", "weight": "25%" },
-      { "name": "Segurança de Sistemas e Controle de Acesso", "weight": "30%" },
-      { "name": "Criptografia e Cibersegurança", "weight": "20%" }
+      {
+        "name": "Segurança de Dados e Armazenamento",
+        "weight": "25%"
+      },
+      {
+        "name": "Segurança de Rede e Comunicações",
+        "weight": "25%"
+      },
+      {
+        "name": "Segurança de Sistemas e Controle de Acesso",
+        "weight": "30%"
+      },
+      {
+        "name": "Criptografia e Cibersegurança",
+        "weight": "20%"
+      }
     ]
   },
   {
@@ -60,10 +96,22 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "HTML & Estrutura Web", "weight": "30%" },
-      { "name": "CSS & Estilização", "weight": "30%" },
-      { "name": "JavaScript Básico & Lógica", "weight": "25%" },
-      { "name": "Servidores e Tecnologias Web", "weight": "15%" }
+      {
+        "name": "HTML & Estrutura Web",
+        "weight": "30%"
+      },
+      {
+        "name": "CSS & Estilização",
+        "weight": "30%"
+      },
+      {
+        "name": "JavaScript Básico & Lógica",
+        "weight": "25%"
+      },
+      {
+        "name": "Servidores e Tecnologias Web",
+        "weight": "15%"
+      }
     ]
   },
   {
@@ -81,10 +129,22 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "Filosofia e Conceitos de Open Source", "weight": "30%" },
-      { "name": "Licenciamento e Modelos de Negócio", "weight": "30%" },
-      { "name": "Comunidade e Governança", "weight": "25%" },
-      { "name": "Ferramentas Colaborativas", "weight": "15%" }
+      {
+        "name": "Filosofia e Conceitos de Open Source",
+        "weight": "30%"
+      },
+      {
+        "name": "Licenciamento e Modelos de Negócio",
+        "weight": "30%"
+      },
+      {
+        "name": "Comunidade e Governança",
+        "weight": "25%"
+      },
+      {
+        "name": "Ferramentas Colaborativas",
+        "weight": "15%"
+      }
     ]
   },
   {
@@ -102,11 +162,26 @@
     "level": "Intermediário",
     "weight": "10%",
     "areas": [
-      { "name": "Arquitetura do Sistema", "weight": "15%" },
-      { "name": "Instalação e Gerenciamento de Pacotes", "weight": "20%" },
-      { "name": "Comandos GNU e Unix", "weight": "25%" },
-      { "name": "Dispositivos, Sistemas de Arquivos e FHS", "weight": "25%" },
-      { "name": "Shell e Scripts", "weight": "15%" }
+      {
+        "name": "Arquitetura do Sistema",
+        "weight": "15%"
+      },
+      {
+        "name": "Instalação e Gerenciamento de Pacotes",
+        "weight": "20%"
+      },
+      {
+        "name": "Comandos GNU e Unix",
+        "weight": "25%"
+      },
+      {
+        "name": "Dispositivos, Sistemas de Arquivos e FHS",
+        "weight": "25%"
+      },
+      {
+        "name": "Shell e Scripts",
+        "weight": "15%"
+      }
     ]
   },
   {
@@ -124,11 +199,26 @@
     "level": "Intermediário",
     "weight": "10%",
     "areas": [
-      { "name": "Shell, Scripts e Gerenciamento de Dados", "weight": "20%" },
-      { "name": "Interfaces de Usuário e Desktops", "weight": "15%" },
-      { "name": "Tarefas Administrativas (Usuários e Grupos)", "weight": "20%" },
-      { "name": "Serviços Essenciais do Sistema", "weight": "20%" },
-      { "name": "Redes e Segurança", "weight": "25%" }
+      {
+        "name": "Shell, Scripts e Gerenciamento de Dados",
+        "weight": "20%"
+      },
+      {
+        "name": "Interfaces de Usuário e Desktops",
+        "weight": "15%"
+      },
+      {
+        "name": "Tarefas Administrativas (Usuários e Grupos)",
+        "weight": "20%"
+      },
+      {
+        "name": "Serviços Essenciais do Sistema",
+        "weight": "20%"
+      },
+      {
+        "name": "Redes e Segurança",
+        "weight": "25%"
+      }
     ]
   },
   {
@@ -146,8 +236,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Apostilas e Guias LPIC-1", "weight": "50%" },
-      { "name": "Resumos e Cheatsheets", "weight": "50%" }
+      {
+        "name": "Apostilas e Guias LPIC-1",
+        "weight": "50%"
+      },
+      {
+        "name": "Resumos e Cheatsheets",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -165,8 +261,14 @@
     "level": "Prático",
     "weight": "Apoio",
     "areas": [
-      { "name": "Sintaxe Shell e Automação", "weight": "50%" },
-      { "name": "Exercícios e Desafios de Código", "weight": "50%" }
+      {
+        "name": "Sintaxe Shell e Automação",
+        "weight": "50%"
+      },
+      {
+        "name": "Exercícios e Desafios de Código",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -184,9 +286,18 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "Conceitos de Nuvem", "weight": "25%" },
-      { "name": "Arquitetura e Serviços do Azure", "weight": "35%" },
-      { "name": "Gerenciamento e Governança no Azure", "weight": "40%" }
+      {
+        "name": "Conceitos de Nuvem",
+        "weight": "25%"
+      },
+      {
+        "name": "Arquitetura e Serviços do Azure",
+        "weight": "35%"
+      },
+      {
+        "name": "Gerenciamento e Governança no Azure",
+        "weight": "40%"
+      }
     ]
   },
   {
@@ -204,11 +315,26 @@
     "level": "Intermediário",
     "weight": "15%",
     "areas": [
-      { "name": "Gerenciamento de Identidade e Governança", "weight": "15%" },
-      { "name": "Armazenamento", "weight": "15%" },
-      { "name": "Computação no Azure", "weight": "20%" },
-      { "name": "Redes Virtuais", "weight": "30%" },
-      { "name": "Monitoramento e Backup", "weight": "20%" }
+      {
+        "name": "Gerenciamento de Identidade e Governança",
+        "weight": "15%"
+      },
+      {
+        "name": "Armazenamento",
+        "weight": "15%"
+      },
+      {
+        "name": "Computação no Azure",
+        "weight": "20%"
+      },
+      {
+        "name": "Redes Virtuais",
+        "weight": "30%"
+      },
+      {
+        "name": "Monitoramento e Backup",
+        "weight": "20%"
+      }
     ]
   },
   {
@@ -226,12 +352,30 @@
     "level": "Avançado",
     "weight": "3%",
     "areas": [
-      { "name": "Estratégia de Instrumentação e Logging", "weight": "15%" },
-      { "name": "Estratégia de SRE (Site Reliability Engineering)", "weight": "10%" },
-      { "name": "Práticas de Segurança e Compliance", "weight": "15%" },
-      { "name": "Controle de Fonte (Git)", "weight": "15%" },
-      { "name": "Integração Contínua (CI)", "weight": "20%" },
-      { "name": "Entrega Contínua (CD)", "weight": "25%" }
+      {
+        "name": "Estratégia de Instrumentação e Logging",
+        "weight": "15%"
+      },
+      {
+        "name": "Estratégia de SRE (Site Reliability Engineering)",
+        "weight": "10%"
+      },
+      {
+        "name": "Práticas de Segurança e Compliance",
+        "weight": "15%"
+      },
+      {
+        "name": "Controle de Fonte (Git)",
+        "weight": "15%"
+      },
+      {
+        "name": "Integração Contínua (CI)",
+        "weight": "20%"
+      },
+      {
+        "name": "Entrega Contínua (CD)",
+        "weight": "25%"
+      }
     ]
   },
   {
@@ -249,8 +393,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Arquitetura e Componentes Azure", "weight": "50%" },
-      { "name": "CLI e PowerShell Cheatsheets", "weight": "50%" }
+      {
+        "name": "Arquitetura e Componentes Azure",
+        "weight": "50%"
+      },
+      {
+        "name": "CLI e PowerShell Cheatsheets",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -268,10 +418,22 @@
     "level": "Inicial",
     "weight": "5%",
     "areas": [
-      { "name": "Conceitos de Nuvem", "weight": "24%" },
-      { "name": "Segurança e Conformidade", "weight": "30%" },
-      { "name": "Tecnologia e Serviços AWS", "weight": "34%" },
-      { "name": "Faturamento, Precificação e Suporte", "weight": "12%" }
+      {
+        "name": "Conceitos de Nuvem",
+        "weight": "24%"
+      },
+      {
+        "name": "Segurança e Conformidade",
+        "weight": "30%"
+      },
+      {
+        "name": "Tecnologia e Serviços AWS",
+        "weight": "34%"
+      },
+      {
+        "name": "Faturamento, Precificação e Suporte",
+        "weight": "12%"
+      }
     ]
   },
   {
@@ -289,10 +451,22 @@
     "level": "Intermediário",
     "weight": "15%",
     "areas": [
-      { "name": "Design de Arquiteturas Seguras", "weight": "30%" },
-      { "name": "Design de Arquiteturas Resilientes", "weight": "26%" },
-      { "name": "Design de Arquiteturas de Alta Performance", "weight": "24%" },
-      { "name": "Design de Arquiteturas Otimizadas de Custo", "weight": "20%" }
+      {
+        "name": "Design de Arquiteturas Seguras",
+        "weight": "30%"
+      },
+      {
+        "name": "Design de Arquiteturas Resilientes",
+        "weight": "26%"
+      },
+      {
+        "name": "Design de Arquiteturas de Alta Performance",
+        "weight": "24%"
+      },
+      {
+        "name": "Design de Arquiteturas Otimizadas de Custo",
+        "weight": "20%"
+      }
     ]
   },
   {
@@ -310,12 +484,30 @@
     "level": "Avançado",
     "weight": "2%",
     "areas": [
-      { "name": "SDLC Automation (Ciclo de Vida de Software)", "weight": "22%" },
-      { "name": "Gerenciamento de Configuração e IaC", "weight": "17%" },
-      { "name": "Monitoramento, Métricas e Logging", "weight": "15%" },
-      { "name": "Políticas e Automação de Padrões", "weight": "10%" },
-      { "name": "Gerenciamento de Eventos e Resposta", "weight": "18%" },
-      { "name": "Alta Disponibilidade e Tolerância a Falhas", "weight": "18%" }
+      {
+        "name": "SDLC Automation (Ciclo de Vida de Software)",
+        "weight": "22%"
+      },
+      {
+        "name": "Gerenciamento de Configuração e IaC",
+        "weight": "17%"
+      },
+      {
+        "name": "Monitoramento, Métricas e Logging",
+        "weight": "15%"
+      },
+      {
+        "name": "Políticas e Automação de Padrões",
+        "weight": "10%"
+      },
+      {
+        "name": "Gerenciamento de Eventos e Resposta",
+        "weight": "18%"
+      },
+      {
+        "name": "Alta Disponibilidade e Tolerância a Falhas",
+        "weight": "18%"
+      }
     ]
   },
   {
@@ -333,8 +525,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Pilares AWS Well-Architected", "weight": "50%" },
-      { "name": "Cheatsheets e Comandos AWS CLI", "weight": "50%" }
+      {
+        "name": "Pilares AWS Well-Architected",
+        "weight": "50%"
+      },
+      {
+        "name": "Cheatsheets e Comandos AWS CLI",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -352,12 +550,30 @@
     "level": "Intermediário",
     "weight": "5%",
     "areas": [
-      { "name": "Orquestração e Swarm", "weight": "25%" },
-      { "name": "Criação de Imagens e Registries", "weight": "20%" },
-      { "name": "Instalação e Configuração", "weight": "15%" },
-      { "name": "Redes em Containers", "weight": "15%" },
-      { "name": "Segurança e Assinatura", "weight": "15%" },
-      { "name": "Volumes e Armazenamento", "weight": "10%" }
+      {
+        "name": "Orquestração e Swarm",
+        "weight": "25%"
+      },
+      {
+        "name": "Criação de Imagens e Registries",
+        "weight": "20%"
+      },
+      {
+        "name": "Instalação e Configuração",
+        "weight": "15%"
+      },
+      {
+        "name": "Redes em Containers",
+        "weight": "15%"
+      },
+      {
+        "name": "Segurança e Assinatura",
+        "weight": "15%"
+      },
+      {
+        "name": "Volumes e Armazenamento",
+        "weight": "10%"
+      }
     ]
   },
   {
@@ -375,11 +591,26 @@
     "level": "Avançado",
     "weight": "15%",
     "areas": [
-      { "name": "Arquitetura, Instalação e Configuração", "weight": "25%" },
-      { "name": "Workloads e Escalonamento", "weight": "15%" },
-      { "name": "Serviços e Rede", "weight": "20%" },
-      { "name": "Armazenamento", "weight": "10%" },
-      { "name": "Troubleshooting (Resolução de Problemas)", "weight": "30%" }
+      {
+        "name": "Arquitetura, Instalação e Configuração",
+        "weight": "25%"
+      },
+      {
+        "name": "Workloads e Escalonamento",
+        "weight": "15%"
+      },
+      {
+        "name": "Serviços e Rede",
+        "weight": "20%"
+      },
+      {
+        "name": "Armazenamento",
+        "weight": "10%"
+      },
+      {
+        "name": "Troubleshooting (Resolução de Problemas)",
+        "weight": "30%"
+      }
     ]
   },
   {
@@ -397,10 +628,22 @@
     "level": "Intermediário",
     "weight": "10%",
     "areas": [
-      { "name": "Design e Criação de Pods", "weight": "20%" },
-      { "name": "Configuração de Aplicações", "weight": "18%" },
-      { "name": "Observabilidade e Manutenção", "weight": "18%" },
-      { "name": "Serviços e Redes de Aplicações", "weight": "20%" }
+      {
+        "name": "Design e Criação de Pods",
+        "weight": "20%"
+      },
+      {
+        "name": "Configuração de Aplicações",
+        "weight": "18%"
+      },
+      {
+        "name": "Observabilidade e Manutenção",
+        "weight": "18%"
+      },
+      {
+        "name": "Serviços e Redes de Aplicações",
+        "weight": "20%"
+      }
     ]
   },
   {
@@ -418,8 +661,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "kubectl e Docker CLI Cheatsheet", "weight": "50%" },
-      { "name": "Manuais e Manifestos YAML", "weight": "50%" }
+      {
+        "name": "kubectl e Docker CLI Cheatsheet",
+        "weight": "50%"
+      },
+      {
+        "name": "Manuais e Manifestos YAML",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -437,13 +686,34 @@
     "level": "Intermediário",
     "weight": "5%",
     "areas": [
-      { "name": "Compreender IaC", "weight": "10%" },
-      { "name": "Conceitos Básicos do Terraform", "weight": "15%" },
-      { "name": "Uso da CLI do Terraform", "weight": "20%" },
-      { "name": "Interação com Módulos", "weight": "15%" },
-      { "name": "Navegação pelo Fluxo de Trabalho", "weight": "20%" },
-      { "name": "Gerenciamento de Estado (State)", "weight": "10%" },
-      { "name": "Configuração do HCL (Linguagem)", "weight": "10%" }
+      {
+        "name": "Compreender IaC",
+        "weight": "10%"
+      },
+      {
+        "name": "Conceitos Básicos do Terraform",
+        "weight": "15%"
+      },
+      {
+        "name": "Uso da CLI do Terraform",
+        "weight": "20%"
+      },
+      {
+        "name": "Interação com Módulos",
+        "weight": "15%"
+      },
+      {
+        "name": "Navegação pelo Fluxo de Trabalho",
+        "weight": "20%"
+      },
+      {
+        "name": "Gerenciamento de Estado (State)",
+        "weight": "10%"
+      },
+      {
+        "name": "Configuração do HCL (Linguagem)",
+        "weight": "10%"
+      }
     ]
   },
   {
@@ -461,11 +731,26 @@
     "level": "Intermediário",
     "weight": "3%",
     "areas": [
-      { "name": "Conceitos de CI/CD", "weight": "20%" },
-      { "name": "Workflows e Pipelines (YAML)", "weight": "30%" },
-      { "name": "Runners e Executores", "weight": "20%" },
-      { "name": "Secrets, Variáveis e Ambientes", "weight": "15%" },
-      { "name": "Deploy, Artefatos e Caching", "weight": "15%" }
+      {
+        "name": "Conceitos de CI/CD",
+        "weight": "20%"
+      },
+      {
+        "name": "Workflows e Pipelines (YAML)",
+        "weight": "30%"
+      },
+      {
+        "name": "Runners e Executores",
+        "weight": "20%"
+      },
+      {
+        "name": "Secrets, Variáveis e Ambientes",
+        "weight": "15%"
+      },
+      {
+        "name": "Deploy, Artefatos e Caching",
+        "weight": "15%"
+      }
     ]
   },
   {
@@ -483,9 +768,18 @@
     "level": "Intermediário",
     "weight": "5%",
     "areas": [
-      { "name": "Playbooks e Inventários Ansible", "weight": "40%" },
-      { "name": "Módulos, Roles e Vault", "weight": "35%" },
-      { "name": "Automação de Configuração", "weight": "25%" }
+      {
+        "name": "Playbooks e Inventários Ansible",
+        "weight": "40%"
+      },
+      {
+        "name": "Módulos, Roles e Vault",
+        "weight": "35%"
+      },
+      {
+        "name": "Automação de Configuração",
+        "weight": "25%"
+      }
     ]
   },
   {
@@ -503,8 +797,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Exemplos de Pipelines YAML", "weight": "50%" },
-      { "name": "Sintaxe HCL e Ansible Cheatsheet", "weight": "50%" }
+      {
+        "name": "Exemplos de Pipelines YAML",
+        "weight": "50%"
+      },
+      {
+        "name": "Sintaxe HCL e Ansible Cheatsheet",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -522,11 +822,26 @@
     "level": "Intermediário",
     "weight": "2%",
     "areas": [
-      { "name": "Conceitos e Arquitetura do Grafana", "weight": "15%" },
-      { "name": "Visualizações e Dashboards", "weight": "25%" },
-      { "name": "Painéis Dinâmicos e Variáveis", "weight": "20%" },
-      { "name": "Alertas e Notificações", "weight": "20%" },
-      { "name": "Integração de Datasources (Prometheus, Logs)", "weight": "20%" }
+      {
+        "name": "Conceitos e Arquitetura do Grafana",
+        "weight": "15%"
+      },
+      {
+        "name": "Visualizações e Dashboards",
+        "weight": "25%"
+      },
+      {
+        "name": "Painéis Dinâmicos e Variáveis",
+        "weight": "20%"
+      },
+      {
+        "name": "Alertas e Notificações",
+        "weight": "20%"
+      },
+      {
+        "name": "Integração de Datasources (Prometheus, Logs)",
+        "weight": "20%"
+      }
     ]
   },
   {
@@ -544,10 +859,22 @@
     "level": "Intermediário",
     "weight": "3%",
     "areas": [
-      { "name": "Arquitetura e Métricas Prometheus", "weight": "30%" },
-      { "name": "Consultas PromQL", "weight": "35%" },
-      { "name": "Alertmanager e Regras", "weight": "20%" },
-      { "name": "Service Discovery e Exporters", "weight": "15%" }
+      {
+        "name": "Arquitetura e Métricas Prometheus",
+        "weight": "30%"
+      },
+      {
+        "name": "Consultas PromQL",
+        "weight": "35%"
+      },
+      {
+        "name": "Alertmanager e Regras",
+        "weight": "20%"
+      },
+      {
+        "name": "Service Discovery e Exporters",
+        "weight": "15%"
+      }
     ]
   },
   {
@@ -565,9 +892,18 @@
     "level": "Intermediário",
     "weight": "3%",
     "areas": [
-      { "name": "Traces, Métricas e Logs (OTLP)", "weight": "40%" },
-      { "name": "OTel Collector e SDKs", "weight": "35%" },
-      { "name": "Instrumentação de Código", "weight": "25%" }
+      {
+        "name": "Traces, Métricas e Logs (OTLP)",
+        "weight": "40%"
+      },
+      {
+        "name": "OTel Collector e SDKs",
+        "weight": "35%"
+      },
+      {
+        "name": "Instrumentação de Código",
+        "weight": "25%"
+      }
     ]
   },
   {
@@ -585,8 +921,14 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Cheatsheet PromQL e LogQL", "weight": "50%" },
-      { "name": "Dashboards de Referência", "weight": "50%" }
+      {
+        "name": "Cheatsheet PromQL e LogQL",
+        "weight": "50%"
+      },
+      {
+        "name": "Dashboards de Referência",
+        "weight": "50%"
+      }
     ]
   },
   {
@@ -604,19 +946,58 @@
     "level": "Intermediário",
     "weight": "8%",
     "areas": [
-      { "name": "Python Fundamentals", "weight": "10%" },
-      { "name": "Linux + Bash Automation", "weight": "8%" },
-      { "name": "boto3 — AWS SDK", "weight": "10%" },
-      { "name": "Azure SDK for Python", "weight": "8%" },
-      { "name": "requests — REST APIs", "weight": "8%" },
-      { "name": "python-dotenv — Secrets", "weight": "6%" },
-      { "name": "PyYAML — YAML Automation", "weight": "8%" },
-      { "name": "kubernetes — Client Python", "weight": "10%" },
-      { "name": "docker SDK for Python", "weight": "8%" },
-      { "name": "pytest — Testing & CI/CD", "weight": "8%" },
-      { "name": "bandit — Security (DevSecOps)", "weight": "6%" },
-      { "name": "OpenTelemetry — Observability", "weight": "8%" },
-      { "name": "click — DevOps CLI Tools", "weight": "6%" }
+      {
+        "name": "Python Fundamentals",
+        "weight": "10%"
+      },
+      {
+        "name": "Linux + Bash Automation",
+        "weight": "8%"
+      },
+      {
+        "name": "boto3 — AWS SDK",
+        "weight": "10%"
+      },
+      {
+        "name": "Azure SDK for Python",
+        "weight": "8%"
+      },
+      {
+        "name": "requests — REST APIs",
+        "weight": "8%"
+      },
+      {
+        "name": "python-dotenv — Secrets",
+        "weight": "6%"
+      },
+      {
+        "name": "PyYAML — YAML Automation",
+        "weight": "8%"
+      },
+      {
+        "name": "kubernetes — Client Python",
+        "weight": "10%"
+      },
+      {
+        "name": "docker SDK for Python",
+        "weight": "8%"
+      },
+      {
+        "name": "pytest — Testing & CI/CD",
+        "weight": "8%"
+      },
+      {
+        "name": "bandit — Security (DevSecOps)",
+        "weight": "6%"
+      },
+      {
+        "name": "OpenTelemetry — Observability",
+        "weight": "8%"
+      },
+      {
+        "name": "click — DevOps CLI Tools",
+        "weight": "6%"
+      }
     ]
   },
   {
@@ -634,9 +1015,18 @@
     "level": "Intermediário",
     "weight": "5%",
     "areas": [
-      { "name": "Manipulação de Arquivos e Regex", "weight": "35%" },
-      { "name": "Subprocess e Chamadas Shell", "weight": "35%" },
-      { "name": "CRON e Tarefas Assíncronas", "weight": "30%" }
+      {
+        "name": "Manipulação de Arquivos e Regex",
+        "weight": "35%"
+      },
+      {
+        "name": "Subprocess e Chamadas Shell",
+        "weight": "35%"
+      },
+      {
+        "name": "CRON e Tarefas Assíncronas",
+        "weight": "30%"
+      }
     ]
   },
   {
@@ -654,9 +1044,18 @@
     "level": "Intermediário",
     "weight": "5%",
     "areas": [
-      { "name": "AWS SDK boto3", "weight": "40%" },
-      { "name": "Azure e GCP Python SDKs", "weight": "35%" },
-      { "name": "Automação Serverless com Lambda", "weight": "25%" }
+      {
+        "name": "AWS SDK boto3",
+        "weight": "40%"
+      },
+      {
+        "name": "Azure e GCP Python SDKs",
+        "weight": "35%"
+      },
+      {
+        "name": "Automação Serverless com Lambda",
+        "weight": "25%"
+      }
     ]
   },
   {
@@ -674,8 +1073,126 @@
     "level": "Guia Geral",
     "weight": "Apoio",
     "areas": [
-      { "name": "Snippets e Scripts Práticos Python", "weight": "50%" },
-      { "name": "Cheatsheet de Bibliotecas DevOps", "weight": "50%" }
+      {
+        "name": "Snippets e Scripts Práticos Python",
+        "weight": "50%"
+      },
+      {
+        "name": "Cheatsheet de Bibliotecas DevOps",
+        "weight": "50%"
+      }
+    ]
+  },
+  {
+    "id": "BR-mod-16-bash-scripting",
+    "number": "16",
+    "group": "Scripting & Automação",
+    "group_icon": "fa-solid fa-terminal",
+    "tag": "BASH",
+    "name": "Bash Scripting & Terminal",
+    "certification_id": "bash-scripting",
+    "code": "BASH",
+    "icon": "fa-solid fa-terminal",
+    "accent": "#4ade80",
+    "path": "dataset/Automation-Shell/Bash-Scripting/BR-mod-16-bash-scripting.json",
+    "level": "Intermediário",
+    "weight": "5%",
+    "areas": [
+      {
+        "name": "Sintaxe Bash e Estruturas de Controle",
+        "weight": "35%"
+      },
+      {
+        "name": "Filtros de Texto (Grep, Sed, AWK)",
+        "weight": "35%"
+      },
+      {
+        "name": "Automação com Cron e Systemd",
+        "weight": "30%"
+      }
+    ]
+  },
+  {
+    "id": "BR-mod-16b-powershell-automation",
+    "number": "16b",
+    "group": "Scripting & Automação",
+    "group_icon": "fa-solid fa-terminal",
+    "tag": "PWSH",
+    "name": "PowerShell & Automation",
+    "certification_id": "powershell-automation",
+    "code": "PWSH",
+    "icon": "fa-solid fa-square-terminal",
+    "accent": "#38bdf8",
+    "path": "dataset/Automation-Shell/PowerShell-Automation/BR-mod-16b-powershell-automation.json",
+    "level": "Intermediário",
+    "weight": "5%",
+    "areas": [
+      {
+        "name": "Cmdlets e Pipeline de Objetos",
+        "weight": "40%"
+      },
+      {
+        "name": "Scripts e Módulos PowerShell",
+        "weight": "35%"
+      },
+      {
+        "name": "Automação Windows/Linux",
+        "weight": "25%"
+      }
+    ]
+  },
+  {
+    "id": "BR-mod-16c-python-cli-scripting",
+    "number": "16c",
+    "group": "Scripting & Automação",
+    "group_icon": "fa-solid fa-terminal",
+    "tag": "PY-CLI",
+    "name": "Python System Scripting",
+    "certification_id": "python-cli-scripting",
+    "code": "PY-CLI",
+    "icon": "fa-brands fa-python",
+    "accent": "#f59e0b",
+    "path": "dataset/Automation-Shell/Python-CLI-Scripting/BR-mod-16c-python-cli-scripting.json",
+    "level": "Intermediário",
+    "weight": "5%",
+    "areas": [
+      {
+        "name": "Criação de CLIs com Click/Argparse",
+        "weight": "40%"
+      },
+      {
+        "name": "Interação com o Sistema Operacional",
+        "weight": "35%"
+      },
+      {
+        "name": "Automação de Tarefas Repetitivas",
+        "weight": "25%"
+      }
+    ]
+  },
+  {
+    "id": "BR-mod-16d-shell-material",
+    "number": "16d",
+    "group": "Scripting & Automação",
+    "group_icon": "fa-solid fa-terminal",
+    "tag": "AUTO-DOC",
+    "name": "Material & Guia Automação",
+    "certification_id": "shell-material-guide",
+    "code": "AUTO-DOC",
+    "icon": "fa-solid fa-robot",
+    "accent": "#a855f7",
+    "path": "dataset/Automation-Shell/Material-Guide/BR-mod-16d-shell-material.json",
+    "level": "Guia Geral",
+    "weight": "Apoio",
+    "areas": [
+      {
+        "name": "Cheatsheets Bash e PowerShell",
+        "weight": "50%"
+      },
+      {
+        "name": "Exemplos de Scripts Práticos",
+        "weight": "50%"
+      }
     ]
   }
 ]

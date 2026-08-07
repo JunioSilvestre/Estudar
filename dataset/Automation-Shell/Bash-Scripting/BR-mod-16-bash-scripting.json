@@ -1,0 +1,13 @@
+{
+  "module_id": "BR-mod-16-bash-scripting",
+  "questions": [
+    {
+      "id": "Q-01",
+      "question_number": "01",
+      "category": "Fundamentos de Bash Scripting & Terminal",
+      "question": "Pergunta de teste para o módulo Bash Scripting & Terminal (BASH).",
+      "correct_answer": "Resposta correta de teste de automação.",
+      "explanation": "Explicação detalhada para o módulo Bash Scripting & Terminal."
+    }
+  ]
+}
