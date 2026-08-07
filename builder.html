@@ -1169,8 +1169,8 @@
       const moduleNameEl = document.getElementById('pdf-modal-module-name');
 
       const moduleId = document.getElementById('meta-module-id').value;
-      const mod = sysModules.find(m => m.id === moduleId);
-      moduleNameEl.textContent = mod ? `${mod.number} — ${mod.name}` : moduleId;
+      const targetMod = (sysModules || []).find(m => m.id === moduleId);
+      moduleNameEl.textContent = targetMod ? `${targetMod.number} — ${targetMod.name}` : moduleId;
 
       modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
@@ -1178,41 +1178,85 @@
       // Loading state
       body.innerHTML = `<div class="flex items-center justify-center py-8 text-slate-400"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Carregando...</div>`;
 
-      const mod = (sysModules || []).find(m => m.id === moduleId);
-      const modDir = mod && mod.path ? mod.path.substring(0, mod.path.lastIndexOf('/')) : `dataset/${moduleId}`;
+      const modDir = targetMod && targetMod.path ? targetMod.path.substring(0, targetMod.path.lastIndexOf('/')) : `dataset/${moduleId}`;
+      let pdfFolder = `${modDir}/pdf`;
+      let pdfMap = new Map();
 
+      // 1. Tentar ler index.json da pasta pdf/ ou pdfs.json
       try {
-        const res = await fetch(`${modDir}/pdfs.json`);
-        if (!res.ok) throw new Error('pdfs.json não encontrado');
-        const pdfs = await res.json();
-
-        if (!pdfs || pdfs.length === 0) {
-          body.innerHTML = `
-            <div class="text-center py-10 space-y-3">
-              <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto">
-                <i class="fa-solid fa-folder-open text-3xl text-slate-400"></i>
-              </div>
-              <p class="font-bold text-slate-700 dark:text-slate-300">Nenhum PDF cadastrado</p>
-              <p class="text-xs text-slate-500">Adicione entradas em <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">${modDir}/pdfs.json</code></p>
-              <div class="bg-slate-900 rounded-xl p-3 text-left">
-                <pre class="text-cyan-300 font-mono text-[11px]">[
-  {
-    "title": "Nome do PDF",
-    "file": "arquivo.pdf",
-    "description": "Guia de estudo oficial"
-  }
-]</pre>
-              </div>
-            </div>
-          `;
-          return;
+        let res = await fetch(`${pdfFolder}/index.json`);
+        if (!res.ok) {
+          res = await fetch(`${modDir}/pdfs.json`);
+          pdfFolder = modDir;
         }
+        if (res.ok) {
+          const list = await res.json();
+          (list || []).forEach(item => {
+            if (item && item.file) pdfMap.set(item.file, item);
+          });
+        }
+      } catch (e) {}
 
+      // 2. Auto-descoberta dinâmica via HTML do servidor local
+      try {
+        const dirRes = await fetch(`${pdfFolder}/`);
+        if (dirRes.ok) {
+          const htmlText = await dirRes.text();
+          const pdfMatches = htmlText.match(/href=["']?([^"'>]+\.pdf)["']?/gi);
+          if (pdfMatches) {
+            pdfMatches.forEach(m => {
+              const raw = m.replace(/href=["']?/i, '').replace(/["']$/, '');
+              const filename = decodeURIComponent(raw.split('/').pop().split('?')[0]);
+              if (filename && filename.endsWith('.pdf') && !pdfMap.has(filename)) {
+                const cleanName = filename.replace(/\.pdf$/i, '').replace(/[-_]+/g, ' ');
+                const title = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+                pdfMap.set(filename, {
+                  title: title,
+                  file: filename,
+                  description: `Documento auto-detectado na pasta pdf/${filename}`
+                });
+              }
+            });
+          }
+        }
+      } catch (e) {}
+
+      const candidatePdfs = Array.from(pdfMap.values());
+
+      // 3. Validação em tempo real (HEAD check)
+      const existingPdfs = [];
+      await Promise.all(candidatePdfs.map(async (pdf) => {
+        try {
+          const pdfFile = (pdf.file.startsWith('/') || pdf.file.includes('://')) ? pdf.file : `${pdfFolder}/${pdf.file}`;
+          const headRes = await fetch(pdfFile, { method: 'HEAD' });
+          if (headRes.ok) {
+            existingPdfs.push(pdf);
+          }
+        } catch (e) {}
+      }));
+
+      const pdfs = existingPdfs;
+
+      if (!pdfs || pdfs.length === 0) {
         body.innerHTML = `
-          <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> ${pdfs.length} PDF(s) disponível(is) para este módulo</p>
-          <div class="space-y-2">
-            ${pdfs.map((pdf, i) => `
-              <a href="${modDir}/${pdf.file}" target="_blank" rel="noopener noreferrer"
+          <div class="text-center py-10 space-y-3">
+            <div class="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto">
+              <i class="fa-solid fa-folder-open text-3xl text-slate-400"></i>
+            </div>
+            <p class="font-bold text-slate-700 dark:text-slate-300">Nenhum PDF encontrado</p>
+            <p class="text-xs text-slate-500">Coloque arquivos .pdf na pasta <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">${modDir}/pdf/</code></p>
+          </div>
+        `;
+        return;
+      }
+
+      body.innerHTML = `
+        <p class="text-xs text-slate-500 mb-4"><i class="fa-solid fa-circle-info text-indigo-400 mr-1"></i> ${pdfs.length} PDF(s) disponível(is) para este módulo</p>
+        <div class="space-y-2">
+          ${pdfs.map((pdf, i) => {
+            const pdfFile = (pdf.file.startsWith('/') || pdf.file.includes('://')) ? pdf.file : `${pdfFolder}/${pdf.file}`;
+            return `
+              <a href="${pdfFile}" target="_blank" rel="noopener noreferrer"
                 class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition group cursor-pointer">
                 <div class="w-10 h-12 bg-rose-100 dark:bg-rose-950 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-rose-200 dark:group-hover:bg-rose-900 transition">
                   <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-xl"></i>
@@ -1220,23 +1264,14 @@
                 <div class="flex-1 min-w-0">
                   <p class="font-bold text-slate-800 dark:text-slate-100 text-sm truncate">${escapeHtml(pdf.title || pdf.file)}</p>
                   ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">${escapeHtml(pdf.description)}</p>` : ''}
-                  <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1 truncate">${escapeHtml(pdf.file)}</p>
+                  <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1 truncate">pdf/${escapeHtml(pdf.file)}</p>
                 </div>
                 <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-rose-500 transition shrink-0"></i>
               </a>
-            `).join('')}
-          </div>
-        `;
-
-      } catch (err) {
-        body.innerHTML = `
-          <div class="text-center py-8 space-y-3">
-            <i class="fa-solid fa-triangle-exclamation text-3xl text-amber-500"></i>
-            <p class="font-bold text-slate-700 dark:text-slate-300">Arquivo pdfs.json não encontrado</p>
-            <p class="text-xs text-slate-500">Crie o arquivo <code class="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">${modDir}/pdfs.json</code> para listar os PDFs.</p>
-          </div>
-        `;
-      }
+            `;
+          }).join('')}
+        </div>
+      `;
     }
 
     function closePdfModal() {
