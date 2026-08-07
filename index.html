@@ -987,6 +987,35 @@
       }
     }
 
+    function togglePdfEmbed(pdfPath, containerId) {
+      const el = document.getElementById(containerId);
+      if (!el) return;
+      if (!el.classList.contains('hidden')) {
+        el.classList.add('hidden');
+        el.innerHTML = '';
+      } else {
+        el.classList.remove('hidden');
+        el.innerHTML = `
+          <div class="rounded-2xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-900 shadow-2xl mt-4">
+            <div class="px-4 py-2.5 bg-slate-800 flex items-center justify-between border-b border-slate-700 text-xs text-slate-300">
+              <span class="font-bold font-mono text-emerald-400 flex items-center gap-2">
+                <i class="fa-solid fa-file-pdf text-rose-500 text-sm"></i> Leitor de PDF Integrado
+              </span>
+              <div class="flex items-center gap-3">
+                <a href="${pdfPath}" target="_blank" class="hover:text-white transition font-medium flex items-center gap-1">
+                  <i class="fa-solid fa-up-right-from-square"></i> Nova Aba
+                </a>
+                <button onclick="togglePdfEmbed('${pdfPath}', '${containerId}')" class="hover:text-rose-400 transition font-bold text-xs flex items-center gap-1 bg-slate-700 hover:bg-slate-600 px-2.5 py-1 rounded-lg">
+                  <i class="fa-solid fa-xmark"></i> Fechar Leitor
+                </button>
+              </div>
+            </div>
+            <iframe src="${pdfPath}" class="w-full h-[700px] border-0 bg-white"></iframe>
+          </div>
+        `;
+      }
+    }
+
     async function fetchModulePdfs(modDir) {
       const pdfContainer = document.getElementById('pdfs-content-area');
       const badge = document.getElementById('tab-pdf-count');
@@ -1007,19 +1036,34 @@
 
         if (quickPdfBtn) quickPdfBtn.classList.remove('hidden');
 
-        pdfContainer.innerHTML = pdfs.map(pdf => `
-          <a href="${modDir}/${pdf.file}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 p-4 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition group">
-            <div class="w-12 h-14 bg-rose-100 dark:bg-rose-950 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-rose-200 dark:group-hover:bg-rose-900 transition">
-              <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-2xl"></i>
+        pdfContainer.innerHTML = pdfs.map((pdf, idx) => {
+          const pdfPath = `${modDir}/${pdf.file}`;
+          const containerId = `pdf-embed-box-${idx}`;
+          return `
+            <div class="col-span-2 bg-slate-50 dark:bg-slate-800/60 p-4 sm:p-5 rounded-2xl border border-slate-200 dark:border-slate-700 space-y-3">
+              <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3.5">
+                  <div class="w-11 h-12 bg-rose-100 dark:bg-rose-950 rounded-xl flex items-center justify-center shrink-0">
+                    <i class="fa-solid fa-file-pdf text-rose-600 dark:text-rose-400 text-xl"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-800 dark:text-slate-100 text-sm">${escapeHtml(pdf.title || pdf.file)}</h4>
+                    ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(pdf.description)}</p>` : ''}
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button onclick="togglePdfEmbed('${pdfPath}', '${containerId}')" class="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white transition flex items-center gap-1.5 shadow-sm">
+                    <i class="fa-solid fa-eye"></i> Ler na Página
+                  </button>
+                  <a href="${pdfPath}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 rounded-xl text-xs font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white border border-slate-300 dark:border-slate-600 transition flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> Nova Aba
+                  </a>
+                </div>
+              </div>
+              <div id="${containerId}" class="hidden"></div>
             </div>
-            <div class="flex-1 min-w-0">
-              <p class="font-bold text-slate-800 dark:text-slate-100 text-sm truncate">${escapeHtml(pdf.title || pdf.file)}</p>
-              ${pdf.description ? `<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">${escapeHtml(pdf.description)}</p>` : ''}
-              <p class="text-[11px] font-mono text-rose-600 dark:text-rose-400 mt-1 truncate">${escapeHtml(pdf.file)}</p>
-            </div>
-            <i class="fa-solid fa-arrow-up-right-from-square text-slate-400 group-hover:text-rose-500 transition shrink-0"></i>
-          </a>
-        `).join('');
+          `;
+        }).join('');
       } catch (e) {
         if (badge) badge.innerText = '0';
         if (quickPdfBtn) quickPdfBtn.classList.add('hidden');
